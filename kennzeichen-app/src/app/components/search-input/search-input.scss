@@ -1,0 +1,36 @@
+@use '../../../styles/main' as *;
+
+.search-input {
+
+  .container {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .field {
+    width: 100%;
+    border: 1px solid $border-primary;
+    background-color: $background-secondary;
+
+    &:focus {
+      outline: none;
+      border-color: $text-primary;
+    }
+  }
+
+  .clear {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: $text-secondary;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $background-primary;
+    }
+  }
+}

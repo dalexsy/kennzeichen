@@ -1,0 +1,18 @@
+@use '../../../styles/main' as *;
+
+.view-toggle {
+  background: $background-secondary;
+  border: 1px solid $border-primary;
+  cursor: pointer;
+  color: $text-secondary;
+
+  &:hover {
+    background: $background-primary;
+    border-color: $text-primary;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $text-primary;
+  }
+}

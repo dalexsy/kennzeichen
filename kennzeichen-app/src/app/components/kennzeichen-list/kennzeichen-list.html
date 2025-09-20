@@ -1,0 +1,48 @@
+<div class="kennzeichen-list">
+  <div *ngIf="isLoading" class="loading">
+    <div class="spinner"></div>
+    <p>Loading license plate data...</p>
+  </div>
+
+  <div
+    *ngIf="!isLoading && (groupedKennzeichen$ | async) as groupedList"
+    class="container"
+  >
+    <div
+      *ngIf="getTotalCount(groupedList) === 0"
+      class="empty"
+    >
+      <p class="empty-text">
+        {{ searchTerm ? 'No license plates found for "' + searchTerm + '"' : 'No license plates available' }}
+      </p>
+      <p class="empty-hint" *ngIf="searchTerm">
+        Try entering fewer letters or check your spelling.
+      </p>
+    </div>
+
+    <div
+      *ngIf="getTotalCount(groupedList) > 0"
+      class="results"
+    >
+      <div class="groups">
+        <div
+          *ngFor="let group of groupedList; trackBy: trackByState"
+          class="group"
+        >
+          <h3 class="group-heading">
+            {{ group.state }} ({{ group.kennzeichen.length }})
+          </h3>
+          <div class="group-items">
+            <app-kennzeichen-item
+              *ngFor="let kennzeichen of group.kennzeichen; trackBy: trackByCode"
+              [kennzeichen]="kennzeichen"
+              [isSeen]="(seenCodes$ | async)?.has(kennzeichen.code) || false"
+              [searchTerm]="searchTerm"
+              (itemClicked)="onItemClicked($event)"
+            ></app-kennzeichen-item>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,51 @@
+@use '../../../styles/main' as *;
+
+.kennzeichen-item {
+  background: $background-secondary;
+  border: 1px solid $border-primary;
+  cursor: pointer;
+
+  &:hover {
+    border-color: $text-primary;
+  }
+
+  &--seen {
+    background-color: #e8f5e8;
+    border-color: #4caf50;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+  }
+
+  .code {
+    font-family: $font-family-license-plate;
+    color: $text-primary;
+  }
+
+  .seen-badge {
+    background-color: #4caf50;
+    color: white;
+    }
+
+  .details {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .city {
+    color: $text-primary;
+  }
+
+  .origin {
+    color: $text-secondary;
+  }
+
+  .state {
+    color: $text-secondary;
+  }
+}

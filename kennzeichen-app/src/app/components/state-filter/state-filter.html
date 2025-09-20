@@ -1,0 +1,24 @@
+<div class="state-filter">
+  <div class="state-filter__container">
+    <select
+      class="state-filter__select"
+      [value]="selectedState"
+      (change)="onStateChange($event)"
+    >
+      <option value="">All States</option>
+      <option *ngFor="let state of germanStates" [value]="state">
+        {{ state }}
+      </option>
+    </select>
+
+    <button
+      *ngIf="selectedState"
+      type="button"
+      class="state-filter__clear"
+      (click)="clearFilter()"
+      aria-label="Clear state filter"
+    >
+      ✕
+    </button>
+  </div>
+</div>

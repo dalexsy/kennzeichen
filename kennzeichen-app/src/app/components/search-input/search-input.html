@@ -1,0 +1,26 @@
+<div class="search-input">
+  <div class="search-input__container">
+    <input
+      type="text"
+      class="search-input__field"
+      [value]="value"
+      [disabled]="disabled"
+      (input)="onInput($event)"
+      (blur)="onBlur()"
+      placeholder="Search by code or location (e.g., B, Berlin, München)"
+      autocomplete="off"
+      spellcheck="false"
+    />
+
+    <button
+      *ngIf="value"
+      type="button"
+      class="search-input__clear"
+      (click)="onClear()"
+      aria-label="Clear search"
+    >
+      ✕
+    </button>
+  </div>
+
+</div>

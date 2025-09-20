@@ -1,0 +1,38 @@
+@use '../styles/main' as *;
+
+.app {
+  min-height: 100vh;
+  background-color: $background-primary;
+
+  .sticky-header {
+    position: sticky;
+    top: 0;
+    background-color: $background-primary;
+    border-bottom: 1px solid $border-primary;
+  }
+
+  .main {
+  }
+
+  .plate-display {
+    display: block;
+  }
+
+  .controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .search {
+    flex: 1;
+  }
+
+  .view-toggle {
+    flex-shrink: 0;
+  }
+
+  .list {
+    display: block;
+  }
+}

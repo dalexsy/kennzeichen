@@ -1,0 +1,34 @@
+<div class="app">
+  <div class="sticky-header">
+    <div class="container">
+      <app-license-plate-display
+        [enteredText]="currentSearchTerm"
+        class="plate-display"
+      ></app-license-plate-display>
+
+      <div class="controls">
+        <app-search-input
+          (searchChange)="onSearchChange($event)"
+          class="search"
+        ></app-search-input>
+        <app-view-toggle
+          (viewChange)="onViewChange($event)"
+          class="view-toggle"
+        ></app-view-toggle>
+      </div>
+    </div>
+  </div>
+
+  <main class="main">
+    <div class="container">
+      <app-kennzeichen-list
+        [groupedKennzeichen$]="groupedKennzeichen$"
+        [seenCodes$]="seenCodes$"
+        [searchTerm]="currentSearchTerm"
+        [isLoading]="isLoading"
+        (itemClicked)="onKennzeichenClicked($event)"
+        class="list"
+      ></app-kennzeichen-list>
+    </div>
+  </main>
+</div>

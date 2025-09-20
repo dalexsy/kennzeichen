@@ -1,0 +1,94 @@
+@use '../../../styles/main' as *;
+@use 'sass:color';
+
+.license-plate {
+  display: flex;
+  background-color: $background-secondary;
+  border: 2px solid $text-primary;
+  border-radius: 4px;
+  font-family: $font-family-license-plate;
+  font-weight: bold;
+  margin: 0;
+  width: 420px;
+  height: 80px;
+  overflow: hidden;
+  position: relative;
+
+  .eu-section {
+    background: #003399;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    text-align: center;
+    border-right: 1px solid $text-primary;
+  }
+
+  .stars {
+    font-size: 7px;
+    line-height: 0.7;
+    margin: 1px 0;
+    letter-spacing: -0.3px;
+  }
+
+  .country {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 1px 0;
+  }
+
+  .main {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    justify-content: flex-start;
+    gap: 12px;
+  }
+
+  .code {
+    font-size: 44px;
+    font-weight: bold;
+    color: $text-primary;
+    line-height: 0.9;
+    letter-spacing: 2px;
+    min-width: 120px;
+  }
+
+  .entered {
+    color: $text-primary;
+  }
+
+  .placeholder {
+    color: $text-secondary;
+  }
+
+  .separator {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    align-items: center;
+    margin: 0 4px;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    background-color: #003399;
+    border-radius: 50%;
+  }
+
+  .numbers {
+    font-size: 44px;
+    font-weight: bold;
+    color: $text-primary;
+    line-height: 0.9;
+    letter-spacing: 2px;
+    flex: 1;
+
+    .placeholder {
+      color: $text-secondary;
+    }
+  }
+}
