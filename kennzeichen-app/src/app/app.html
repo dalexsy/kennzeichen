@@ -8,27 +8,24 @@
 
       <div class="controls">
         <app-search-input
+          [externalValue]="currentSearchTerm"
           (searchChange)="onSearchChange($event)"
           class="search"
         ></app-search-input>
-        <app-view-toggle
-          (viewChange)="onViewChange($event)"
-          class="view-toggle"
-        ></app-view-toggle>
       </div>
     </div>
   </div>
 
   <main class="main">
-    <div class="container">
-      <app-kennzeichen-list
-        [groupedKennzeichen$]="groupedKennzeichen$"
-        [seenCodes$]="seenCodes$"
-        [searchTerm]="currentSearchTerm"
-        [isLoading]="isLoading"
-        (itemClicked)="onKennzeichenClicked($event)"
-        class="list"
-      ></app-kennzeichen-list>
-    </div>
+    <app-kennzeichen-list
+      [groupedKennzeichen$]="groupedKennzeichen$"
+      [seenCodes$]="seenCodes$"
+      [searchTerm]="currentSearchTerm"
+      [selectedCode]="selectedCode"
+      [isLoading]="isLoading"
+      (itemClicked)="onKennzeichenClicked($event)"
+      (viewChange)="onViewChange($event)"
+      class="list"
+    ></app-kennzeichen-list>
   </main>
 </div>

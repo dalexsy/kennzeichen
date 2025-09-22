@@ -1,7 +1,7 @@
 <div class="state-filter">
-  <div class="state-filter__container">
+  <div class="filter-container">
     <select
-      class="state-filter__select"
+      class="select"
       [value]="selectedState"
       (change)="onStateChange($event)"
     >
@@ -14,7 +14,7 @@
     <button
       *ngIf="selectedState"
       type="button"
-      class="state-filter__clear"
+      class="clear"
       (click)="clearFilter()"
       aria-label="Clear state filter"
     >

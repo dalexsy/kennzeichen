@@ -18,7 +18,11 @@
       "Bash(git add:*)",
       "Bash(git config:*)",
       "Bash(del nul)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(ng build)",
+      "Bash(ng build:*)",
+      "Bash(npx tsc:*)",
+      "Bash(rm:*)"
     ],
     "deny": [],
     "ask": []

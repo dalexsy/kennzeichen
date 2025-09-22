@@ -1,27 +1,33 @@
 <div
   class="kennzeichen-item"
-  [class.kennzeichen-item--seen]="isSeen"
+  [class.seen]="isSeen"
+  [class.selected]="isSelected"
   (click)="onClick()"
   role="button"
   tabindex="0"
-  [attr.aria-label]="'License plate code ' + kennzeichen.code + ' from ' + kennzeichen.derived_from + (isSeen ? ', already seen' : ', not seen yet')"
+  [attr.aria-label]="
+    'License plate code ' +
+    kennzeichen.code +
+    ' from ' +
+    kennzeichen.derived_from +
+    (isSeen ? ', already seen' : ', not seen yet')
+  "
 >
   <div class="header">
-    <div class="code" [innerHTML]="getHighlightedCode()"></div>
-    <div *ngIf="isSeen">
-      <span class="seen-badge">✓ Seen</span>
+    <div class="region-section">
+      <app-region-badge [federalState]="kennzeichen.federal_state" size="medium"></app-region-badge>
+      <div class="region-info">
+        <div class="city">{{ kennzeichen.city_district }}</div>
+        <div class="state">{{ kennzeichen.federal_state }}</div>
+      </div>
     </div>
+
+    <div class="code" [innerHTML]="getHighlightedCode()"></div>
   </div>
 
   <div class="details">
-    <div class="city">
-      {{ kennzeichen.city_district }}
-    </div>
     <div class="origin">
-      From: {{ kennzeichen.derived_from }}
-    </div>
-    <div class="state">
-      {{ kennzeichen.federal_state }}
+      <span [innerHTML]="getHighlightedOrigin()"></span>
     </div>
   </div>
 </div>

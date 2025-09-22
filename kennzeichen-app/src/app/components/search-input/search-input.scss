@@ -1,17 +1,25 @@
 @use '../../../styles/main' as *;
 
 .search-input {
+  width: 100%;
 
-  .container {
+  .input-container {
     position: relative;
     display: flex;
     align-items: center;
+    width: 100%;
+    max-width: 30rem;
+    margin: 0 auto;
   }
 
   .field {
-    width: 100%;
-    border: 1px solid $border-primary;
+    border: 0.125rem solid var(--border-primary);
     background-color: $background-secondary;
+    color: $text-primary;
+    padding: 1rem 3rem 1rem 1rem;
+    font-family: $body-font;
+    width: 100%;
+    border-radius: 5rem;
 
     &:focus {
       outline: none;
@@ -21,16 +29,22 @@
 
   .clear {
     position: absolute;
-    right: 8px;
+    right: 1rem;
     top: 50%;
     transform: translateY(-50%);
     background: none;
     border: none;
     color: $text-secondary;
     cursor: pointer;
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
 
     &:hover {
-      background-color: $background-primary;
+      background-color: var(--border-secondary);
     }
   }
 }

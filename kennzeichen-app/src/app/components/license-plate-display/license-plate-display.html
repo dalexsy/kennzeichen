@@ -1,22 +1,44 @@
-<div class="license-plate">
-  <div class="eu-section">
-    <div class="stars">★★★★★★</div>
-    <div class="country">D</div>
-    <div class="stars">★★★★★★</div>
+<div class="license-plate-container">
+  <div class="license-plate">
+    <div class="eu-section">
+      <div class="stars">
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+      </div>
+      <div class="country">D</div>
+    </div>
+
+    <div class="main">
+      <div class="code">
+        <span class="entered">{{ displayText.slice(0, enteredText.length) }}</span><span class="placeholder">{{ displayText.slice(enteredText.length) }}</span>
+      </div>
+
+      <div class="separator">
+        <div class="year-sticker">{{ currentYear.toString().slice(-2) }}</div>
+        <app-region-badge
+          [federalState]="federalState"
+          size="large"
+        ></app-region-badge>
+      </div>
+
+      <div class="numbers">
+        <span class="placeholder">{{ placeholderNumbers }}</span>
+      </div>
+    </div>
   </div>
 
-  <div class="main">
-    <div class="code">
-      <span class="entered">{{ displayText.slice(0, enteredText.length) }}</span><span class="placeholder">{{ displayText.slice(enteredText.length) }}</span>
-    </div>
-
-    <div class="separator">
-      <div class="dot"></div>
-      <div class="dot"></div>
-    </div>
-
-    <div class="numbers">
-      <span class="placeholder">{{ placeholderNumbers }}</span>
-    </div>
+  <div class="region-info">
+    <div class="region-name">{{ hasTopResult ? regionName : '&nbsp;' }}</div>
+    <div class="state-name">{{ hasTopResult ? federalState : '&nbsp;' }}</div>
   </div>
 </div>

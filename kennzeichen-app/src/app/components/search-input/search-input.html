@@ -1,8 +1,8 @@
 <div class="search-input">
-  <div class="search-input__container">
+  <div class="input-container">
     <input
       type="text"
-      class="search-input__field"
+      class="field"
       [value]="value"
       [disabled]="disabled"
       (input)="onInput($event)"
@@ -15,7 +15,7 @@
     <button
       *ngIf="value"
       type="button"
-      class="search-input__clear"
+      class="clear"
       (click)="onClear()"
       aria-label="Clear search"
     >

@@ -6,7 +6,7 @@
 
   <div
     *ngIf="!isLoading && (groupedKennzeichen$ | async) as groupedList"
-    class="container"
+    class="list-container"
   >
     <div
       *ngIf="getTotalCount(groupedList) === 0"
@@ -26,17 +26,23 @@
     >
       <div class="groups">
         <div
-          *ngFor="let group of groupedList; trackBy: trackByState"
+          *ngFor="let group of groupedList; let i = index; trackBy: trackByState"
           class="group"
         >
           <h3 class="group-heading">
             {{ group.state }} ({{ group.kennzeichen.length }})
+            <app-view-toggle
+              [currentView]="(viewMode$ | async) || 'alphabetical'"
+              (viewChange)="onViewChange($event)"
+              class="view-toggle"
+            ></app-view-toggle>
           </h3>
           <div class="group-items">
             <app-kennzeichen-item
               *ngFor="let kennzeichen of group.kennzeichen; trackBy: trackByCode"
               [kennzeichen]="kennzeichen"
               [isSeen]="(seenCodes$ | async)?.has(kennzeichen.code) || false"
+              [isSelected]="kennzeichen.code === selectedCode"
               [searchTerm]="searchTerm"
               (itemClicked)="onItemClicked($event)"
             ></app-kennzeichen-item>

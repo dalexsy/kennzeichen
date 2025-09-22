@@ -1,10 +1,14 @@
 @use '../../../styles/main' as *;
 
 .view-toggle {
-  background: $background-secondary;
-  border: 1px solid $border-primary;
+  padding: 1rem;
+  background: transparent;
+  border: none;
   cursor: pointer;
-  color: $text-secondary;
+  color: #18c09e;
+  padding: 0.5rem;
+  font-weight: 500;
+  font-family: 'Rubik', sans-serif;
 
   &:hover {
     background: $background-primary;

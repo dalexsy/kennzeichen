@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -8,12 +8,11 @@ import { CommonModule } from '@angular/common';
   styleUrl: './view-toggle.scss'
 })
 export class ViewToggle {
+  @Input() currentView: 'alphabetical' | 'grouped' = 'alphabetical';
   @Output() viewChange = new EventEmitter<'alphabetical' | 'grouped'>();
 
-  currentView: 'alphabetical' | 'grouped' = 'alphabetical';
-
   toggleView(): void {
-    this.currentView = this.currentView === 'alphabetical' ? 'grouped' : 'alphabetical';
-    this.viewChange.emit(this.currentView);
+    const newView = this.currentView === 'alphabetical' ? 'grouped' : 'alphabetical';
+    this.viewChange.emit(newView);
   }
 }

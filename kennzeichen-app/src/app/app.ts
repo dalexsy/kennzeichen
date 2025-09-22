@@ -9,7 +9,6 @@ import { LocalStorageService } from './services/local-storage';
 import { LicensePlateDisplay } from './components/license-plate-display/license-plate-display';
 import { SearchInput } from './components/search-input/search-input';
 import { KennzeichenList } from './components/kennzeichen-list/kennzeichen-list';
-import { ViewToggle } from './components/view-toggle/view-toggle';
 
 @Component({
   selector: 'app-root',
@@ -17,8 +16,7 @@ import { ViewToggle } from './components/view-toggle/view-toggle';
     CommonModule,
     LicensePlateDisplay,
     SearchInput,
-    KennzeichenList,
-    ViewToggle
+    KennzeichenList
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
@@ -33,6 +31,7 @@ export class App implements OnInit {
 
   // Local state
   currentSearchTerm = '';
+  selectedCode = '';
   isLoading = true;
 
   constructor(
@@ -53,6 +52,7 @@ export class App implements OnInit {
 
   onSearchChange(searchTerm: string): void {
     this.currentSearchTerm = searchTerm;
+    this.selectedCode = '';  // Clear selection when typing
     this.kennzeichenService.setSearchTerm(searchTerm);
   }
 
@@ -61,7 +61,16 @@ export class App implements OnInit {
   }
 
   onKennzeichenClicked(kennzeichen: Kennzeichen): void {
-    this.localStorageService.toggleSeen(kennzeichen.code);
+    // Toggle selection
+    if (this.selectedCode === kennzeichen.code) {
+      this.selectedCode = '';
+      this.currentSearchTerm = '';
+      this.kennzeichenService.setSearchTerm('');
+    } else {
+      this.selectedCode = kennzeichen.code;
+      this.currentSearchTerm = kennzeichen.code;
+      this.kennzeichenService.setSearchTerm('');  // Don't filter the list
+    }
   }
 
   onViewChange(view: 'alphabetical' | 'grouped'): void {

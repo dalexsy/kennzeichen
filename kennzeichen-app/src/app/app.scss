@@ -8,7 +8,7 @@
     position: sticky;
     top: 0;
     background-color: $background-primary;
-    border-bottom: 1px solid $border-primary;
+    z-index: 20;
   }
 
   .main {
@@ -22,6 +22,7 @@
     display: flex;
     gap: 8px;
     align-items: center;
+    width: 100%;
   }
 
   .search {
@@ -33,6 +34,5 @@
   }
 
   .list {
-    display: block;
   }
 }

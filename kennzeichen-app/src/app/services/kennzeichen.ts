@@ -90,9 +90,10 @@ export class KennzeichenService {
   // Grouped kennzeichen by state or alphabetically
   public groupedKennzeichen$ = combineLatest([
     this.filteredKennzeichen$,
-    this.viewMode$
+    this.viewMode$,
+    this.searchTerm$
   ]).pipe(
-    map(([kennzeichen, viewMode]) => {
+    map(([kennzeichen, viewMode, searchTerm]) => {
       if (viewMode === 'alphabetical') {
         // Group alphabetically by first letter
         const groups = new Map<string, Kennzeichen[]>();
@@ -121,9 +122,44 @@ export class KennzeichenService {
         });
 
         // Convert to array and sort by state name
-        return Array.from(groups.entries())
-          .map(([state, kennzeichen]) => ({ state, kennzeichen }))
-          .sort((a, b) => a.state.localeCompare(b.state));
+        let sortedGroups = Array.from(groups.entries())
+          .map(([state, kennzeichen]) => ({ state, kennzeichen }));
+
+        // If searching, sort groups by relevance (groups with top matches first)
+        if (searchTerm.trim()) {
+          const term = searchTerm.toLowerCase();
+
+          sortedGroups.sort((a, b) => {
+            // Check if groups contain exact code matches
+            const aHasCodeMatch = a.kennzeichen.some(k => k.code.toLowerCase().startsWith(term));
+            const bHasCodeMatch = b.kennzeichen.some(k => k.code.toLowerCase().startsWith(term));
+
+            if (aHasCodeMatch && !bHasCodeMatch) return -1;
+            if (!aHasCodeMatch && bHasCodeMatch) return 1;
+
+            // Among groups with code matches, prioritize by shortest match
+            if (aHasCodeMatch && bHasCodeMatch) {
+              const aShortestMatch = Math.min(...a.kennzeichen
+                .filter(k => k.code.toLowerCase().startsWith(term))
+                .map(k => k.code.length));
+              const bShortestMatch = Math.min(...b.kennzeichen
+                .filter(k => k.code.toLowerCase().startsWith(term))
+                .map(k => k.code.length));
+
+              if (aShortestMatch !== bShortestMatch) {
+                return aShortestMatch - bShortestMatch;
+              }
+            }
+
+            // Default to alphabetical
+            return a.state.localeCompare(b.state);
+          });
+        } else {
+          // No search term, sort alphabetically
+          sortedGroups.sort((a, b) => a.state.localeCompare(b.state));
+        }
+
+        return sortedGroups;
       }
     })
   );

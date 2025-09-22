@@ -1,21 +1,51 @@
+// Google Fonts Import
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
 // Font Face Declaration
 @font-face {
   font-family: 'EuroPlate';
   src: url('/EuroPlate.ttf') format('truetype');
-  font-weight: normal;
+  font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 
-// Essential Variables Only
-$text-primary: #212121;
-$text-secondary: #757575;
-$body-font: 'Roboto', sans-serif;
-$background-primary: #fafafa;
-$background-secondary: #ffffff;
-$border-primary: #bdbdbd;
-$border-secondary: #e0e0e0;
+// Theme variables
+:root {
+  color-scheme: light dark;
+
+  // Light theme (default)
+  --text-primary: #212121;
+  --text-secondary: #757575;
+  --background-primary: #dffcf2;
+  --background-secondary: #ffffff;
+  --border-primary: #bdbdbd;
+  --border-secondary: #e0e0e0;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    // Dark theme
+    --text-primary: #e0e0e0;
+    --text-secondary: #a0a0a0;
+    --background-primary: #1a1a1a;
+    --background-secondary: #2d2d2d;
+    --border-primary: #424242;
+    --border-secondary: #303030;
+  }
+}
+
+// SCSS variables using CSS custom properties
+$text-primary: var(--text-primary);
+$text-secondary: var(--text-secondary);
+$body-font: 'Rubik', sans-serif;
+$background-primary: var(--background-primary);
+$background-secondary: var(--background-secondary);
+$border-primary: var(--border-primary);
+$border-secondary: var(--border-secondary);
 
 // License plate specific
 $font-family-license-plate: 'EuroPlate', monospace;
 
+// Font weights
+$font-weight-bolder: 500;

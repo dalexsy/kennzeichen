@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, forwardRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, forwardRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -20,8 +20,14 @@ export class SearchInput implements ControlValueAccessor {
   @Output() searchChange = new EventEmitter<string>();
   @Output() inputChange = new EventEmitter<string>();
 
-  value: string = '';
+  @Input() value: string = '';
   disabled: boolean = false;
+
+  @Input() set externalValue(val: string) {
+    if (val !== this.value) {
+      this.value = val;
+    }
+  }
 
   private onChange = (value: string) => {};
   private onTouched = () => {};

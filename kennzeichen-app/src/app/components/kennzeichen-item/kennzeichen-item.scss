@@ -2,47 +2,81 @@
 
 .kennzeichen-item {
   background: $background-secondary;
-  border: 1px solid $border-primary;
   cursor: pointer;
+  display: flex;
+  padding: 1rem;
+  gap: 1rem;
+  border-radius: 0.25rem;
+  flex-direction: column;
+  box-shadow: #00000033 2px 2px;
+  height: 100%;
 
   &:hover {
     border-color: $text-primary;
   }
 
-  &--seen {
+  &.seen {
     background-color: #e8f5e8;
     border-color: #4caf50;
   }
 
+  &.selected {
+    background-color: #e3f2fd;
+    border-color: #2196f3;
+    border-width: 2px;
+  }
+
   .header {
     display: flex;
+    gap: 1rem;
     justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .region-section {
+    display: flex;
     align-items: center;
-    margin-bottom: 4px;
+    gap: 0.5rem;
+  }
+
+  .region-info {
+    display: flex;
+    flex-direction: column;
   }
 
   .code {
     font-family: $font-family-license-plate;
-    color: $text-primary;
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+
+  .seen-badge-container {
+    margin-left: auto;
   }
 
   .seen-badge {
     background-color: #4caf50;
     color: white;
-    }
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+  }
 
   .details {
     display: flex;
-    flex-direction: column;
-    gap: 2px;
+    flex-direction: row-reverse;
+    gap: 0.25rem;
+    justify-content: space-between;
   }
 
   .city {
-    color: $text-primary;
+    color: #18c09e;
   }
 
   .origin {
-    color: $text-secondary;
+    color: #acacac;
+    text-align: right;
   }
 
   .state {

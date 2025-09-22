@@ -1,6 +1,12 @@
 {
   "license_plates": [
     {
+      "code": "0",
+      "city_district": "Diplomatisches Corps",
+      "derived_from": "willkürlich gewählt",
+      "federal_state": "Deutschland"
+    },
+    {
       "code": "A",
       "city_district": "Stadt Augsburg",
       "derived_from": "Augsburg",
@@ -3724,7 +3730,7 @@
       "code": "THW",
       "city_district": "Bundesanstalt Technisches Hilfswerk",
       "derived_from": "Technisches HilfsWerk",
-      "federal_state": "bundesweit"
+      "federal_state": "Deutschland"
     },
     {
       "code": "TIR",
@@ -4204,7 +4210,7 @@
       "code": "X",
       "city_district": "Internationale Hauptquartiere",
       "derived_from": "willkürlich gewählt",
-      "federal_state": "bundesweit"
+      "federal_state": "Deutschland"
     },
     {
       "code": "Z",
