@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
-import { LicensePlate } from '../../models/kennzeichen.interface';
+import { LicensePlate } from '../../models/license-plate.interface';
 import { LicensePlateGroup, LicensePlateService } from '../../services/license-plate';
 import { LicensePlateItem } from '../kennzeichen-item/kennzeichen-item';
 import { ViewToggle } from '../view-toggle/view-toggle';

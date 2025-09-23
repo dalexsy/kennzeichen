@@ -1,9 +1,9 @@
 <div class="region-badge" [class]="size">
   <img
-    *ngIf="wappenPath"
-    [src]="wappenPath"
+    *ngIf="coatOfArmsPath"
+    [src]="coatOfArmsPath"
     [alt]="federalState + ' coat of arms'"
-    class="wappen"
+    class="coat-of-arms"
   />
-  <div *ngIf="!wappenPath" class="placeholder"></div>
+  <div *ngIf="!coatOfArmsPath" class="placeholder"></div>
 </div>

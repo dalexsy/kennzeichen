@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LicensePlate } from '../../models/kennzeichen.interface';
+import { LicensePlate } from '../../models/license-plate.interface';
 import { RegionBadge } from '../region-badge/region-badge';
 
 @Component({

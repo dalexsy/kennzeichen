@@ -19,3 +19,4 @@ export interface LicensePlateWithSeen extends LicensePlate {
   seen?: boolean;
   seenAt?: Date;
 }
+

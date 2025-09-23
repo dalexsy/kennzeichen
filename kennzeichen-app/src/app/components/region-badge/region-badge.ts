@@ -11,7 +11,7 @@ export class RegionBadge {
   @Input() federalState: string = '';
   @Input() size: 'small' | 'medium' | 'large' = 'small';
 
-  get wappenPath(): string | null {
+  get coatOfArmsPath(): string | null {
     if (!this.federalState) {
       return null;
     }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-export interface SeenKennzeichen {
+export interface SeenLicensePlate {
   code: string;
   seenAt: string; // ISO date string
 }
@@ -10,40 +10,40 @@ export interface SeenKennzeichen {
   providedIn: 'root'
 })
 export class LocalStorageService {
-  private readonly SEEN_KEY = 'kennzeichen-seen';
-  private seenKennzeichenSubject = new BehaviorSubject<Set<string>>(new Set());
+  private readonly SEEN_KEY = 'license-plates-seen';
+  private seenLicensePlatesSubject = new BehaviorSubject<Set<string>>(new Set());
 
-  public seenKennzeichen$ = this.seenKennzeichenSubject.asObservable();
+  public seenLicensePlates$ = this.seenLicensePlatesSubject.asObservable();
 
   constructor() {
-    this.loadSeenKennzeichen();
+    this.loadSeenLicensePlates();
   }
 
-  private loadSeenKennzeichen(): void {
+  private loadSeenLicensePlates(): void {
     try {
       const stored = localStorage.getItem(this.SEEN_KEY);
       if (stored) {
-        const seenData: SeenKennzeichen[] = JSON.parse(stored);
+        const seenData: SeenLicensePlate[] = JSON.parse(stored);
         const seenCodes = new Set(seenData.map(item => item.code));
-        this.seenKennzeichenSubject.next(seenCodes);
+        this.seenLicensePlatesSubject.next(seenCodes);
       }
     } catch (error) {
-      console.error('Error loading seen kennzeichen:', error);
+      console.error('Error loading seen license plates:', error);
     }
   }
 
-  private saveSeenKennzeichen(seenData: SeenKennzeichen[]): void {
+  private saveSeenLicensePlates(seenData: SeenLicensePlate[]): void {
     try {
       localStorage.setItem(this.SEEN_KEY, JSON.stringify(seenData));
     } catch (error) {
-      console.error('Error saving seen kennzeichen:', error);
+      console.error('Error saving seen license plates:', error);
     }
   }
 
   markAsSeen(code: string): void {
     try {
       const stored = localStorage.getItem(this.SEEN_KEY);
-      let seenData: SeenKennzeichen[] = stored ? JSON.parse(stored) : [];
+      let seenData: SeenLicensePlate[] = stored ? JSON.parse(stored) : [];
 
       // Check if already seen
       const existingIndex = seenData.findIndex(item => item.code === code);
@@ -59,26 +59,26 @@ export class LocalStorageService {
         seenData[existingIndex].seenAt = new Date().toISOString();
       }
 
-      this.saveSeenKennzeichen(seenData);
+      this.saveSeenLicensePlates(seenData);
 
       // Update the subject
-      const currentSeen = this.seenKennzeichenSubject.value;
+      const currentSeen = this.seenLicensePlatesSubject.value;
       currentSeen.add(code);
-      this.seenKennzeichenSubject.next(new Set(currentSeen));
+      this.seenLicensePlatesSubject.next(new Set(currentSeen));
     } catch (error) {
-      console.error('Error marking kennzeichen as seen:', error);
+      console.error('Error marking license plate as seen:', error);
     }
   }
 
   isSeen(code: string): boolean {
-    return this.seenKennzeichenSubject.value.has(code);
+    return this.seenLicensePlatesSubject.value.has(code);
   }
 
   getSeenCodes(): string[] {
-    return Array.from(this.seenKennzeichenSubject.value);
+    return Array.from(this.seenLicensePlatesSubject.value);
   }
 
-  getSeenDetails(): SeenKennzeichen[] {
+  getSeenDetails(): SeenLicensePlate[] {
     try {
       const stored = localStorage.getItem(this.SEEN_KEY);
       return stored ? JSON.parse(stored) : [];
@@ -91,14 +91,14 @@ export class LocalStorageService {
   clearSeen(): void {
     try {
       localStorage.removeItem(this.SEEN_KEY);
-      this.seenKennzeichenSubject.next(new Set());
+      this.seenLicensePlatesSubject.next(new Set());
     } catch (error) {
-      console.error('Error clearing seen kennzeichen:', error);
+      console.error('Error clearing seen license plates:', error);
     }
   }
 
   getSeenCount(): number {
-    return this.seenKennzeichenSubject.value.size;
+    return this.seenLicensePlatesSubject.value.size;
   }
 
   toggleSeen(code: string): void {
@@ -112,24 +112,24 @@ export class LocalStorageService {
   removeSeen(code: string): void {
     try {
       const stored = localStorage.getItem(this.SEEN_KEY);
-      let seenData: SeenKennzeichen[] = stored ? JSON.parse(stored) : [];
+      let seenData: SeenLicensePlate[] = stored ? JSON.parse(stored) : [];
 
       // Remove the entry
       seenData = seenData.filter(item => item.code !== code);
 
-      this.saveSeenKennzeichen(seenData);
+      this.saveSeenLicensePlates(seenData);
 
       // Update the subject
-      const currentSeen = this.seenKennzeichenSubject.value;
+      const currentSeen = this.seenLicensePlatesSubject.value;
       currentSeen.delete(code);
-      this.seenKennzeichenSubject.next(new Set(currentSeen));
+      this.seenLicensePlatesSubject.next(new Set(currentSeen));
     } catch (error) {
-      console.error('Error removing seen kennzeichen:', error);
+      console.error('Error removing seen license plates:', error);
     }
   }
 
   // Get recently seen (last 10)
-  getRecentlySeen(limit: number = 10): SeenKennzeichen[] {
+  getRecentlySeen(limit: number = 10): SeenLicensePlate[] {
     try {
       const seenData = this.getSeenDetails();
       return seenData

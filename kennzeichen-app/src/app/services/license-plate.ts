@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, combineLatest, map } from 'rxjs';
-import { LicensePlate, LicensePlateData, LicensePlateWithSeen } from '../models/kennzeichen.interface';
+import { LicensePlate, LicensePlateData, LicensePlateWithSeen } from '../models/license-plate.interface';
 
 export interface LicensePlateGroup {
   state: string;

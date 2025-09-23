@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable, BehaviorSubject } from 'rxjs';
 
-import { LicensePlate } from './models/kennzeichen.interface';
+import { LicensePlate } from './models/license-plate.interface';
 import { LicensePlateService, LicensePlateGroup } from './services/license-plate';
 import { LocalStorageService } from './services/local-storage';
 
@@ -40,7 +40,7 @@ export class App implements OnInit {
   ) {
     this.filteredLicensePlates$ = this.licensePlateService.filteredLicensePlates$;
     this.groupedLicensePlates$ = this.licensePlateService.groupedLicensePlates$;
-    this.seenCodes$ = this.localStorageService.seenKennzeichen$;
+    this.seenCodes$ = this.localStorageService.seenLicensePlates$;
   }
 
   ngOnInit(): void {

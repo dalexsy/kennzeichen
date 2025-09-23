@@ -22,7 +22,9 @@
       "Bash(ng build)",
       "Bash(ng build:*)",
       "Bash(npx tsc:*)",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "Bash(dir:*)",
+      "Bash(find:*)"
     ],
     "deny": [],
     "ask": []

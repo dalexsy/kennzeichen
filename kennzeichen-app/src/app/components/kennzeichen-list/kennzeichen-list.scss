@@ -1,6 +1,6 @@
 @use '../../../styles/main' as *;
 
-.kennzeichen-list {
+.license-plate-list {
   .loading {
     display: flex;
     flex-direction: column;
@@ -23,6 +23,7 @@
     display: flex;
     max-width: 1200px;
     margin: 0 auto;
+    padding-bottom: 1rem;
   }
 
   .empty {
