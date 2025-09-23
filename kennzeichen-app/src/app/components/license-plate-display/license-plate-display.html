@@ -20,15 +20,13 @@
 
     <div class="main">
       <div class="code">
-        <span class="entered">{{ displayText.slice(0, enteredText.length) }}</span><span class="placeholder">{{ displayText.slice(enteredText.length) }}</span>
+        <span class="entered">{{ displayText.slice(0, enteredText.length) }}</span
+        ><span class="placeholder">{{ displayText.slice(enteredText.length) }}</span>
       </div>
 
       <div class="separator">
-        <div class="year-sticker">{{ currentYear.toString().slice(-2) }}</div>
-        <app-region-badge
-          [federalState]="federalState"
-          size="large"
-        ></app-region-badge>
+        <div class="year-sticker" [attr.data-year]="currentYear">{{ currentYear.toString().slice(-2) }}</div>
+        <app-region-badge [federalState]="federalState" size="large"></app-region-badge>
       </div>
 
       <div class="numbers">
@@ -38,7 +36,7 @@
   </div>
 
   <div class="region-info">
-    <div class="region-name">{{ hasTopResult ? regionName : '&nbsp;' }}</div>
+    <div class="region-name">{{ hasTopResult ? regionName : randomGreeting }}</div>
     <div class="state-name">{{ hasTopResult ? federalState : '&nbsp;' }}</div>
   </div>
 </div>

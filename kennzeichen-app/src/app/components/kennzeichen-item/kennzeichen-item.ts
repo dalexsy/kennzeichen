@@ -1,45 +1,45 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Kennzeichen } from '../../models/kennzeichen.interface';
+import { LicensePlate } from '../../models/kennzeichen.interface';
 import { RegionBadge } from '../region-badge/region-badge';
 
 @Component({
-  selector: 'app-kennzeichen-item',
+  selector: 'app-license-plate-item',
   imports: [CommonModule, RegionBadge],
   templateUrl: './kennzeichen-item.html',
   styleUrl: './kennzeichen-item.scss'
 })
-export class KennzeichenItem {
-  @Input() kennzeichen!: Kennzeichen;
+export class LicensePlateItem {
+  @Input() licensePlate!: LicensePlate;
   @Input() isSeen: boolean = false;
   @Input() isSelected: boolean = false;
   @Input() searchTerm: string = '';
-  @Output() itemClicked = new EventEmitter<Kennzeichen>();
+  @Output() itemClicked = new EventEmitter<LicensePlate>();
 
   onClick(): void {
-    this.itemClicked.emit(this.kennzeichen);
+    this.itemClicked.emit(this.licensePlate);
   }
 
   getHighlightedCode(): string {
     if (!this.searchTerm) {
-      return this.kennzeichen.code;
+      return this.licensePlate.code;
     }
 
     const term = this.searchTerm.toLowerCase();
-    const code = this.kennzeichen.code.toLowerCase();
+    const code = this.licensePlate.code.toLowerCase();
 
     if (code.startsWith(term)) {
-      const highlighted = this.kennzeichen.code.substring(0, this.searchTerm.length);
-      const rest = this.kennzeichen.code.substring(this.searchTerm.length);
+      const highlighted = this.licensePlate.code.substring(0, this.searchTerm.length);
+      const rest = this.licensePlate.code.substring(this.searchTerm.length);
       return `<span class="highlighted">${highlighted}</span>${rest}`;
     }
 
-    return this.kennzeichen.code;
+    return this.licensePlate.code;
   }
 
   getHighlightedOrigin(): string {
-    const code = this.kennzeichen.code.toUpperCase();
-    const origin = this.kennzeichen.derived_from;
+    const code = this.licensePlate.code.toUpperCase();
+    const origin = this.licensePlate.derived_from;
 
     // Create a result string with highlighted letters
     let result = '';

@@ -17,15 +17,15 @@
   </div>
 
   <main class="main">
-    <app-kennzeichen-list
-      [groupedKennzeichen$]="groupedKennzeichen$"
+    <app-license-plate-list
+      [groupedLicensePlates$]="groupedLicensePlates$"
       [seenCodes$]="seenCodes$"
       [searchTerm]="currentSearchTerm"
       [selectedCode]="selectedCode"
       [isLoading]="isLoading"
-      (itemClicked)="onKennzeichenClicked($event)"
+      (itemClicked)="onLicensePlateClicked($event)"
       (viewChange)="onViewChange($event)"
       class="list"
-    ></app-kennzeichen-list>
+    ></app-license-plate-list>
   </main>
 </div>

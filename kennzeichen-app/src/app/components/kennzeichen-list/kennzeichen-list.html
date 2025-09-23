@@ -5,7 +5,7 @@
   </div>
 
   <div
-    *ngIf="!isLoading && (groupedKennzeichen$ | async) as groupedList"
+    *ngIf="!isLoading && (groupedLicensePlates$ | async) as groupedList"
     class="list-container"
   >
     <div
@@ -30,7 +30,7 @@
           class="group"
         >
           <h3 class="group-heading">
-            {{ group.state }} ({{ group.kennzeichen.length }})
+            {{ group.state }} ({{ group.licensePlates.length }})
             <app-view-toggle
               [currentView]="(viewMode$ | async) || 'alphabetical'"
               (viewChange)="onViewChange($event)"
@@ -38,14 +38,14 @@
             ></app-view-toggle>
           </h3>
           <div class="group-items">
-            <app-kennzeichen-item
-              *ngFor="let kennzeichen of group.kennzeichen; trackBy: trackByCode"
-              [kennzeichen]="kennzeichen"
-              [isSeen]="(seenCodes$ | async)?.has(kennzeichen.code) || false"
-              [isSelected]="kennzeichen.code === selectedCode"
+            <app-license-plate-item
+              *ngFor="let licensePlate of group.licensePlates; trackBy: trackByCode"
+              [licensePlate]="licensePlate"
+              [isSeen]="(seenCodes$ | async)?.has(licensePlate.code) || false"
+              [isSelected]="licensePlate.code === selectedCode"
               [searchTerm]="searchTerm"
               (itemClicked)="onItemClicked($event)"
-            ></app-kennzeichen-item>
+            ></app-license-plate-item>
           </div>
         </div>
       </div>

@@ -1,39 +1,39 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, combineLatest, map } from 'rxjs';
-import { Kennzeichen, KennzeichenData, KennzeichenWithSeen } from '../models/kennzeichen.interface';
+import { LicensePlate, LicensePlateData, LicensePlateWithSeen } from '../models/kennzeichen.interface';
 
-export interface KennzeichenGroup {
+export interface LicensePlateGroup {
   state: string;
-  kennzeichen: Kennzeichen[];
+  licensePlates: LicensePlate[];
 }
 
 @Injectable({
   providedIn: 'root'
 })
-export class KennzeichenService {
-  private kennzeichenSubject = new BehaviorSubject<Kennzeichen[]>([]);
+export class LicensePlateService {
+  private licensePlatesSubject = new BehaviorSubject<LicensePlate[]>([]);
   private searchTermSubject = new BehaviorSubject<string>('');
   private stateFilterSubject = new BehaviorSubject<string>('');
   private viewModeSubject = new BehaviorSubject<'alphabetical' | 'grouped'>('alphabetical');
 
-  public kennzeichen$ = this.kennzeichenSubject.asObservable();
+  public licensePlates$ = this.licensePlatesSubject.asObservable();
   public searchTerm$ = this.searchTermSubject.asObservable();
   public stateFilter$ = this.stateFilterSubject.asObservable();
   public viewMode$ = this.viewModeSubject.asObservable();
 
-  // Filtered kennzeichen based on search term and state filter
-  public filteredKennzeichen$ = combineLatest([
-    this.kennzeichen$,
+  // Filtered license plates based on search term and state filter
+  public filteredLicensePlates$ = combineLatest([
+    this.licensePlates$,
     this.searchTerm$,
     this.stateFilter$
   ]).pipe(
-    map(([kennzeichen, searchTerm, stateFilter]) => {
-      let filtered = kennzeichen;
+    map(([licensePlates, searchTerm, stateFilter]) => {
+      let filtered = licensePlates;
 
       // Apply state filter first
       if (stateFilter.trim()) {
-        filtered = filtered.filter(k => k.federal_state === stateFilter);
+        filtered = filtered.filter(plate => plate.federal_state === stateFilter);
       }
 
       // Apply search filter
@@ -41,20 +41,20 @@ export class KennzeichenService {
         const term = searchTerm.toLowerCase();
 
         // First, check if we have any exact code matches
-        const codeMatches = filtered.filter(k => k.code.toLowerCase().startsWith(term));
+        const codeMatches = filtered.filter(plate => plate.code.toLowerCase().startsWith(term));
 
         if (codeMatches.length > 0) {
           // If we have code matches, ONLY show those for autobahn use case
           filtered = codeMatches;
         } else {
           // Only if no code matches, then search in other fields
-          filtered = filtered.filter(k => {
+          filtered = filtered.filter(plate => {
             // Search in city/district name
-            const cityMatch = k.city_district.toLowerCase().includes(term);
+            const cityMatch = plate.city_district.toLowerCase().includes(term);
             // Search in derived from
-            const derivedMatch = k.derived_from.toLowerCase().includes(term);
+            const derivedMatch = plate.derived_from.toLowerCase().includes(term);
             // Search in federal state
-            const stateMatch = k.federal_state.toLowerCase().includes(term);
+            const stateMatch = plate.federal_state.toLowerCase().includes(term);
 
             return cityMatch || derivedMatch || stateMatch;
           });
@@ -87,43 +87,43 @@ export class KennzeichenService {
     })
   );
 
-  // Grouped kennzeichen by state or alphabetically
-  public groupedKennzeichen$ = combineLatest([
-    this.filteredKennzeichen$,
+  // Grouped license plates by state or alphabetically
+  public groupedLicensePlates$ = combineLatest([
+    this.filteredLicensePlates$,
     this.viewMode$,
     this.searchTerm$
   ]).pipe(
-    map(([kennzeichen, viewMode, searchTerm]) => {
+    map(([licensePlates, viewMode, searchTerm]) => {
       if (viewMode === 'alphabetical') {
         // Group alphabetically by first letter
-        const groups = new Map<string, Kennzeichen[]>();
+        const groups = new Map<string, LicensePlate[]>();
 
-        kennzeichen.forEach(k => {
-          const firstLetter = k.code.charAt(0).toUpperCase();
+        licensePlates.forEach(plate => {
+          const firstLetter = plate.code.charAt(0).toUpperCase();
           if (!groups.has(firstLetter)) {
             groups.set(firstLetter, []);
           }
-          groups.get(firstLetter)!.push(k);
+          groups.get(firstLetter)!.push(plate);
         });
 
         // Convert to array and sort by letter
         return Array.from(groups.entries())
-          .map(([state, kennzeichen]) => ({ state, kennzeichen }))
+          .map(([state, licensePlates]) => ({ state, licensePlates }))
           .sort((a, b) => a.state.localeCompare(b.state));
       } else {
         // Group by federal state
-        const groups = new Map<string, Kennzeichen[]>();
+        const groups = new Map<string, LicensePlate[]>();
 
-        kennzeichen.forEach(k => {
-          if (!groups.has(k.federal_state)) {
-            groups.set(k.federal_state, []);
+        licensePlates.forEach(plate => {
+          if (!groups.has(plate.federal_state)) {
+            groups.set(plate.federal_state, []);
           }
-          groups.get(k.federal_state)!.push(k);
+          groups.get(plate.federal_state)!.push(plate);
         });
 
         // Convert to array and sort by state name
         let sortedGroups = Array.from(groups.entries())
-          .map(([state, kennzeichen]) => ({ state, kennzeichen }));
+          .map(([state, licensePlates]) => ({ state, licensePlates }));
 
         // If searching, sort groups by relevance (groups with top matches first)
         if (searchTerm.trim()) {
@@ -131,20 +131,20 @@ export class KennzeichenService {
 
           sortedGroups.sort((a, b) => {
             // Check if groups contain exact code matches
-            const aHasCodeMatch = a.kennzeichen.some(k => k.code.toLowerCase().startsWith(term));
-            const bHasCodeMatch = b.kennzeichen.some(k => k.code.toLowerCase().startsWith(term));
+            const aHasCodeMatch = a.licensePlates.some(plate => plate.code.toLowerCase().startsWith(term));
+            const bHasCodeMatch = b.licensePlates.some(plate => plate.code.toLowerCase().startsWith(term));
 
             if (aHasCodeMatch && !bHasCodeMatch) return -1;
             if (!aHasCodeMatch && bHasCodeMatch) return 1;
 
             // Among groups with code matches, prioritize by shortest match
             if (aHasCodeMatch && bHasCodeMatch) {
-              const aShortestMatch = Math.min(...a.kennzeichen
-                .filter(k => k.code.toLowerCase().startsWith(term))
-                .map(k => k.code.length));
-              const bShortestMatch = Math.min(...b.kennzeichen
-                .filter(k => k.code.toLowerCase().startsWith(term))
-                .map(k => k.code.length));
+              const aShortestMatch = Math.min(...a.licensePlates
+                .filter(plate => plate.code.toLowerCase().startsWith(term))
+                .map(plate => plate.code.length));
+              const bShortestMatch = Math.min(...b.licensePlates
+                .filter(plate => plate.code.toLowerCase().startsWith(term))
+                .map(plate => plate.code.length));
 
               if (aShortestMatch !== bShortestMatch) {
                 return aShortestMatch - bShortestMatch;
@@ -165,17 +165,17 @@ export class KennzeichenService {
   );
 
   constructor(private http: HttpClient) {
-    this.loadKennzeichen();
+    this.loadLicensePlates();
   }
 
-  private loadKennzeichen(): void {
-    this.http.get<KennzeichenData>('kennzeichen.json')
+  private loadLicensePlates(): void {
+    this.http.get<LicensePlateData>('kennzeichen.json')
       .subscribe({
         next: (data) => {
-          this.kennzeichenSubject.next(data.license_plates);
+          this.licensePlatesSubject.next(data.license_plates);
         },
         error: (error) => {
-          console.error('Error loading kennzeichen data:', error);
+          console.error('Error loading license plate data:', error);
         }
       });
   }
@@ -192,12 +192,12 @@ export class KennzeichenService {
     this.viewModeSubject.next(mode);
   }
 
-  getKennzeichenByCode(code: string): Kennzeichen | undefined {
-    return this.kennzeichenSubject.value.find(k => k.code === code);
+  getLicensePlateByCode(code: string): LicensePlate | undefined {
+    return this.licensePlatesSubject.value.find(plate => plate.code === code);
   }
 
-  getAllKennzeichen(): Kennzeichen[] {
-    return this.kennzeichenSubject.value;
+  getAllLicensePlates(): LicensePlate[] {
+    return this.licensePlatesSubject.value;
   }
 
   getCurrentSearchTerm(): string {
@@ -205,14 +205,14 @@ export class KennzeichenService {
   }
 
   // Get suggestions based on partial input
-  getSuggestions(input: string, limit: number = 10): Kennzeichen[] {
+  getSuggestions(input: string, limit: number = 10): LicensePlate[] {
     if (!input.trim()) {
       return [];
     }
 
     const term = input.toLowerCase();
-    return this.kennzeichenSubject.value
-      .filter(k => k.code.toLowerCase().startsWith(term))
+    return this.licensePlatesSubject.value
+      .filter(plate => plate.code.toLowerCase().startsWith(term))
       .sort((a, b) => {
         // Sort by code length first, then alphabetically
         if (a.code.length !== b.code.length) {

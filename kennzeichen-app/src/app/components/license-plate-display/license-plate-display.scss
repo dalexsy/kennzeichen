@@ -21,7 +21,6 @@
   padding-right: 0.5rem;
   position: relative;
   font-size: 4rem;
-  font-weight: bold;
   letter-spacing: 2px;
 
   .eu-section {
@@ -122,13 +121,38 @@
   .year-sticker {
     width: 1.25rem;
     height: 1.25rem;
-    background-color: #ffc0cb;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 8px;
-    font-weight: bold;
+    font-size: 0.5rem;
+    font-size: 0.5rem;
+    font-family: 'Rubik';
+
+    &[data-year='2020'],
+    &[data-year='2026'] {
+      background-color: #5dade2;
+    }
+    &[data-year='2021'],
+    &[data-year='2027'] {
+      background-color: #f7dc6f;
+    }
+    &[data-year='2022'],
+    &[data-year='2028'] {
+      background-color: #cd6155;
+    }
+    &[data-year='2023'],
+    &[data-year='2029'] {
+      background-color: #f1948a;
+    }
+    &[data-year='2024'],
+    &[data-year='2030'] {
+      background-color: #58d68d;
+    }
+    &[data-year='2025'],
+    &[data-year='2031'] {
+      background-color: #f39c12;
+    }
   }
 
   .numbers {
@@ -147,5 +171,28 @@
 
   .region-name {
     font-weight: 500;
+    position: relative;
+    padding: 0.25rem 1rem;
+    color: #18c09e;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #18c09e;
+      clip-path: polygon(
+        0.5rem 50%,
+        0rem 0%,
+        calc(100% - 0rem) 0%,
+        calc(100% - 0.5rem) 50%,
+        calc(100% - 0rem) 100%,
+        0rem 100%
+      );
+      opacity: 0.15;
+      z-index: -1;
+    }
   }
 }

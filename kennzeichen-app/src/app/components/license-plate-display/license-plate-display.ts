@@ -1,18 +1,21 @@
 import { Component, Input, inject } from '@angular/core';
-import { NgIf } from '@angular/common';
-import { KennzeichenService } from '../../services/kennzeichen';
+import { CommonModule } from '@angular/common';
+import { LicensePlateService } from '../../services/license-plate';
 import { RegionBadge } from '../region-badge/region-badge';
 
 @Component({
   selector: 'app-license-plate-display',
-  imports: [NgIf, RegionBadge],
+  imports: [CommonModule, RegionBadge],
   templateUrl: './license-plate-display.html',
   styleUrl: './license-plate-display.scss'
 })
 export class LicensePlateDisplay {
   @Input() enteredText: string = '';
 
-  private kennzeichenService = inject(KennzeichenService);
+  private licensePlateService = inject(LicensePlateService);
+  private _randomGreeting?: string;
+
+  months = Array.from({length: 12}, (_, i) => i + 1);
 
   get displayText(): string {
     if (!this.enteredText) {
@@ -20,7 +23,7 @@ export class LicensePlateDisplay {
     }
 
     // Get the top suggestion based on entered text
-    const suggestions = this.kennzeichenService.getSuggestions(this.enteredText, 1);
+    const suggestions = this.licensePlateService.getSuggestions(this.enteredText, 1);
 
     if (suggestions.length > 0) {
       const topResult = suggestions[0];
@@ -48,16 +51,16 @@ export class LicensePlateDisplay {
 
   get federalState(): string {
     if (!this.enteredText) {
-      return '';
+      return 'Deutschland';
     }
 
     // Get the top suggestion and use its federal state
-    const suggestions = this.kennzeichenService.getSuggestions(this.enteredText, 1);
+    const suggestions = this.licensePlateService.getSuggestions(this.enteredText, 1);
     if (suggestions.length > 0) {
       return suggestions[0].federal_state;
     }
 
-    return '';
+    return 'Deutschland';
   }
 
   get regionName(): string {
@@ -65,7 +68,7 @@ export class LicensePlateDisplay {
       return '';
     }
 
-    const suggestions = this.kennzeichenService.getSuggestions(this.enteredText, 1);
+    const suggestions = this.licensePlateService.getSuggestions(this.enteredText, 1);
     if (suggestions.length > 0) {
       return suggestions[0].city_district;
     }
@@ -78,7 +81,15 @@ export class LicensePlateDisplay {
       return false;
     }
 
-    const suggestions = this.kennzeichenService.getSuggestions(this.enteredText, 1);
+    const suggestions = this.licensePlateService.getSuggestions(this.enteredText, 1);
     return suggestions.length > 0;
+  }
+
+  get randomGreeting(): string {
+    if (!this._randomGreeting) {
+      const greetings = ['Moin.', 'Auf geht\'s.', 'Hallo.', 'Na dann.', 'Los geht\'s!', 'Servus!'];
+      this._randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
+    }
+    return this._randomGreeting;
   }
 }

@@ -1,12 +1,12 @@
-export interface Kennzeichen {
+export interface LicensePlate {
   code: string;
   city_district: string;
   derived_from: string;
   federal_state: string;
 }
 
-export interface KennzeichenData {
-  license_plates: Kennzeichen[];
+export interface LicensePlateData {
+  license_plates: LicensePlate[];
   metadata: {
     source: string;
     description: string;
@@ -15,7 +15,7 @@ export interface KennzeichenData {
   };
 }
 
-export interface KennzeichenWithSeen extends Kennzeichen {
+export interface LicensePlateWithSeen extends LicensePlate {
   seen?: boolean;
   seenAt?: Date;
 }

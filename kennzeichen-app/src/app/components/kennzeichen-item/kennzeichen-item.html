@@ -7,18 +7,18 @@
   tabindex="0"
   [attr.aria-label]="
     'License plate code ' +
-    kennzeichen.code +
+    licensePlate.code +
     ' from ' +
-    kennzeichen.derived_from +
+    licensePlate.derived_from +
     (isSeen ? ', already seen' : ', not seen yet')
   "
 >
   <div class="header">
     <div class="region-section">
-      <app-region-badge [federalState]="kennzeichen.federal_state" size="medium"></app-region-badge>
+      <app-region-badge [federalState]="licensePlate.federal_state" size="medium"></app-region-badge>
       <div class="region-info">
-        <div class="city">{{ kennzeichen.city_district }}</div>
-        <div class="state">{{ kennzeichen.federal_state }}</div>
+        <div class="city">{{ licensePlate.city_district }}</div>
+        <div class="state">{{ licensePlate.federal_state }}</div>
       </div>
     </div>
 
