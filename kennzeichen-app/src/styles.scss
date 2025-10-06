@@ -1,10 +1,10 @@
 // Use main styles
 @use 'styles/main' as *;
 
-// Font Face Declaration - only here to avoid VS Code path resolution issues
+// Font Face Declaration - using relative path that works with base-href
 @font-face {
   font-family: 'EuroPlate';
-  src: url('/EuroPlate.ttf') format('truetype');
+  src: url('assets/EuroPlate.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
