@@ -1,10 +1,10 @@
 @use '../../../styles/main' as *;
 
 .view-toggle {
-  padding: 1rem;
   background: transparent;
   border: none;
   cursor: pointer;
+  text-align: right;
   color: #18c09e;
   padding: 0.5rem;
   font-weight: 500;

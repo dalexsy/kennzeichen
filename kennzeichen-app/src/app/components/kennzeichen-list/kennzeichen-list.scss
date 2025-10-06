@@ -66,10 +66,9 @@
     top: 15rem;
     background-color: $background-primary;
     z-index: 10;
+    gap: 1rem;
     display: flex;
-    padding-bottom: 1rem;
     justify-content: space-between;
-    align-content: center;
     align-items: center;
     padding: 0 1rem 1rem;
   }
