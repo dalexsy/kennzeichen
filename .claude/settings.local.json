@@ -24,7 +24,11 @@
       "Bash(npx tsc:*)",
       "Bash(rm:*)",
       "Bash(dir:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(git push:*)",
+      "Bash(gh run list:*)",
+      "Bash(gh api:*)",
+      "WebFetch(domain:github.com)"
     ],
     "deny": [],
     "ask": []
