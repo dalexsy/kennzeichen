@@ -1,6 +1,9 @@
 // Use main styles
 @use 'styles/main' as *;
 
+// Import fonts
+@import 'styles/fonts';
+
 // Base typography
 html {
   font-size: 16px;
