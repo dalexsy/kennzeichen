@@ -17,15 +17,23 @@
   </div>
 
   <main class="main">
-    <app-license-plate-list
-      [groupedLicensePlates$]="groupedLicensePlates$"
-      [seenCodes$]="seenCodes$"
-      [searchTerm]="currentSearchTerm"
-      [selectedCode]="selectedCode"
-      [isLoading]="isLoading"
-      (itemClicked)="onLicensePlateClicked($event)"
-      (viewChange)="onViewChange($event)"
-      class="list"
-    ></app-license-plate-list>
+    <div class="content-wrapper">
+      <app-map
+        [licensePlates]="(filteredLicensePlates$ | async) || []"
+        [selectedCode]="selectedCode"
+        class="map-section"
+      ></app-map>
+
+      <app-license-plate-list
+        [groupedLicensePlates$]="groupedLicensePlates$"
+        [seenCodes$]="seenCodes$"
+        [searchTerm]="currentSearchTerm"
+        [selectedCode]="selectedCode"
+        [isLoading]="isLoading"
+        (itemClicked)="onLicensePlateClicked($event)"
+        (viewChange)="onViewChange($event)"
+        class="list"
+      ></app-license-plate-list>
+    </div>
   </main>
 </div>

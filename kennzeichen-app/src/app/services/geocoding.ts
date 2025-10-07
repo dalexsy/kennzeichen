@@ -1,0 +1,282 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+
+export interface CityCoordinates {
+  name: string;
+  lat: number;
+  lng: number;
+  state?: string;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class GeocodingService {
+  private cache = new Map<string, CityCoordinates>();
+  private overpassUrl = 'https://overpass-api.de/api/interpreter';
+  private nominatimUrl = 'https://nominatim.openstreetmap.org/search';
+  private requestQueue: Array<{ cityName: string; stateName?: string; resolve: (value: CityCoordinates | null) => void }> = [];
+  private isProcessing = false;
+  private lastRequestTime = 0;
+  private minRequestInterval = 3000; // 3 seconds between requests (more conservative)
+
+  constructor(private http: HttpClient) {
+    this.loadStaticCoordinates();
+  }
+
+  private loadStaticCoordinates() {
+    // Load all German cities from complete static file - no API calls needed
+    this.http.get<CityCoordinates[]>('/german-cities-complete.json').subscribe(cities => {
+      cities.forEach(city => {
+        const cacheKey = `${city.name}-${city.state || 'unknown'}`;
+        this.cache.set(cacheKey, city);
+      });
+      console.log(`Loaded ${cities.length} German cities - all coordinates cached`);
+    });
+  }
+
+  private initializeStaticCoordinatesOLD() {
+    // Old hardcoded list - now using german-cities.json instead
+    const staticCities: CityCoordinates[] = [
+      { name: 'Berlin', lat: 52.520008, lng: 13.404954, state: 'Berlin' },
+      { name: 'Hamburg', lat: 53.551086, lng: 9.993682, state: 'Hamburg' },
+      { name: 'München', lat: 48.137154, lng: 11.576124, state: 'Bayern' },
+      { name: 'Köln', lat: 50.937531, lng: 6.960279, state: 'Nordrhein-Westfalen' },
+      { name: 'Frankfurt', lat: 50.110924, lng: 8.682127, state: 'Hessen' },
+      { name: 'Stuttgart', lat: 48.775846, lng: 9.182932, state: 'Baden-Württemberg' },
+      { name: 'Düsseldorf', lat: 51.227741, lng: 6.773456, state: 'Nordrhein-Westfalen' },
+      { name: 'Leipzig', lat: 51.339695, lng: 12.373075, state: 'Sachsen' },
+      { name: 'Dortmund', lat: 51.514244, lng: 7.468429, state: 'Nordrhein-Westfalen' },
+      { name: 'Essen', lat: 51.458069, lng: 7.014761, state: 'Nordrhein-Westfalen' },
+      { name: 'Bremen', lat: 53.079296, lng: 8.801694, state: 'Bremen' },
+      { name: 'Dresden', lat: 51.050409, lng: 13.737262, state: 'Sachsen' },
+      { name: 'Hannover', lat: 52.370216, lng: 9.732050, state: 'Niedersachsen' },
+      { name: 'Nürnberg', lat: 49.452030, lng: 11.076751, state: 'Bayern' },
+      { name: 'Duisburg', lat: 51.434405, lng: 6.762329, state: 'Nordrhein-Westfalen' },
+      { name: 'Bochum', lat: 51.481845, lng: 7.216236, state: 'Nordrhein-Westfalen' },
+      { name: 'Bonn', lat: 50.735851, lng: 7.10066, state: 'Nordrhein-Westfalen' },
+      { name: 'Bielefeld', lat: 52.020228, lng: 8.532471, state: 'Nordrhein-Westfalen' },
+      { name: 'Mannheim', lat: 49.487459, lng: 8.466039, state: 'Baden-Württemberg' },
+      { name: 'Karlsruhe', lat: 49.006889, lng: 8.403653, state: 'Baden-Württemberg' },
+      { name: 'Münster', lat: 51.960665, lng: 7.626135, state: 'Nordrhein-Westfalen' },
+      { name: 'Wiesbaden', lat: 50.082730, lng: 8.270016, state: 'Hessen' },
+      { name: 'Augsburg', lat: 48.371582, lng: 10.898333, state: 'Bayern' },
+      { name: 'Aachen', lat: 50.775346, lng: 6.083887, state: 'Nordrhein-Westfalen' },
+      { name: 'Gelsenkirchen', lat: 51.517744, lng: 7.085716, state: 'Nordrhein-Westfalen' },
+      { name: 'Braunschweig', lat: 52.269167, lng: 10.521683, state: 'Niedersachsen' },
+      { name: 'Kiel', lat: 54.323293, lng: 10.140267, state: 'Schleswig-Holstein' },
+      { name: 'Chemnitz', lat: 50.827845, lng: 12.921446, state: 'Sachsen' },
+      { name: 'Halle', lat: 51.482577, lng: 11.969639, state: 'Sachsen-Anhalt' },
+      { name: 'Magdeburg', lat: 52.120533, lng: 11.627624, state: 'Sachsen-Anhalt' },
+      { name: 'Freiburg', lat: 47.999882, lng: 7.842104, state: 'Baden-Württemberg' },
+      { name: 'Krefeld', lat: 51.338979, lng: 6.585804, state: 'Nordrhein-Westfalen' },
+      { name: 'Mainz', lat: 49.992862, lng: 8.272311, state: 'Rheinland-Pfalz' },
+      { name: 'Lübeck', lat: 53.865467, lng: 10.686559, state: 'Schleswig-Holstein' },
+      { name: 'Erfurt', lat: 50.984444, lng: 11.029167, state: 'Thüringen' },
+      { name: 'Rostock', lat: 54.088668, lng: 12.128595, state: 'Mecklenburg-Vorpommern' },
+      { name: 'Kassel', lat: 51.312801, lng: 9.481544, state: 'Hessen' },
+      { name: 'Hagen', lat: 51.367881, lng: 7.463236, state: 'Nordrhein-Westfalen' },
+      { name: 'Saarbrücken', lat: 49.240326, lng: 6.996944, state: 'Saarland' },
+      { name: 'Hamm', lat: 51.679669, lng: 7.814298, state: 'Nordrhein-Westfalen' },
+      { name: 'Mülheim', lat: 51.430819, lng: 6.882790, state: 'Nordrhein-Westfalen' },
+      { name: 'Ludwigshafen', lat: 49.477398, lng: 8.434467, state: 'Rheinland-Pfalz' },
+      { name: 'Leverkusen', lat: 51.040516, lng: 6.989118, state: 'Nordrhein-Westfalen' },
+      { name: 'Oldenburg', lat: 53.143889, lng: 8.214167, state: 'Niedersachsen' },
+      { name: 'Osnabrück', lat: 52.279911, lng: 8.047179, state: 'Niedersachsen' },
+      { name: 'Solingen', lat: 51.164833, lng: 7.067639, state: 'Nordrhein-Westfalen' },
+      { name: 'Heidelberg', lat: 49.398750, lng: 8.672434, state: 'Baden-Württemberg' },
+      { name: 'Herne', lat: 51.538353, lng: 7.225761, state: 'Nordrhein-Westfalen' },
+      { name: 'Neuss', lat: 51.204411, lng: 6.688886, state: 'Nordrhein-Westfalen' },
+      { name: 'Regensburg', lat: 49.019493, lng: 12.096933, state: 'Bayern' },
+      { name: 'Paderborn', lat: 51.719056, lng: 8.752222, state: 'Nordrhein-Westfalen' },
+      { name: 'Ingolstadt', lat: 48.763611, lng: 11.424167, state: 'Bayern' },
+      { name: 'Würzburg', lat: 49.794444, lng: 9.926944, state: 'Bayern' },
+      { name: 'Fürth', lat: 49.477778, lng: 10.988611, state: 'Bayern' },
+      { name: 'Wolfsburg', lat: 52.422222, lng: 10.786944, state: 'Niedersachsen' },
+      { name: 'Offenbach', lat: 50.100556, lng: 8.766111, state: 'Hessen' },
+      { name: 'Ulm', lat: 48.401389, lng: 9.987222, state: 'Baden-Württemberg' },
+      { name: 'Heilbronn', lat: 49.142222, lng: 9.218611, state: 'Baden-Württemberg' },
+      { name: 'Pforzheim', lat: 48.891111, lng: 8.694444, state: 'Baden-Württemberg' },
+      { name: 'Göttingen', lat: 51.533889, lng: 9.937500, state: 'Niedersachsen' },
+      { name: 'Bottrop', lat: 51.524444, lng: 6.928611, state: 'Nordrhein-Westfalen' },
+      { name: 'Trier', lat: 49.749722, lng: 6.637500, state: 'Rheinland-Pfalz' },
+      { name: 'Recklinghausen', lat: 51.615278, lng: 7.197500, state: 'Nordrhein-Westfalen' },
+      { name: 'Reutlingen', lat: 48.491111, lng: 9.204444, state: 'Baden-Württemberg' },
+      { name: 'Bremerhaven', lat: 53.547222, lng: 8.572778, state: 'Bremen' },
+      { name: 'Koblenz', lat: 50.354722, lng: 7.598611, state: 'Rheinland-Pfalz' },
+      { name: 'Erlangen', lat: 49.597500, lng: 11.004167, state: 'Bayern' },
+      { name: 'Jena', lat: 50.927222, lng: 11.586111, state: 'Thüringen' },
+      { name: 'Remscheid', lat: 51.180556, lng: 7.200000, state: 'Nordrhein-Westfalen' },
+      { name: 'Moers', lat: 51.452778, lng: 6.628611, state: 'Nordrhein-Westfalen' },
+      { name: 'Siegen', lat: 50.874722, lng: 8.024167, state: 'Nordrhein-Westfalen' },
+      { name: 'Hildesheim', lat: 52.155833, lng: 9.951944, state: 'Niedersachsen' },
+      { name: 'Salzgitter', lat: 52.153611, lng: 10.331944, state: 'Niedersachsen' }
+    ];
+
+    // Pre-populate cache
+    staticCities.forEach(city => {
+      const cacheKey = `${city.name}-${city.state || 'unknown'}`;
+      this.cache.set(cacheKey, city);
+    });
+
+    console.log(`Pre-cached ${staticCities.length} major German cities`);
+  }
+
+  /**
+   * Get coordinates synchronously from cache (for performance)
+   */
+  getCoordinatesSync(cityName: string, stateName?: string): CityCoordinates | null {
+    const cacheKey = `${cityName}-${stateName || 'unknown'}`;
+    return this.cache.get(cacheKey) || null;
+  }
+
+  /**
+   * Get coordinates for a German city using rate-limited Overpass API
+   */
+  getCoordinates(cityName: string, stateName?: string): Observable<CityCoordinates | null> {
+    const cacheKey = `${cityName}-${stateName || 'unknown'}`;
+
+    // Check cache first
+    if (this.cache.has(cacheKey)) {
+      return of(this.cache.get(cacheKey)!);
+    }
+
+    // Use rate-limited request
+    return new Observable(observer => {
+      this.requestQueue.push({
+        cityName,
+        stateName,
+        resolve: (result) => {
+          observer.next(result);
+          observer.complete();
+        }
+      });
+
+      this.processQueue();
+    });
+  }
+
+  private async processQueue() {
+    if (this.isProcessing || this.requestQueue.length === 0) {
+      return;
+    }
+
+    this.isProcessing = true;
+
+    while (this.requestQueue.length > 0) {
+      const request = this.requestQueue.shift()!;
+
+      // Rate limiting: wait if needed
+      const now = Date.now();
+      const timeToWait = this.minRequestInterval - (now - this.lastRequestTime);
+      if (timeToWait > 0) {
+        await this.delay(timeToWait);
+      }
+
+      try {
+        const result = await this.makeGeocodingRequest(request.cityName, request.stateName);
+        request.resolve(result);
+        this.lastRequestTime = Date.now();
+      } catch (error) {
+        console.warn(`Failed to geocode ${request.cityName}:`, error);
+        request.resolve(null);
+      }
+
+      // Small additional delay between requests
+      await this.delay(500);
+    }
+
+    this.isProcessing = false;
+  }
+
+  private async makeGeocodingRequest(cityName: string, stateName?: string): Promise<CityCoordinates | null> {
+    const cacheKey = `${cityName}-${stateName || 'unknown'}`;
+
+    // Check cache again (might have been added while waiting)
+    if (this.cache.has(cacheKey)) {
+      return this.cache.get(cacheKey)!;
+    }
+
+    const query = this.buildOverpassQuery(cityName, stateName);
+
+    try {
+      const response: any = await this.http.post(this.overpassUrl, query, {
+        headers: { 'Content-Type': 'text/plain' },
+        responseType: 'json'
+      }).toPromise();
+
+      if (response.elements && response.elements.length > 0) {
+        const element = response.elements[0];
+        const coordinates: CityCoordinates = {
+          name: cityName,
+          lat: element.lat || element.center?.lat,
+          lng: element.lon || element.center?.lon,
+          state: stateName
+        };
+
+        // Cache the result
+        this.cache.set(cacheKey, coordinates);
+        return coordinates;
+      }
+      return null;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  private delay(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  /**
+   * Build Overpass API query for German cities
+   */
+  private buildOverpassQuery(cityName: string, stateName?: string): string {
+    // Clean city name for search
+    const cleanCityName = cityName.replace(/\s+/g, ' ').trim();
+
+    // Build the Overpass query
+    let query = `[out:json][timeout:25];
+(
+  relation["place"~"^(city|town)$"]["name"="${cleanCityName}"]["admin_level"~"^[678]$"]["ISO3166-1"="DE"];
+  way["place"~"^(city|town)$"]["name"="${cleanCityName}"]["admin_level"~"^[678]$"];
+  node["place"~"^(city|town)$"]["name"="${cleanCityName}"];
+`;
+
+    // Add state filter if provided
+    if (stateName) {
+      query += `  relation["place"~"^(city|town)$"]["name"="${cleanCityName}"]["addr:state"="${stateName}"];
+`;
+    }
+
+    query += `);
+out center geom;`;
+
+    return query;
+  }
+
+  /**
+   * Get coordinates for multiple cities at once
+   */
+  getMultipleCoordinates(cities: { name: string; state?: string }[]): Observable<CityCoordinates[]> {
+    const requests = cities.map(city =>
+      this.getCoordinates(city.name, city.state)
+    );
+
+    return new Observable(observer => {
+      Promise.all(requests.map(req => req.toPromise()))
+        .then(results => {
+          const validResults = results.filter(result => result !== null) as CityCoordinates[];
+          observer.next(validResults);
+          observer.complete();
+        })
+        .catch(error => {
+          console.error('Error geocoding multiple cities:', error);
+          observer.next([]);
+          observer.complete();
+        });
+    });
+  }
+}

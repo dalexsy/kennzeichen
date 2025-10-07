@@ -1,0 +1,4280 @@
+[
+  {
+    "name": "Berlin",
+    "lat": 52.520008,
+    "lng": 13.404954,
+    "state": "Berlin"
+  },
+  {
+    "name": "Hamburg",
+    "lat": 53.551086,
+    "lng": 9.993682,
+    "state": "Hamburg"
+  },
+  {
+    "name": "München",
+    "lat": 48.137154,
+    "lng": 11.576124,
+    "state": "Bayern"
+  },
+  {
+    "name": "Köln",
+    "lat": 50.937531,
+    "lng": 6.960279,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Frankfurt",
+    "lat": 50.110924,
+    "lng": 8.682127,
+    "state": "Hessen"
+  },
+  {
+    "name": "Stuttgart",
+    "lat": 48.775846,
+    "lng": 9.182932,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "Düsseldorf",
+    "lat": 51.227741,
+    "lng": 6.773456,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Leipzig",
+    "lat": 51.339695,
+    "lng": 12.373075,
+    "state": "Sachsen"
+  },
+  {
+    "name": "Dortmund",
+    "lat": 51.514244,
+    "lng": 7.468429,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Essen",
+    "lat": 51.458069,
+    "lng": 7.014761,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Bremen",
+    "lat": 53.079296,
+    "lng": 8.801694,
+    "state": "Bremen"
+  },
+  {
+    "name": "Dresden",
+    "lat": 51.050409,
+    "lng": 13.737262,
+    "state": "Sachsen"
+  },
+  {
+    "name": "Hannover",
+    "lat": 52.370216,
+    "lng": 9.73205,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "Nürnberg",
+    "lat": 49.45203,
+    "lng": 11.076751,
+    "state": "Bayern"
+  },
+  {
+    "name": "Duisburg",
+    "lat": 51.434405,
+    "lng": 6.762329,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Bochum",
+    "lat": 51.481845,
+    "lng": 7.216236,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Bonn",
+    "lat": 50.735851,
+    "lng": 7.10066,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Bielefeld",
+    "lat": 52.020228,
+    "lng": 8.532471,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Mannheim",
+    "lat": 49.487459,
+    "lng": 8.466039,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "Karlsruhe",
+    "lat": 49.006889,
+    "lng": 8.403653,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "Münster",
+    "lat": 51.960665,
+    "lng": 7.626135,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Wiesbaden",
+    "lat": 50.08273,
+    "lng": 8.270016,
+    "state": "Hessen"
+  },
+  {
+    "name": "Augsburg",
+    "lat": 48.371582,
+    "lng": 10.898333,
+    "state": "Bayern"
+  },
+  {
+    "name": "Aachen",
+    "lat": 50.775346,
+    "lng": 6.083887,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Mönchengladbach",
+    "lat": 51.180344,
+    "lng": 6.442122,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Gelsenkirchen",
+    "lat": 51.517744,
+    "lng": 7.085716,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Braunschweig",
+    "lat": 52.269167,
+    "lng": 10.521683,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "Kiel",
+    "lat": 54.323293,
+    "lng": 10.140267,
+    "state": "Schleswig-Holstein"
+  },
+  {
+    "name": "Chemnitz",
+    "lat": 50.827845,
+    "lng": 12.921446,
+    "state": "Sachsen"
+  },
+  {
+    "name": "Halle",
+    "lat": 51.482577,
+    "lng": 11.969639,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "Magdeburg",
+    "lat": 52.120533,
+    "lng": 11.627624,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "Freiburg",
+    "lat": 47.999882,
+    "lng": 7.842104,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "Krefeld",
+    "lat": 51.338979,
+    "lng": 6.585804,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Mainz",
+    "lat": 49.992862,
+    "lng": 8.272311,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "Lübeck",
+    "lat": 53.865467,
+    "lng": 10.686559,
+    "state": "Schleswig-Holstein"
+  },
+  {
+    "name": "Erfurt",
+    "lat": 50.984444,
+    "lng": 11.029167,
+    "state": "Thüringen"
+  },
+  {
+    "name": "Rostock",
+    "lat": 54.088668,
+    "lng": 12.128595,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "Kassel",
+    "lat": 51.312801,
+    "lng": 9.481544,
+    "state": "Hessen"
+  },
+  {
+    "name": "Hagen",
+    "lat": 51.367881,
+    "lng": 7.463236,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Saarbrücken",
+    "lat": 49.240326,
+    "lng": 6.996944,
+    "state": "Saarland"
+  },
+  {
+    "name": "Hamm",
+    "lat": 51.679669,
+    "lng": 7.814298,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Mülheim",
+    "lat": 51.430819,
+    "lng": 6.88279,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Ludwigshafen",
+    "lat": 49.477398,
+    "lng": 8.434467,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "Leverkusen",
+    "lat": 51.040516,
+    "lng": 6.989118,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Oldenburg",
+    "lat": 53.143889,
+    "lng": 8.214167,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "Osnabrück",
+    "lat": 52.279911,
+    "lng": 8.047179,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "Solingen",
+    "lat": 51.164833,
+    "lng": 7.067639,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Heidelberg",
+    "lat": 49.39875,
+    "lng": 8.672434,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "Herne",
+    "lat": 51.538353,
+    "lng": 7.225761,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Neuss",
+    "lat": 51.204411,
+    "lng": 6.688886,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Regensburg",
+    "lat": 49.019493,
+    "lng": 12.096933,
+    "state": "Bayern"
+  },
+  {
+    "name": "Paderborn",
+    "lat": 51.719056,
+    "lng": 8.752222,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Ingolstadt",
+    "lat": 48.763611,
+    "lng": 11.424167,
+    "state": "Bayern"
+  },
+  {
+    "name": "Würzburg",
+    "lat": 49.794444,
+    "lng": 9.926944,
+    "state": "Bayern"
+  },
+  {
+    "name": "Fürth",
+    "lat": 49.477778,
+    "lng": 10.988611,
+    "state": "Bayern"
+  },
+  {
+    "name": "Wolfsburg",
+    "lat": 52.422222,
+    "lng": 10.786944,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "Offenbach",
+    "lat": 50.100556,
+    "lng": 8.766111,
+    "state": "Hessen"
+  },
+  {
+    "name": "Ulm",
+    "lat": 48.401389,
+    "lng": 9.987222,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "Heilbronn",
+    "lat": 49.142222,
+    "lng": 9.218611,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "Pforzheim",
+    "lat": 48.891111,
+    "lng": 8.694444,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "Göttingen",
+    "lat": 51.533889,
+    "lng": 9.9375,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "Bottrop",
+    "lat": 51.524444,
+    "lng": 6.928611,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Trier",
+    "lat": 49.749722,
+    "lng": 6.6375,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "Recklinghausen",
+    "lat": 51.615278,
+    "lng": 7.1975,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Reutlingen",
+    "lat": 48.491111,
+    "lng": 9.204444,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "Bremerhaven",
+    "lat": 53.547222,
+    "lng": 8.572778,
+    "state": "Bremen"
+  },
+  {
+    "name": "Koblenz",
+    "lat": 50.354722,
+    "lng": 7.598611,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "Bergisch Gladbach",
+    "lat": 50.985556,
+    "lng": 7.131944,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Erlangen",
+    "lat": 49.5975,
+    "lng": 11.004167,
+    "state": "Bayern"
+  },
+  {
+    "name": "Jena",
+    "lat": 50.927222,
+    "lng": 11.586111,
+    "state": "Thüringen"
+  },
+  {
+    "name": "Remscheid",
+    "lat": 51.180556,
+    "lng": 7.2,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Moers",
+    "lat": 51.452778,
+    "lng": 6.628611,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Siegen",
+    "lat": 50.874722,
+    "lng": 8.024167,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Hildesheim",
+    "lat": 52.155833,
+    "lng": 9.951944,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "Salzgitter",
+    "lat": 52.153611,
+    "lng": 10.331944,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "Aalen",
+    "lat": 48.8375607,
+    "lng": 10.0929593,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "Aschaffenburg",
+    "lat": 49.9706701,
+    "lng": 9.1384857,
+    "state": "Bayern"
+  },
+  {
+    "name": "Altenburg",
+    "lat": 50.9852411,
+    "lng": 12.4340988,
+    "state": "Thüringen"
+  },
+  {
+    "name": "Anhalt-Bitterfeld",
+    "lat": 51.8167973,
+    "lng": 12.010507,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "Ahrweiler",
+    "lat": 50.4365274,
+    "lng": 7.0050227,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "Ahaus",
+    "lat": 52.0761541,
+    "lng": 7.004876,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "AIBling",
+    "lat": 47.8640504,
+    "lng": 12.0097685,
+    "state": "Bayern"
+  },
+  {
+    "name": "Aichach",
+    "lat": 48.4591478,
+    "lng": 11.1309953,
+    "state": "Bayern"
+  },
+  {
+    "name": "Altenkirchen",
+    "lat": 50.6880109,
+    "lng": 7.6477412,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "ALFeld",
+    "lat": 51.9869477,
+    "lng": 9.8253376,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "ALZenau",
+    "lat": 50.085868,
+    "lng": 9.0813749,
+    "state": "Bayern"
+  },
+  {
+    "name": "Amberg",
+    "lat": 49.4543662,
+    "lng": 11.8474021,
+    "state": "Bayern"
+  },
+  {
+    "name": "Ansbach",
+    "lat": 49.2888745,
+    "lng": 10.5597693,
+    "state": "Bayern"
+  },
+  {
+    "name": "ANnAberg",
+    "lat": 50.5805503,
+    "lng": 13.0016874,
+    "state": "Sachsen"
+  },
+  {
+    "name": "ANGermünde",
+    "lat": 53.017276,
+    "lng": 13.9981503,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "ANKlam",
+    "lat": 53.8560526,
+    "lng": 13.688091,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "Altötting",
+    "lat": 48.2268085,
+    "lng": 12.6757914,
+    "state": "Bayern"
+  },
+  {
+    "name": "Apolda",
+    "lat": 51.0227878,
+    "lng": 11.5129742,
+    "state": "Thüringen"
+  },
+  {
+    "name": "APolDa",
+    "lat": 51.0227878,
+    "lng": 11.5129742,
+    "state": "Thüringen"
+  },
+  {
+    "name": "Arnstadt",
+    "lat": 50.8349097,
+    "lng": 10.9461479,
+    "state": "Thüringen"
+  },
+  {
+    "name": "Artern",
+    "lat": 51.3627798,
+    "lng": 11.2935249,
+    "state": "Thüringen"
+  },
+  {
+    "name": "Amberg-Sulzbach",
+    "lat": 49.4801852,
+    "lng": 11.7836407,
+    "state": "Bayern"
+  },
+  {
+    "name": "Aschersleben",
+    "lat": 51.7559549,
+    "lng": 11.462134,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "AltenTreptow",
+    "lat": 53.692909,
+    "lng": 13.2512212,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "Aue",
+    "lat": 50.586993,
+    "lng": 12.6992687,
+    "state": "Sachsen"
+  },
+  {
+    "name": "Aurich",
+    "lat": 53.5122853,
+    "lng": 7.3915284,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "Alzey",
+    "lat": 49.7454561,
+    "lng": 8.1130036,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "Bamberg",
+    "lat": 49.8916044,
+    "lng": 10.8868478,
+    "state": "Bayern"
+  },
+  {
+    "name": "Baden-Baden",
+    "lat": 48.7610716,
+    "lng": 8.239959,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "Barnim",
+    "lat": 52.8019321,
+    "lng": 13.6771933,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "Böblingen",
+    "lat": 48.684969,
+    "lng": 9.0113444,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "Bernburg",
+    "lat": 51.7930788,
+    "lng": 11.7391606,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "Biberach",
+    "lat": 48.0984413,
+    "lng": 9.7899938,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "BuCHen",
+    "lat": 49.5219386,
+    "lng": 9.3251309,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "Beckum",
+    "lat": 51.7555148,
+    "lng": 8.041135,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Bedburg",
+    "lat": 50.9972161,
+    "lng": 6.5767648,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Bernkastel",
+    "lat": 49.9155518,
+    "lng": 7.0757788,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "Burgsteinfurt",
+    "lat": 52.1479842,
+    "lng": 7.3392179,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Bergstraße",
+    "lat": 49.6231836,
+    "lng": 8.5271071,
+    "state": "Hessen"
+  },
+  {
+    "name": "BerchtesGaDen",
+    "lat": 47.6330221,
+    "lng": 13.0020051,
+    "state": "Bayern"
+  },
+  {
+    "name": "BerchtesGadener Land",
+    "lat": 47.7494467,
+    "lng": 12.9216667,
+    "state": "Bayern"
+  },
+  {
+    "name": "Bühl",
+    "lat": 48.6945066,
+    "lng": 8.134423,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "BIeDenkopf",
+    "lat": 50.91958,
+    "lng": 8.53771,
+    "state": "Hessen"
+  },
+  {
+    "name": "BINgen",
+    "lat": 49.9675456,
+    "lng": 7.8944,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "Birkenfeld",
+    "lat": 49.6488236,
+    "lng": 7.1647477,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "Bitburg",
+    "lat": 49.9732762,
+    "lng": 6.524947,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "BIschofsWerda",
+    "lat": 51.1277815,
+    "lng": 14.1795516,
+    "state": "Sachsen"
+  },
+  {
+    "name": "BernKaStel",
+    "lat": 49.9155518,
+    "lng": 7.0757788,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "Balingen",
+    "lat": 48.2737512,
+    "lng": 8.8557862,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "BerLeBurg",
+    "lat": 51.0478493,
+    "lng": 8.3917759,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "BurgenLandKreis",
+    "lat": 51.1290647,
+    "lng": 11.8515581,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "Bergheim",
+    "lat": 50.9540457,
+    "lng": 6.6410004,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "BorNA",
+    "lat": 51.1241649,
+    "lng": 12.4999055,
+    "state": "Sachsen"
+  },
+  {
+    "name": "Börde",
+    "lat": 52.2005791,
+    "lng": 11.3349526,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "BOGen",
+    "lat": 48.9082826,
+    "lng": 12.7185426,
+    "state": "Bayern"
+  },
+  {
+    "name": "BOcHolt",
+    "lat": 51.8382715,
+    "lng": 6.6148669,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Borken",
+    "lat": 51.8444777,
+    "lng": 6.8583277,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Bruchsal",
+    "lat": 49.124118,
+    "lng": 8.5980244,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "Brandenburg",
+    "lat": 52.4108261,
+    "lng": 12.5497933,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "Bad Brückenau",
+    "lat": 50.3101441,
+    "lng": 9.7912176,
+    "state": "Bayern"
+  },
+  {
+    "name": "BRemerVörde",
+    "lat": 53.4850249,
+    "lng": 9.1362085,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "BerSenBrück",
+    "lat": 52.5553293,
+    "lng": 7.9471842,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "BeeSKow",
+    "lat": 52.1721569,
+    "lng": 14.2471058,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "Bayreuth",
+    "lat": 49.9449711,
+    "lng": 11.5734327,
+    "state": "Bayern"
+  },
+  {
+    "name": "Bitterfeld",
+    "lat": 51.6239124,
+    "lng": 12.3301466,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "Burgdorf",
+    "lat": 52.4438008,
+    "lng": 10.0078364,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "Büdingen",
+    "lat": 50.2972353,
+    "lng": 9.0990829,
+    "state": "Hessen"
+  },
+  {
+    "name": "BUrgLengenfeld",
+    "lat": 49.2071077,
+    "lng": 12.03996,
+    "state": "Bayern"
+  },
+  {
+    "name": "Büren",
+    "lat": 51.5525333,
+    "lng": 8.5591919,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Büsingen",
+    "lat": 47.6975034,
+    "lng": 8.6907123,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "Bützow",
+    "lat": 53.8500047,
+    "lng": 11.9832952,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "BaYerischer Landtag",
+    "lat": 48.1361881,
+    "lng": 11.5941368,
+    "state": "Bayern"
+  },
+  {
+    "name": "Bautzen",
+    "lat": 51.1809132,
+    "lng": 14.4276003,
+    "state": "Sachsen"
+  },
+  {
+    "name": "Calau",
+    "lat": 51.7466674,
+    "lng": 13.949307,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "Calw",
+    "lat": 48.7142691,
+    "lng": 8.7397624,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "Castrop",
+    "lat": 51.5490704,
+    "lng": 7.3095683,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Cottbus",
+    "lat": 51.7567447,
+    "lng": 14.3357307,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "Celle",
+    "lat": 52.624056,
+    "lng": 10.081052,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "Cham",
+    "lat": 49.2178194,
+    "lng": 12.6663832,
+    "state": "Bayern"
+  },
+  {
+    "name": "Cloppenburg",
+    "lat": 52.8461339,
+    "lng": 8.0438783,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "CLausthal-Zellerfeld",
+    "lat": 51.8070405,
+    "lng": 10.3364483,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "Coburg",
+    "lat": 50.2582226,
+    "lng": 10.964561,
+    "state": "Bayern"
+  },
+  {
+    "name": "Cochem",
+    "lat": 50.1483916,
+    "lng": 7.1663195,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "Coesfeld",
+    "lat": 51.9458943,
+    "lng": 7.1691108,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "CRailsheim",
+    "lat": 49.1365626,
+    "lng": 10.0720195,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "Cuxhaven",
+    "lat": 53.86878,
+    "lng": 8.698286,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "Darmstadt",
+    "lat": 49.872775,
+    "lng": 8.651177,
+    "state": "Hessen"
+  },
+  {
+    "name": "Dachau",
+    "lat": 48.2592477,
+    "lng": 11.4354419,
+    "state": "Bayern"
+  },
+  {
+    "name": "Dannenberg",
+    "lat": 53.0989099,
+    "lng": 11.0960722,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "Daun",
+    "lat": 50.1962461,
+    "lng": 6.8305031,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "Dobern",
+    "lat": 51.6147262,
+    "lng": 14.5972172,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "Dessau",
+    "lat": 51.8309956,
+    "lng": 12.2430723,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "Deggendorf",
+    "lat": 48.7814115,
+    "lng": 13.0006423,
+    "state": "Bayern"
+  },
+  {
+    "name": "Delmenhorst",
+    "lat": 53.048095,
+    "lng": 8.6286066,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "DinGolFing",
+    "lat": 48.6300801,
+    "lng": 12.4977434,
+    "state": "Bayern"
+  },
+  {
+    "name": "Diepholz",
+    "lat": 52.7478987,
+    "lng": 8.7615261,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "Dieburg",
+    "lat": 49.8981797,
+    "lng": 8.8396216,
+    "state": "Hessen"
+  },
+  {
+    "name": "Dillenburg",
+    "lat": 50.75211,
+    "lng": 8.31573,
+    "state": "Hessen"
+  },
+  {
+    "name": "Dinslaken",
+    "lat": 51.5623618,
+    "lng": 6.7345106,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "DIeZ",
+    "lat": 50.3694175,
+    "lng": 8.0174521,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "Dinkelsbühl",
+    "lat": 49.0691672,
+    "lng": 10.3194022,
+    "state": "Bayern"
+  },
+  {
+    "name": "Döbeln",
+    "lat": 51.1167001,
+    "lng": 13.1166999,
+    "state": "Sachsen"
+  },
+  {
+    "name": "Dillingen",
+    "lat": 48.577185,
+    "lng": 10.4943532,
+    "state": "Bayern"
+  },
+  {
+    "name": "Demmin",
+    "lat": 53.9070019,
+    "lng": 13.0327836,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "Düren",
+    "lat": 50.8031684,
+    "lng": 6.4820806,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Dömitz",
+    "lat": 53.1384884,
+    "lng": 11.2609279,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "Donauwörth",
+    "lat": 48.7180364,
+    "lng": 10.7807299,
+    "state": "Bayern"
+  },
+  {
+    "name": "Donaueschingen",
+    "lat": 47.9534194,
+    "lng": 8.4959257,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "Detmold",
+    "lat": 51.936284,
+    "lng": 8.8791526,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "DUDerstadt",
+    "lat": 51.5123672,
+    "lng": 10.2610699,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "Dürkheim",
+    "lat": 49.4687239,
+    "lng": 8.1138978,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "Dippoldiswalde",
+    "lat": 50.8950479,
+    "lng": 13.6633335,
+    "state": "Sachsen"
+  },
+  {
+    "name": "Delitzsch",
+    "lat": 51.5255661,
+    "lng": 12.342857,
+    "state": "Sachsen"
+  },
+  {
+    "name": "Eisenach",
+    "lat": 50.9747134,
+    "lng": 10.3193565,
+    "state": "Thüringen"
+  },
+  {
+    "name": "Eilenburg",
+    "lat": 51.4586736,
+    "lng": 12.6344389,
+    "state": "Sachsen"
+  },
+  {
+    "name": "Ebersberg",
+    "lat": 48.0782763,
+    "lng": 11.9694372,
+    "state": "Bayern"
+  },
+  {
+    "name": "Ebern",
+    "lat": 50.0943461,
+    "lng": 10.7950972,
+    "state": "Bayern"
+  },
+  {
+    "name": "Eckernförde",
+    "lat": 54.4716456,
+    "lng": 9.8374947,
+    "state": "Schleswig-Holstein"
+  },
+  {
+    "name": "Erding",
+    "lat": 48.3106834,
+    "lng": 11.9144357,
+    "state": "Bayern"
+  },
+  {
+    "name": "Elbe-Elster",
+    "lat": 51.6271759,
+    "lng": 13.4805453,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "Eggenfelden",
+    "lat": 48.4031909,
+    "lng": 12.7626208,
+    "state": "Bayern"
+  },
+  {
+    "name": "Eisenhüttenstadt",
+    "lat": 52.1448863,
+    "lng": 14.6294413,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "Eichstätt",
+    "lat": 48.8933417,
+    "lng": 11.1838965,
+    "state": "Bayern"
+  },
+  {
+    "name": "Eichsfeld",
+    "lat": 51.1400885,
+    "lng": 11.0874783,
+    "state": "Thüringen"
+  },
+  {
+    "name": "EIsLeben",
+    "lat": 51.5283282,
+    "lng": 11.5465911,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "Einbeck",
+    "lat": 51.8185067,
+    "lng": 9.8678465,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "Eisenberg",
+    "lat": 50.9691346,
+    "lng": 11.8961116,
+    "state": "Thüringen"
+  },
+  {
+    "name": "Emsland",
+    "lat": 52.7590373,
+    "lng": 7.4564975,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "Emmendingen",
+    "lat": 48.1224978,
+    "lng": 7.8653814,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "Emden",
+    "lat": 53.3670541,
+    "lng": 7.2058304,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "Bad Ems",
+    "lat": 50.3352062,
+    "lng": 7.7128538,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "Ennepe",
+    "lat": 51.2684734,
+    "lng": 7.4126538,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Erbach",
+    "lat": 49.6376,
+    "lng": 9.013,
+    "state": "Hessen"
+  },
+  {
+    "name": "Erlangen-Höchstadt",
+    "lat": 49.64042,
+    "lng": 10.930096,
+    "state": "Bayern"
+  },
+  {
+    "name": "Erkelenz",
+    "lat": 51.080992,
+    "lng": 6.3160684,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Erzgebirge",
+    "lat": 50.5916915,
+    "lng": 13.054863,
+    "state": "Sachsen"
+  },
+  {
+    "name": "Esslingen",
+    "lat": 48.7427584,
+    "lng": 9.3071685,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "Eschenbach",
+    "lat": 49.5316435,
+    "lng": 11.4916021,
+    "state": "Bayern"
+  },
+  {
+    "name": "Eschwege",
+    "lat": 51.1733518,
+    "lng": 10.0680632,
+    "state": "Hessen"
+  },
+  {
+    "name": "Euskirchen",
+    "lat": 50.6612623,
+    "lng": 6.7871219,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Eberswalde",
+    "lat": 52.8350807,
+    "lng": 13.7996542,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "Friedberg",
+    "lat": 50.328272,
+    "lng": 8.747636,
+    "state": "Hessen"
+  },
+  {
+    "name": "Fulda",
+    "lat": 50.5542328,
+    "lng": 9.6770448,
+    "state": "Hessen"
+  },
+  {
+    "name": "Friedberg",
+    "lat": 48.3551962,
+    "lng": 10.9786498,
+    "state": "Bayern"
+  },
+  {
+    "name": "Freudenstadt",
+    "lat": 48.4637727,
+    "lng": 8.4111727,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "Feuchtwangen",
+    "lat": 49.1678603,
+    "lng": 10.3313268,
+    "state": "Bayern"
+  },
+  {
+    "name": "Frankfurt",
+    "lat": 52.3412273,
+    "lng": 14.549452,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "Fürstenfeldbruck",
+    "lat": 48.1794705,
+    "lng": 11.2547202,
+    "state": "Bayern"
+  },
+  {
+    "name": "Freiberg",
+    "lat": 50.9169415,
+    "lng": 13.3428889,
+    "state": "Sachsen"
+  },
+  {
+    "name": "Finsterwalde",
+    "lat": 51.6315282,
+    "lng": 13.707358,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "Finnentrop",
+    "lat": 51.1729173,
+    "lng": 7.9724578,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "FranKenBerg",
+    "lat": 51.0771933,
+    "lng": 8.7908312,
+    "state": "Hessen"
+  },
+  {
+    "name": "Flensburg",
+    "lat": 54.7833021,
+    "lng": 9.4333264,
+    "state": "Schleswig-Holstein"
+  },
+  {
+    "name": "Flöha",
+    "lat": 50.8503529,
+    "lng": 13.0772325,
+    "state": "Sachsen"
+  },
+  {
+    "name": "Friedrichshafen",
+    "lat": 47.6500279,
+    "lng": 9.4800858,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "Forchheim",
+    "lat": 49.7187319,
+    "lng": 11.0595749,
+    "state": "Bayern"
+  },
+  {
+    "name": "Forst",
+    "lat": 51.7438586,
+    "lng": 14.6455395,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "Freyung-Grafenau",
+    "lat": 48.81666,
+    "lng": 13.481332,
+    "state": "Bayern"
+  },
+  {
+    "name": "Friesland",
+    "lat": 53.467993,
+    "lng": 8.0221914,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "Freienwalde",
+    "lat": 52.787521,
+    "lng": 14.0300689,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "Freising",
+    "lat": 48.4008273,
+    "lng": 11.7439565,
+    "state": "Bayern"
+  },
+  {
+    "name": "Frankenthal",
+    "lat": 49.5353466,
+    "lng": 8.3541391,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "FreiTaL",
+    "lat": 51.016265,
+    "lng": 13.6530329,
+    "state": "Sachsen"
+  },
+  {
+    "name": "Füssen",
+    "lat": 47.5675998,
+    "lng": 10.6993217,
+    "state": "Bayern"
+  },
+  {
+    "name": "Fürstenwalde",
+    "lat": 52.3671912,
+    "lng": 14.0584217,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "Fritzlar",
+    "lat": 51.1537071,
+    "lng": 9.2645106,
+    "state": "Hessen"
+  },
+  {
+    "name": "Gera",
+    "lat": 50.8765528,
+    "lng": 12.0832674,
+    "state": "Thüringen"
+  },
+  {
+    "name": "Gardelegen",
+    "lat": 52.5269433,
+    "lng": 11.3927377,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "Garmisch",
+    "lat": 47.4938417,
+    "lng": 11.0829,
+    "state": "Bayern"
+  },
+  {
+    "name": "Garmisch-Partenkirchen",
+    "lat": 47.4923741,
+    "lng": 11.0962815,
+    "state": "Bayern"
+  },
+  {
+    "name": "Glauchau",
+    "lat": 50.8199031,
+    "lng": 12.5397873,
+    "state": "Sachsen"
+  },
+  {
+    "name": "Gütersloh",
+    "lat": 51.9063997,
+    "lng": 8.3782078,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Gadebusch",
+    "lat": 53.70187,
+    "lng": 11.1177362,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "Geldern",
+    "lat": 51.5169736,
+    "lng": 6.3228189,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Gerolzhofen",
+    "lat": 49.9009668,
+    "lng": 10.3494113,
+    "state": "Bayern"
+  },
+  {
+    "name": "Germersheim",
+    "lat": 49.2222749,
+    "lng": 8.36659,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "Gifhorn",
+    "lat": 52.5780613,
+    "lng": 10.6613448,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "Groß-Gerau",
+    "lat": 49.914,
+    "lng": 8.4657,
+    "state": "Hessen"
+  },
+  {
+    "name": "Geithain",
+    "lat": 51.054325,
+    "lng": 12.694675,
+    "state": "Sachsen"
+  },
+  {
+    "name": "Gelnhausen",
+    "lat": 50.1995532,
+    "lng": 9.1713202,
+    "state": "Hessen"
+  },
+  {
+    "name": "Gießen",
+    "lat": 50.5808795,
+    "lng": 8.6938161,
+    "state": "Hessen"
+  },
+  {
+    "name": "Geilenkirchen",
+    "lat": 50.963605,
+    "lng": 6.1199802,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Gladbeck",
+    "lat": 51.5718665,
+    "lng": 6.9877343,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Gummersbach",
+    "lat": 51.0277658,
+    "lng": 7.5630545,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Grimmen",
+    "lat": 54.1127844,
+    "lng": 13.0429152,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "Genthin",
+    "lat": 52.4063738,
+    "lng": 12.1561742,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "Gotha",
+    "lat": 50.9494849,
+    "lng": 10.7014435,
+    "state": "Thüringen"
+  },
+  {
+    "name": "Görlitz",
+    "lat": 51.1563185,
+    "lng": 14.991018,
+    "state": "Sachsen"
+  },
+  {
+    "name": "Göppingen",
+    "lat": 48.7031377,
+    "lng": 9.6541116,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "Grafenau",
+    "lat": 48.8576397,
+    "lng": 13.3938284,
+    "state": "Bayern"
+  },
+  {
+    "name": "Großenhain",
+    "lat": 51.2911845,
+    "lng": 13.5317153,
+    "state": "Sachsen"
+  },
+  {
+    "name": "Griesbach",
+    "lat": 49.8684701,
+    "lng": 12.4806054,
+    "state": "Bayern"
+  },
+  {
+    "name": "Grimma",
+    "lat": 51.2383379,
+    "lng": 12.7287511,
+    "state": "Sachsen"
+  },
+  {
+    "name": "Greiz",
+    "lat": 50.7783814,
+    "lng": 12.0763533,
+    "state": "Thüringen"
+  },
+  {
+    "name": "Goslar",
+    "lat": 51.9059936,
+    "lng": 10.4266284,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "Güstrow",
+    "lat": 53.793587,
+    "lng": 12.1764906,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "Guben",
+    "lat": 51.9503235,
+    "lng": 14.7153567,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "Gunzenhausen",
+    "lat": 49.1147095,
+    "lng": 10.7545933,
+    "state": "Bayern"
+  },
+  {
+    "name": "Grevenbroich",
+    "lat": 51.0862467,
+    "lng": 6.5848937,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "GreVesMühlen",
+    "lat": 53.8644705,
+    "lng": 11.1898839,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "Greifswald",
+    "lat": 54.095791,
+    "lng": 13.3815238,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "Günzburg",
+    "lat": 48.4555244,
+    "lng": 10.2766213,
+    "state": "Bayern"
+  },
+  {
+    "name": "Hammelburg",
+    "lat": 50.1152207,
+    "lng": 9.8904404,
+    "state": "Bayern"
+  },
+  {
+    "name": "Haßberge",
+    "lat": 50.0591577,
+    "lng": 10.6106885,
+    "state": "Bayern"
+  },
+  {
+    "name": "Hansestadt Bremen",
+    "lat": 53.5345194,
+    "lng": 8.5809844,
+    "state": "Bremen"
+  },
+  {
+    "name": "Hildburghausen",
+    "lat": 50.4266327,
+    "lng": 10.7300263,
+    "state": "Thüringen"
+  },
+  {
+    "name": "Halberstadt",
+    "lat": 51.8953514,
+    "lng": 11.0520563,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "Hainichen",
+    "lat": 50.9725862,
+    "lng": 13.1229747,
+    "state": "Sachsen"
+  },
+  {
+    "name": "HeCHingen",
+    "lat": 48.3525529,
+    "lng": 8.9642047,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "Heidenheim",
+    "lat": 48.6767637,
+    "lng": 10.152923,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "HalDensLeben",
+    "lat": 52.2911243,
+    "lng": 11.4132719,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "Helmstedt",
+    "lat": 52.2089226,
+    "lng": 11.0028882,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "Hersbruck",
+    "lat": 49.5085843,
+    "lng": 11.4285065,
+    "state": "Bayern"
+  },
+  {
+    "name": "Hersfeld",
+    "lat": 50.8604177,
+    "lng": 9.6767709,
+    "state": "Hessen"
+  },
+  {
+    "name": "Heide",
+    "lat": 54.1948848,
+    "lng": 9.0928251,
+    "state": "Schleswig-Holstein"
+  },
+  {
+    "name": "Hessen",
+    "lat": 51.3145221,
+    "lng": 9.5056109,
+    "state": "Hessen"
+  },
+  {
+    "name": "Hettstedt",
+    "lat": 51.6500047,
+    "lng": 11.4999986,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "Herford",
+    "lat": 52.1152245,
+    "lng": 8.6711118,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Bad Homburg",
+    "lat": 50.2363508,
+    "lng": 8.5980265,
+    "state": "Hessen"
+  },
+  {
+    "name": "HaGeNow",
+    "lat": 53.4305796,
+    "lng": 11.1904828,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "Hansestadt GreifsWald",
+    "lat": 54.095791,
+    "lng": 13.3815238,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "Hansestadt Hamburg",
+    "lat": 53.5424405,
+    "lng": 10.0306323,
+    "state": "Hamburg"
+  },
+  {
+    "name": "HoHenMölsen",
+    "lat": 51.1573976,
+    "lng": 12.0981844,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "Heiligenstadt",
+    "lat": 51.3756186,
+    "lng": 10.138224,
+    "state": "Thüringen"
+  },
+  {
+    "name": "HIlPoltstein",
+    "lat": 49.1893907,
+    "lng": 11.1920909,
+    "state": "Bayern"
+  },
+  {
+    "name": "Heidekreis",
+    "lat": 52.8217435,
+    "lng": 9.6601426,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "Hansestadt Lübeck",
+    "lat": 53.866444,
+    "lng": 10.684738,
+    "state": "Schleswig-Holstein"
+  },
+  {
+    "name": "Hameln",
+    "lat": 52.1039941,
+    "lng": 9.3561569,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "Hann. Münden",
+    "lat": 51.4161908,
+    "lng": 9.6550096,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "Hof",
+    "lat": 50.3219015,
+    "lng": 11.9178807,
+    "state": "Bayern"
+  },
+  {
+    "name": "Holzminden",
+    "lat": 51.8989989,
+    "lng": 9.5741099,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "Homburg",
+    "lat": 49.3181673,
+    "lng": 7.3340336,
+    "state": "Saarland"
+  },
+  {
+    "name": "Horb am Neckar",
+    "lat": 48.4447943,
+    "lng": 8.6914794,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "Höchstadt an der Aisch",
+    "lat": 49.7035803,
+    "lng": 10.8047235,
+    "state": "Bayern"
+  },
+  {
+    "name": "Hohenstein-Ernstthal",
+    "lat": 50.801716,
+    "lng": 12.7087086,
+    "state": "Sachsen"
+  },
+  {
+    "name": "Heppenheim",
+    "lat": 49.64999,
+    "lng": 8.66768,
+    "state": "Hessen"
+  },
+  {
+    "name": "Homberg (Efze)",
+    "lat": 51.0117227,
+    "lng": 9.4048406,
+    "state": "Hessen"
+  },
+  {
+    "name": "Hansestadt Rostock",
+    "lat": 54.0886707,
+    "lng": 12.1400211,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "Heinsberg",
+    "lat": 51.0654268,
+    "lng": 6.0984461,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Hochsauerlandkreis",
+    "lat": 51.3208265,
+    "lng": 8.268492,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Hansestadt STralsund",
+    "lat": 54.3096314,
+    "lng": 13.0820846,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "Hanau",
+    "lat": 50.132881,
+    "lng": 8.9169797,
+    "state": "Hessen"
+  },
+  {
+    "name": "Hünfeld",
+    "lat": 50.65546,
+    "lng": 9.7764627,
+    "state": "Hessen"
+  },
+  {
+    "name": "HaVelberg",
+    "lat": 52.8250425,
+    "lng": 12.0741929,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "Havelland",
+    "lat": 52.6244437,
+    "lng": 12.6847264,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "Hansestadt Wismar",
+    "lat": 53.8891504,
+    "lng": 11.4453933,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "Höxter",
+    "lat": 51.7938902,
+    "lng": 9.348855,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Hoyerswerda",
+    "lat": 51.4333103,
+    "lng": 14.250083,
+    "state": "Sachsen"
+  },
+  {
+    "name": "Herzberg/Harz",
+    "lat": 51.6645023,
+    "lng": 11.0074887,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "Ingbert",
+    "lat": 49.2788378,
+    "lng": 7.1156707,
+    "state": "Saarland"
+  },
+  {
+    "name": "Ilm-Kreis",
+    "lat": 50.7291643,
+    "lng": 10.9575149,
+    "state": "Thüringen"
+  },
+  {
+    "name": "Ilmenau",
+    "lat": 50.6867695,
+    "lng": 10.9142385,
+    "state": "Thüringen"
+  },
+  {
+    "name": "Illertissen",
+    "lat": 48.221764,
+    "lng": 10.1058969,
+    "state": "Bayern"
+  },
+  {
+    "name": "Itzehoe",
+    "lat": 53.919448,
+    "lng": 9.5172441,
+    "state": "Schleswig-Holstein"
+  },
+  {
+    "name": "JüterBog",
+    "lat": 51.9916493,
+    "lng": 13.0801128,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "Jerichow",
+    "lat": 52.4976362,
+    "lng": 12.0257528,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "Jerichower Land",
+    "lat": 52.288252,
+    "lng": 12.0099979,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "KorBach",
+    "lat": 51.2559045,
+    "lng": 8.8426963,
+    "state": "Hessen"
+  },
+  {
+    "name": "KronaCh",
+    "lat": 50.2397846,
+    "lng": 11.3277669,
+    "state": "Bayern"
+  },
+  {
+    "name": "KEmpten",
+    "lat": 47.7267063,
+    "lng": 10.3168835,
+    "state": "Bayern"
+  },
+  {
+    "name": "KElHeim",
+    "lat": 48.91849,
+    "lng": 11.8722777,
+    "state": "Bayern"
+  },
+  {
+    "name": "KEhL",
+    "lat": 48.5728929,
+    "lng": 7.8109768,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "KEMnath",
+    "lat": 49.8581156,
+    "lng": 11.9355154,
+    "state": "Bayern"
+  },
+  {
+    "name": "KauFbeuren",
+    "lat": 47.8803788,
+    "lng": 10.622246,
+    "state": "Bayern"
+  },
+  {
+    "name": "KissinGen",
+    "lat": 50.2275595,
+    "lng": 10.0023408,
+    "state": "Bayern"
+  },
+  {
+    "name": "KreuznacH",
+    "lat": 49.7748199,
+    "lng": 7.529418,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "KIel",
+    "lat": 54.3227085,
+    "lng": 10.135555,
+    "state": "Schleswig-Holstein"
+  },
+  {
+    "name": "KIrchheimBolanden",
+    "lat": 49.6644306,
+    "lng": 8.0107385,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "KaisersLautern",
+    "lat": 49.4432174,
+    "lng": 7.7689951,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "KLEve",
+    "lat": 51.7895571,
+    "lng": 6.1376008,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "KLötZe",
+    "lat": 52.6276465,
+    "lng": 11.165058,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "KaMenz",
+    "lat": 51.270139,
+    "lng": 14.0948628,
+    "state": "Sachsen"
+  },
+  {
+    "name": "KoNstanz",
+    "lat": 47.659216,
+    "lng": 9.1750718,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "KOblenz",
+    "lat": 50.3533278,
+    "lng": 7.5943951,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "KRefeld",
+    "lat": 51.3331205,
+    "lng": 6.5623343,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "KRUmbach",
+    "lat": 48.2430587,
+    "lng": 10.3631004,
+    "state": "Bayern"
+  },
+  {
+    "name": "KasSel",
+    "lat": 51.3157833,
+    "lng": 9.4978479,
+    "state": "Hessen"
+  },
+  {
+    "name": "KiTzingen",
+    "lat": 49.7380667,
+    "lng": 10.1601218,
+    "state": "Bayern"
+  },
+  {
+    "name": "KUlmbach",
+    "lat": 50.1008448,
+    "lng": 11.4479149,
+    "state": "Bayern"
+  },
+  {
+    "name": "KUSel",
+    "lat": 49.5399844,
+    "lng": 7.4008479,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "Königs Wusterhausen",
+    "lat": 52.2994511,
+    "lng": 13.6244389,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "KYritz",
+    "lat": 52.9430648,
+    "lng": 12.3966896,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "KYFfhäuser",
+    "lat": 51.3947987,
+    "lng": 11.1100952,
+    "state": "Thüringen"
+  },
+  {
+    "name": "LAndshut",
+    "lat": 48.536217,
+    "lng": 12.1516551,
+    "state": "Bayern"
+  },
+  {
+    "name": "LANdau",
+    "lat": 48.6828553,
+    "lng": 12.6950655,
+    "state": "Bayern"
+  },
+  {
+    "name": "LAUf",
+    "lat": 49.1864922,
+    "lng": 11.9126885,
+    "state": "Bayern"
+  },
+  {
+    "name": "LudwigsBurg",
+    "lat": 48.8953937,
+    "lng": 9.1895147,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "LoBenStein",
+    "lat": 50.4424064,
+    "lng": 11.652167,
+    "state": "Thüringen"
+  },
+  {
+    "name": "LüBZ",
+    "lat": 53.4623324,
+    "lng": 12.0293606,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "LuCkau",
+    "lat": 51.8524163,
+    "lng": 13.7150055,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "LanDau",
+    "lat": 49.1982825,
+    "lng": 8.1123441,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "Lahn-Dill-Kreis",
+    "lat": 50.6390064,
+    "lng": 8.3265327,
+    "state": "Hessen"
+  },
+  {
+    "name": "Landkreis Dahme-Spreewald",
+    "lat": 52.0739107,
+    "lng": 13.8668655,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "LEOnberg",
+    "lat": 48.8012983,
+    "lng": 9.0150026,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "LEeR",
+    "lat": 53.2050927,
+    "lng": 7.459464,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "LEVerkusen",
+    "lat": 51.0324743,
+    "lng": 6.9881194,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "LauFen",
+    "lat": 47.9354122,
+    "lng": 12.930309,
+    "state": "Bayern"
+  },
+  {
+    "name": "LüneburG",
+    "lat": 53.248706,
+    "lng": 10.407855,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "LüdingHausen",
+    "lat": 51.7717757,
+    "lng": 7.444639,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "LIndau",
+    "lat": 47.550753,
+    "lng": 9.6926624,
+    "state": "Bayern"
+  },
+  {
+    "name": "LIeBenwerda",
+    "lat": 51.5210174,
+    "lng": 13.363001,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "LIchtenFels",
+    "lat": 50.14568,
+    "lng": 11.06382,
+    "state": "Bayern"
+  },
+  {
+    "name": "LIPpe",
+    "lat": 51.6711439,
+    "lng": 7.7165069,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "LübbecKe",
+    "lat": 52.3027209,
+    "lng": 8.6183054,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Landsberg am Lech",
+    "lat": 48.0497474,
+    "lng": 10.8768728,
+    "state": "Bayern"
+  },
+  {
+    "name": "LiMburg",
+    "lat": 50.406558,
+    "lng": 8.075668,
+    "state": "Hessen"
+  },
+  {
+    "name": "LübbeN",
+    "lat": 51.9418987,
+    "lng": 13.8963805,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "Landkreis Oder-Spree",
+    "lat": 52.2504354,
+    "lng": 14.2685781,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "LiPpstadt",
+    "lat": 51.6747074,
+    "lng": 8.347194,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "LahR",
+    "lat": 48.338896,
+    "lng": 7.8710825,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "Landkreis ROstock",
+    "lat": 53.9210675,
+    "lng": 12.2937049,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "Land Sachsen-Anhalt",
+    "lat": 52.2072721,
+    "lng": 11.8988922,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "Landtag SachseN",
+    "lat": 51.056782,
+    "lng": 13.7337403,
+    "state": "Sachsen"
+  },
+  {
+    "name": "LangenSalZa",
+    "lat": 51.1085823,
+    "lng": 10.6454374,
+    "state": "Thüringen"
+  },
+  {
+    "name": "LUdwigshafen",
+    "lat": 49.4704113,
+    "lng": 8.4381568,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "LUcKenwalde",
+    "lat": 52.0902045,
+    "lng": 13.1741882,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "LUdwigslust, Parchim",
+    "lat": 53.4197468,
+    "lng": 11.8428604,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "LudWigsLust",
+    "lat": 53.3300229,
+    "lng": 11.4993644,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "MAnnheim",
+    "lat": 49.4892913,
+    "lng": 8.4673098,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "MArienBerg",
+    "lat": 50.6507279,
+    "lng": 13.163188,
+    "state": "Sachsen"
+  },
+  {
+    "name": "MAInburg",
+    "lat": 48.6410502,
+    "lng": 11.7864304,
+    "state": "Bayern"
+  },
+  {
+    "name": "MArKtredwitz",
+    "lat": 50.0009915,
+    "lng": 12.0856433,
+    "state": "Bayern"
+  },
+  {
+    "name": "MALlersdorf",
+    "lat": 48.7770079,
+    "lng": 12.2527113,
+    "state": "Bayern"
+  },
+  {
+    "name": "MiesBach",
+    "lat": 47.790025,
+    "lng": 11.8335417,
+    "state": "Bayern"
+  },
+  {
+    "name": "MalChin",
+    "lat": 53.7382631,
+    "lng": 12.7644198,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "MagDeburg",
+    "lat": 52.1314783,
+    "lng": 11.6400789,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "MEttmann",
+    "lat": 51.2527778,
+    "lng": 6.9777778,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "MElDorf",
+    "lat": 54.08988,
+    "lng": 9.070633,
+    "state": "Schleswig-Holstein"
+  },
+  {
+    "name": "MElsunGen",
+    "lat": 51.1425944,
+    "lng": 9.5833158,
+    "state": "Hessen"
+  },
+  {
+    "name": "MEIßen",
+    "lat": 51.1630871,
+    "lng": 13.4704939,
+    "state": "Sachsen"
+  },
+  {
+    "name": "Mittlerer ErzgebirgsKreis",
+    "lat": 50.5751851,
+    "lng": 13.0252864,
+    "state": "Sachsen"
+  },
+  {
+    "name": "MELle",
+    "lat": 52.200762,
+    "lng": 8.338667,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "MERseburg",
+    "lat": 51.3564413,
+    "lng": 11.996148,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "MEllrichstadT",
+    "lat": 50.4282218,
+    "lng": 10.3020932,
+    "state": "Bayern"
+  },
+  {
+    "name": "MönchenGladbach",
+    "lat": 51.1947131,
+    "lng": 6.4353792,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "MerGentHeim",
+    "lat": 49.4907909,
+    "lng": 9.77317,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "MeininGeN",
+    "lat": 50.56761,
+    "lng": 10.4153029,
+    "state": "Thüringen"
+  },
+  {
+    "name": "MülHeim",
+    "lat": 51.4272925,
+    "lng": 6.8829192,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "MüHLhausen",
+    "lat": 51.2094255,
+    "lng": 10.4589044,
+    "state": "Thüringen"
+  },
+  {
+    "name": "MInden",
+    "lat": 52.2881045,
+    "lng": 8.9168852,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "MILtenberg",
+    "lat": 49.7017584,
+    "lng": 9.2559718,
+    "state": "Bayern"
+  },
+  {
+    "name": "Märkischer Kreis",
+    "lat": 51.2734858,
+    "lng": 7.7274266,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Main-Kinzig-Kreis",
+    "lat": 50.2119793,
+    "lng": 9.1521552,
+    "state": "Hessen"
+  },
+  {
+    "name": "Mansfelder Land",
+    "lat": 51.5778528,
+    "lng": 11.5142097,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "MemMingen",
+    "lat": 47.9863099,
+    "lng": 10.1808016,
+    "state": "Bayern"
+  },
+  {
+    "name": "MiNdelheim",
+    "lat": 48.0464164,
+    "lng": 10.4882504,
+    "state": "Bayern"
+  },
+  {
+    "name": "MOers",
+    "lat": 51.451283,
+    "lng": 6.62843,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "MarktOberDorf",
+    "lat": 47.7780871,
+    "lng": 10.6188796,
+    "state": "Bayern"
+  },
+  {
+    "name": "Märkisch-OderLand",
+    "lat": 52.6387335,
+    "lng": 14.178299,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "MONschau",
+    "lat": 50.5544687,
+    "lng": 6.2407954,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "MOSbach",
+    "lat": 49.3521085,
+    "lng": 9.1460205,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "Merseburg, Querfurt",
+    "lat": 51.3861519,
+    "lng": 11.599644,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "MaRburg",
+    "lat": 50.8090106,
+    "lng": 8.7704695,
+    "state": "Hessen"
+  },
+  {
+    "name": "MünSter",
+    "lat": 51.9625101,
+    "lng": 7.6251879,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Mecklenburgische SEenplatte",
+    "lat": 53.5838993,
+    "lng": 13.0638679,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "Mansfeld, SüdHarz",
+    "lat": 51.5929057,
+    "lng": 11.4529104,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "Main, SPessart",
+    "lat": 49.9947528,
+    "lng": 9.573777,
+    "state": "Bayern"
+  },
+  {
+    "name": "Mecklenburg-STrelitz",
+    "lat": 53.3802358,
+    "lng": 13.0525431,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "Main-Taunus-Kreis",
+    "lat": 50.0995751,
+    "lng": 8.4264122,
+    "state": "Hessen"
+  },
+  {
+    "name": "MuldenTaL",
+    "lat": 50.9583926,
+    "lng": 13.350269,
+    "state": "Sachsen"
+  },
+  {
+    "name": "MUenChen",
+    "lat": 48.1371079,
+    "lng": 11.5753822,
+    "state": "Bayern"
+  },
+  {
+    "name": "MittWeida",
+    "lat": 50.9854597,
+    "lng": 12.9810458,
+    "state": "Sachsen"
+  },
+  {
+    "name": "MaYen",
+    "lat": 50.3283544,
+    "lng": 7.2215134,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "MaYen, Koblenz",
+    "lat": 50.3283544,
+    "lng": 7.2215134,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "MainZ",
+    "lat": 49.9995205,
+    "lng": 8.2736253,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "MerZiG",
+    "lat": 49.4427023,
+    "lng": 6.6374902,
+    "state": "Saarland"
+  },
+  {
+    "name": "NABburg",
+    "lat": 49.4543783,
+    "lng": 12.1806935,
+    "state": "Bayern"
+  },
+  {
+    "name": "NAIla",
+    "lat": 50.3296301,
+    "lng": 11.7084131,
+    "state": "Bayern"
+  },
+  {
+    "name": "NAUen",
+    "lat": 52.6061065,
+    "lng": 12.8772599,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "NeuBrandenburg",
+    "lat": 53.5574458,
+    "lng": 13.2602781,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "Neuburg an der Donau",
+    "lat": 48.7371951,
+    "lng": 11.1795268,
+    "state": "Bayern"
+  },
+  {
+    "name": "NorDHausen",
+    "lat": 51.5051574,
+    "lng": 10.7925317,
+    "state": "Thüringen"
+  },
+  {
+    "name": "NEuss",
+    "lat": 51.1981778,
+    "lng": 6.6916476,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "NEustadt an der Aisch",
+    "lat": 49.5800045,
+    "lng": 10.6087584,
+    "state": "Bayern"
+  },
+  {
+    "name": "NEBra",
+    "lat": 51.2873083,
+    "lng": 11.5787877,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "NEustadt bei Coburg",
+    "lat": 50.3283477,
+    "lng": 11.1226908,
+    "state": "Bayern"
+  },
+  {
+    "name": "NEuNburg",
+    "lat": 49.3487545,
+    "lng": 12.3819759,
+    "state": "Bayern"
+  },
+  {
+    "name": "NEustadt an der Saale",
+    "lat": 50.3292157,
+    "lng": 10.2242824,
+    "state": "Bayern"
+  },
+  {
+    "name": "NEUstadt",
+    "lat": 48.848514,
+    "lng": 9.3226283,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "NEustadt an der Waldnaab",
+    "lat": 49.7314121,
+    "lng": 12.1732938,
+    "state": "Bayern"
+  },
+  {
+    "name": "NordFriesland",
+    "lat": 54.6591472,
+    "lng": 8.9982188,
+    "state": "Schleswig-Holstein"
+  },
+  {
+    "name": "NeuHaus",
+    "lat": 50.6835356,
+    "lng": 10.9287411,
+    "state": "Thüringen"
+  },
+  {
+    "name": "NIenburg",
+    "lat": 52.6487602,
+    "lng": 9.2578105,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "NeunKirchen",
+    "lat": 49.34987,
+    "lng": 7.1841564,
+    "state": "Saarland"
+  },
+  {
+    "name": "Niedersächsischer Landtag",
+    "lat": 52.370469,
+    "lng": 9.7334773,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "NeuMarkt",
+    "lat": 49.279624,
+    "lng": 11.4594662,
+    "state": "Bayern"
+  },
+  {
+    "name": "NauMBurg",
+    "lat": 51.1525648,
+    "lng": 11.8099186,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "NeuMünSter",
+    "lat": 54.0703296,
+    "lng": 9.9884451,
+    "state": "Schleswig-Holstein"
+  },
+  {
+    "name": "NOrdHorn",
+    "lat": 52.4359731,
+    "lng": 7.0707659,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "NOrtheiM",
+    "lat": 51.7643824,
+    "lng": 9.8583289,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "NORden",
+    "lat": 53.5942039,
+    "lng": 7.2067435,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "NeurupPin",
+    "lat": 52.9243859,
+    "lng": 12.8092919,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "Neuwied am Rhein",
+    "lat": 50.5679844,
+    "lng": 7.2822463,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "NordRhein-Westfalen",
+    "lat": 51.6223155,
+    "lng": 6.9749162,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "NürTingen",
+    "lat": 48.6265854,
+    "lng": 9.3365463,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "Neu-Ulm",
+    "lat": 48.3953489,
+    "lng": 10.0005211,
+    "state": "Bayern"
+  },
+  {
+    "name": "NordVorPommern",
+    "lat": 54.2340662,
+    "lng": 12.8324041,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "Neustadt an der Weinstraße",
+    "lat": 49.3539802,
+    "lng": 8.1350021,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "NordWestMecklenburg",
+    "lat": 53.8002812,
+    "lng": 11.2879208,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "NieskY",
+    "lat": 51.2921267,
+    "lng": 14.8250955,
+    "state": "Sachsen"
+  },
+  {
+    "name": "NeustrelitZ",
+    "lat": 53.3617163,
+    "lng": 13.0630004,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "OberAllgäu",
+    "lat": 47.6130964,
+    "lng": 10.270825,
+    "state": "Bayern"
+  },
+  {
+    "name": "OstALlgäu",
+    "lat": 47.8025889,
+    "lng": 10.6259267,
+    "state": "Bayern"
+  },
+  {
+    "name": "OBerhausen",
+    "lat": 51.4696137,
+    "lng": 6.8514435,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "OBernBurg",
+    "lat": 49.8238464,
+    "lng": 9.1260767,
+    "state": "Bayern"
+  },
+  {
+    "name": "OsterBurG",
+    "lat": 52.7899044,
+    "lng": 11.7526038,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "OsChersleben",
+    "lat": 52.0266526,
+    "lng": 11.227781,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "OCHsenfurt",
+    "lat": 49.6643552,
+    "lng": 10.0647551,
+    "state": "Bayern"
+  },
+  {
+    "name": "OlDesloe",
+    "lat": 53.8096562,
+    "lng": 10.3733692,
+    "state": "Schleswig-Holstein"
+  },
+  {
+    "name": "OlpE",
+    "lat": 51.029482,
+    "lng": 7.8435278,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "OFfenbach",
+    "lat": 50.1055002,
+    "lng": 8.7610698,
+    "state": "Hessen"
+  },
+  {
+    "name": "OffenburG",
+    "lat": 48.4695984,
+    "lng": 7.9429235,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "OstHolstein",
+    "lat": 54.1766629,
+    "lng": 10.84762,
+    "state": "Schleswig-Holstein"
+  },
+  {
+    "name": "Osterode am HArz",
+    "lat": 51.72784,
+    "lng": 10.2508204,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "OberHaVel",
+    "lat": 52.918881,
+    "lng": 13.2279803,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "OsterHolZ",
+    "lat": 53.2604518,
+    "lng": 8.7435145,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "OLdenburg",
+    "lat": 53.1389753,
+    "lng": 8.2146017,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "OPladen",
+    "lat": 51.0657432,
+    "lng": 7.0088448,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "OstPrignitz, Ruppin",
+    "lat": 52.9207392,
+    "lng": 12.799944,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "OSnabrück",
+    "lat": 52.2719595,
+    "lng": 8.047635,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "OberSpreewald, Lausitz",
+    "lat": 51.8824836,
+    "lng": 14.0298466,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "OTtWeiler",
+    "lat": 49.4030447,
+    "lng": 7.1631469,
+    "state": "Saarland"
+  },
+  {
+    "name": "OberVIechtach",
+    "lat": 49.4602721,
+    "lng": 12.4189759,
+    "state": "Bayern"
+  },
+  {
+    "name": "OberVogtLand",
+    "lat": 50.2979763,
+    "lng": 12.3695116,
+    "state": "Sachsen"
+  },
+  {
+    "name": "OschatZ",
+    "lat": 51.2979627,
+    "lng": 13.1081103,
+    "state": "Sachsen"
+  },
+  {
+    "name": "Potsdam",
+    "lat": 52.4009309,
+    "lng": 13.0591397,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "PAssau",
+    "lat": 48.5748229,
+    "lng": 13.4609744,
+    "state": "Bayern"
+  },
+  {
+    "name": "PfAFfenhofen",
+    "lat": 49.2679464,
+    "lng": 11.0811275,
+    "state": "Bayern"
+  },
+  {
+    "name": "PfArrkircheN",
+    "lat": 48.4320329,
+    "lng": 12.9386266,
+    "state": "Bayern"
+  },
+  {
+    "name": "PARsberg",
+    "lat": 49.1598787,
+    "lng": 11.7187658,
+    "state": "Bayern"
+  },
+  {
+    "name": "PaderBorn",
+    "lat": 51.7177044,
+    "lng": 8.752653,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "ParCHim",
+    "lat": 53.4258455,
+    "lng": 11.8475244,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "PEine",
+    "lat": 52.3117289,
+    "lng": 10.251904,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "PEGnitz",
+    "lat": 49.75649,
+    "lng": 11.540944,
+    "state": "Bayern"
+  },
+  {
+    "name": "PForzheim",
+    "lat": 48.890934,
+    "lng": 8.7025509,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "PInneberg",
+    "lat": 53.7278939,
+    "lng": 9.6979598,
+    "state": "Schleswig-Holstein"
+  },
+  {
+    "name": "PIRna",
+    "lat": 50.9616923,
+    "lng": 13.9386643,
+    "state": "Sachsen"
+  },
+  {
+    "name": "PLauen",
+    "lat": 50.4950632,
+    "lng": 12.1346523,
+    "state": "Sachsen"
+  },
+  {
+    "name": "Potsdam, Mittelmark",
+    "lat": 52.3582619,
+    "lng": 13.0981281,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "PößNeck",
+    "lat": 50.694735,
+    "lng": 11.5953247,
+    "state": "Thüringen"
+  },
+  {
+    "name": "PRignitz",
+    "lat": 53.12352,
+    "lng": 11.9019357,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "PirmaSens",
+    "lat": 49.1996961,
+    "lng": 7.6087847,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "PaseWalk",
+    "lat": 53.5053677,
+    "lng": 13.9889049,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "PrenZlau",
+    "lat": 53.3167,
+    "lng": 13.866575,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "QuerFurT",
+    "lat": 51.378707,
+    "lng": 11.5974078,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "QuedLinBurg",
+    "lat": 51.7855428,
+    "lng": 11.1519933,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "RAstatt",
+    "lat": 48.8574209,
+    "lng": 8.2088088,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "ReiChenbach",
+    "lat": 50.6200076,
+    "lng": 12.298936,
+    "state": "Sachsen"
+  },
+  {
+    "name": "RenDsburg",
+    "lat": 54.3000225,
+    "lng": 9.6516356,
+    "state": "Schleswig-Holstein"
+  },
+  {
+    "name": "Ribnitz-DamGarten",
+    "lat": 54.2433326,
+    "lng": 12.4319733,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "REcklinghausen",
+    "lat": 51.6143815,
+    "lng": 7.1978546,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "REGen",
+    "lat": 49.1844212,
+    "lng": 12.4251773,
+    "state": "Bayern"
+  },
+  {
+    "name": "REHau",
+    "lat": 50.2500051,
+    "lng": 12.0332893,
+    "state": "Bayern"
+  },
+  {
+    "name": "REIchenhall",
+    "lat": 47.7222676,
+    "lng": 12.8760923,
+    "state": "Bayern"
+  },
+  {
+    "name": "Riesa, Großenhain",
+    "lat": 51.2762574,
+    "lng": 13.5234178,
+    "state": "Sachsen"
+  },
+  {
+    "name": "RotH",
+    "lat": 49.1952934,
+    "lng": 11.0566523,
+    "state": "Bayern"
+  },
+  {
+    "name": "RInteln",
+    "lat": 52.1873798,
+    "lng": 9.0804584,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "RIeDenburg",
+    "lat": 48.9717049,
+    "lng": 11.6927181,
+    "state": "Bayern"
+  },
+  {
+    "name": "RIEsa",
+    "lat": 51.3038241,
+    "lng": 13.308828,
+    "state": "Sachsen"
+  },
+  {
+    "name": "RochLitz",
+    "lat": 51.0456789,
+    "lng": 12.7990531,
+    "state": "Sachsen"
+  },
+  {
+    "name": "Röbel/Müritz",
+    "lat": 53.3768182,
+    "lng": 12.6059705,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "RatheNow",
+    "lat": 52.6063703,
+    "lng": 12.3382259,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "ROsenheim",
+    "lat": 47.8539273,
+    "lng": 12.127262,
+    "state": "Bayern"
+  },
+  {
+    "name": "RODing",
+    "lat": 49.1964174,
+    "lng": 12.5166987,
+    "state": "Bayern"
+  },
+  {
+    "name": "ROtenburg an der Fulda",
+    "lat": 51.018118,
+    "lng": 9.7487639,
+    "state": "Hessen"
+  },
+  {
+    "name": "ROcKenhausen",
+    "lat": 49.6290332,
+    "lng": 7.8206451,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "ROttenburg an der Laaber",
+    "lat": 48.7001539,
+    "lng": 12.0282878,
+    "state": "Bayern"
+  },
+  {
+    "name": "ROStock",
+    "lat": 54.0886707,
+    "lng": 12.1400211,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "ROthenburg ob der Tauber",
+    "lat": 49.3772526,
+    "lng": 10.1790017,
+    "state": "Bayern"
+  },
+  {
+    "name": "ROtenburg",
+    "lat": 53.1108906,
+    "lng": 9.4049292,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "Rhein-Pfalz",
+    "lat": 50.3095175,
+    "lng": 7.6201362,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "RemScheid",
+    "lat": 51.1798706,
+    "lng": 7.1943544,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "RosSLau",
+    "lat": 51.8882826,
+    "lng": 12.2434581,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "ReuTlingen",
+    "lat": 48.4919508,
+    "lng": 9.2114144,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "RUdolstadt",
+    "lat": 50.7206063,
+    "lng": 11.3401985,
+    "state": "Thüringen"
+  },
+  {
+    "name": "RaVensburg",
+    "lat": 47.7811014,
+    "lng": 9.612468,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "RottWeil",
+    "lat": 48.1678244,
+    "lng": 8.626979,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "RatZeburg",
+    "lat": 53.7011061,
+    "lng": 10.774288,
+    "state": "Schleswig-Holstein"
+  },
+  {
+    "name": "SAarBurg",
+    "lat": 49.6082527,
+    "lng": 6.548746,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "SchwAnDorf",
+    "lat": 49.3261854,
+    "lng": 12.1092708,
+    "state": "Bayern"
+  },
+  {
+    "name": "StAdtsteiNach",
+    "lat": 50.1616746,
+    "lng": 11.5055461,
+    "state": "Bayern"
+  },
+  {
+    "name": "SAlzWedel",
+    "lat": 52.8528456,
+    "lng": 11.1539699,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "SaarBrücken",
+    "lat": 49.234362,
+    "lng": 6.996379,
+    "state": "Saarland"
+  },
+  {
+    "name": "StrasBurG",
+    "lat": 53.5084448,
+    "lng": 13.7434101,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "SchöneBecK",
+    "lat": 52.0205998,
+    "lng": 11.7383277,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "SChwabach",
+    "lat": 49.3290521,
+    "lng": 11.0207677,
+    "state": "Bayern"
+  },
+  {
+    "name": "SChleiZ",
+    "lat": 50.5590505,
+    "lng": 11.8040013,
+    "state": "Thüringen"
+  },
+  {
+    "name": "SonDersHausen",
+    "lat": 51.3666041,
+    "lng": 10.8668419,
+    "state": "Thüringen"
+  },
+  {
+    "name": "StenDaL",
+    "lat": 52.6050782,
+    "lng": 11.8594279,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "SchweDT",
+    "lat": 53.0586366,
+    "lng": 14.2840858,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "SEgeberg",
+    "lat": 53.9232287,
+    "lng": 10.1612312,
+    "state": "Schleswig-Holstein"
+  },
+  {
+    "name": "SEBnitz",
+    "lat": 50.97098,
+    "lng": 14.2727203,
+    "state": "Sachsen"
+  },
+  {
+    "name": "SEElow",
+    "lat": 52.5318238,
+    "lng": 14.380704,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "SchEinFeld",
+    "lat": 49.6653406,
+    "lng": 10.462567,
+    "state": "Bayern"
+  },
+  {
+    "name": "SELb",
+    "lat": 50.169121,
+    "lng": 12.1297769,
+    "state": "Bayern"
+  },
+  {
+    "name": "SenFtenBerg",
+    "lat": 51.519201,
+    "lng": 14.0046541,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "StaßFurT",
+    "lat": 51.8514515,
+    "lng": 11.5929455,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "SolinGen",
+    "lat": 51.1721629,
+    "lng": 7.0845893,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "SanGerHausen",
+    "lat": 51.4729797,
+    "lng": 11.2981851,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "Schleswig-Holstein",
+    "lat": 53.6550707,
+    "lng": 9.9309123,
+    "state": "Schleswig-Holstein"
+  },
+  {
+    "name": "Schwäbisch HAll",
+    "lat": 49.1123963,
+    "lng": 9.7369047,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "StadtHaGen",
+    "lat": 52.3289688,
+    "lng": 9.2053496,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "Saale-Holzland-Kreis",
+    "lat": 50.9041255,
+    "lng": 11.7321914,
+    "state": "Thüringen"
+  },
+  {
+    "name": "SuHL",
+    "lat": 50.6086518,
+    "lng": 10.6926437,
+    "state": "Thüringen"
+  },
+  {
+    "name": "SIegen",
+    "lat": 50.8751175,
+    "lng": 8.0256131,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "SIGmaringen",
+    "lat": 48.0869139,
+    "lng": 9.2165039,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "SIMmern",
+    "lat": 49.9834956,
+    "lng": 7.5260197,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "SaaleKreis",
+    "lat": 51.4546989,
+    "lng": 11.850502,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "SchLeswig",
+    "lat": 54.51851,
+    "lng": 9.5653284,
+    "state": "Schleswig-Holstein"
+  },
+  {
+    "name": "SchLEiden",
+    "lat": 50.5285919,
+    "lng": 6.4761556,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "SaaLFeld",
+    "lat": 50.6479143,
+    "lng": 11.3610041,
+    "state": "Thüringen"
+  },
+  {
+    "name": "SauLGau",
+    "lat": 48.0158071,
+    "lng": 9.5010309,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "SalzLandKreis",
+    "lat": 51.8509799,
+    "lng": 11.6004622,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "SchmölLN",
+    "lat": 50.8971549,
+    "lng": 12.3520022,
+    "state": "Thüringen"
+  },
+  {
+    "name": "SaarLouiS",
+    "lat": 49.3164661,
+    "lng": 6.749846,
+    "state": "Saarland"
+  },
+  {
+    "name": "SaLZungen",
+    "lat": 50.812318,
+    "lng": 10.2320784,
+    "state": "Thüringen"
+  },
+  {
+    "name": "SchMalkalden",
+    "lat": 50.7213643,
+    "lng": 10.4510467,
+    "state": "Thüringen"
+  },
+  {
+    "name": "SchweriN",
+    "lat": 53.6288297,
+    "lng": 11.4148038,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "SOest",
+    "lat": 51.5725501,
+    "lng": 8.1061259,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "SchrOBenhausen",
+    "lat": 48.5613407,
+    "lng": 11.2654488,
+    "state": "Bayern"
+  },
+  {
+    "name": "SchOnGau",
+    "lat": 47.8118973,
+    "lng": 10.8972133,
+    "state": "Bayern"
+  },
+  {
+    "name": "Saale-Orla-Kreis",
+    "lat": 50.623351,
+    "lng": 11.7208511,
+    "state": "Thüringen"
+  },
+  {
+    "name": "SONneberg",
+    "lat": 50.3575412,
+    "lng": 11.1691714,
+    "state": "Thüringen"
+  },
+  {
+    "name": "SPeyer",
+    "lat": 49.3165553,
+    "lng": 8.433615,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "SPremBerg",
+    "lat": 51.5714513,
+    "lng": 14.3804302,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "SPree, Neiße",
+    "lat": 51.5729927,
+    "lng": 14.3793106,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "StRaubing",
+    "lat": 48.8839157,
+    "lng": 12.5955773,
+    "state": "Bayern"
+  },
+  {
+    "name": "StRausBerg",
+    "lat": 52.5588942,
+    "lng": 13.9042481,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "StadtROda",
+    "lat": 50.8582666,
+    "lng": 11.7263639,
+    "state": "Thüringen"
+  },
+  {
+    "name": "STeinfurt",
+    "lat": 52.138683,
+    "lng": 7.3678356,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "STArnberg",
+    "lat": 47.9986851,
+    "lng": 11.3410791,
+    "state": "Bayern"
+  },
+  {
+    "name": "STernBerg",
+    "lat": 53.7118374,
+    "lng": 11.8288314,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "STaDe",
+    "lat": 53.599794,
+    "lng": 9.475438,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "STaffelstEin",
+    "lat": 47.7563679,
+    "lng": 12.3583691,
+    "state": "Bayern"
+  },
+  {
+    "name": "STolLberg",
+    "lat": 50.7087734,
+    "lng": 12.7762607,
+    "state": "Sachsen"
+  },
+  {
+    "name": "STOckach",
+    "lat": 47.8530941,
+    "lng": 9.0134524,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "SiegbUrg",
+    "lat": 50.7928332,
+    "lng": 7.2070774,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "SULzbach-Rosenberg",
+    "lat": 49.5051888,
+    "lng": 11.7396963,
+    "state": "Bayern"
+  },
+  {
+    "name": "SchWeinfurt",
+    "lat": 50.0518552,
+    "lng": 10.2220921,
+    "state": "Bayern"
+  },
+  {
+    "name": "SchWAlbach",
+    "lat": 50.1490109,
+    "lng": 8.5357434,
+    "state": "Hessen"
+  },
+  {
+    "name": "SYke",
+    "lat": 52.9131332,
+    "lng": 8.8198737,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "SalZgitter",
+    "lat": 52.1503721,
+    "lng": 10.3593147,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "SchwarZenBerg",
+    "lat": 50.5449982,
+    "lng": 12.7876699,
+    "state": "Sachsen"
+  },
+  {
+    "name": "TauBerBischofsheim",
+    "lat": 49.6229682,
+    "lng": 9.6627138,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "TEcklenburg",
+    "lat": 52.2202557,
+    "lng": 7.8134148,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "TETerow",
+    "lat": 53.7709505,
+    "lng": 12.5753569,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "Teltow, Fläming",
+    "lat": 52.3930834,
+    "lng": 13.3592066,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "TorGau",
+    "lat": 51.5581272,
+    "lng": 13.0046538,
+    "state": "Sachsen"
+  },
+  {
+    "name": "THüringer Landtag",
+    "lat": 50.9639811,
+    "lng": 11.0344187,
+    "state": "Thüringen"
+  },
+  {
+    "name": "TIRschenreuth",
+    "lat": 49.8780234,
+    "lng": 12.3372095,
+    "state": "Bayern"
+  },
+  {
+    "name": "Torgau, Oschatz",
+    "lat": 51.3000968,
+    "lng": 13.0950521,
+    "state": "Sachsen"
+  },
+  {
+    "name": "TemPlin",
+    "lat": 53.1193496,
+    "lng": 13.5005559,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "TRier",
+    "lat": 49.7596208,
+    "lng": 6.6441878,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "TraunStein",
+    "lat": 47.8695272,
+    "lng": 12.6484621,
+    "state": "Bayern"
+  },
+  {
+    "name": "TeTtnang",
+    "lat": 47.6716558,
+    "lng": 9.5891158,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "TUTtlingen",
+    "lat": 47.9844315,
+    "lng": 8.8186606,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "UElzen",
+    "lat": 52.9840679,
+    "lng": 10.5385882,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "UEckerMünde",
+    "lat": 53.7371069,
+    "lng": 14.0458887,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "UFFenheim",
+    "lat": 49.5447684,
+    "lng": 10.2304674,
+    "state": "Bayern"
+  },
+  {
+    "name": "Unstrut, Hainich",
+    "lat": 51.1215225,
+    "lng": 10.5336634,
+    "state": "Thüringen"
+  },
+  {
+    "name": "ULm",
+    "lat": 48.3984968,
+    "lng": 9.9912458,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "UckerMark",
+    "lat": 53.2452631,
+    "lng": 13.9151351,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "UNna",
+    "lat": 51.5348835,
+    "lng": 7.689014,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "USIngen",
+    "lat": 50.350795,
+    "lng": 8.5231684,
+    "state": "Hessen"
+  },
+  {
+    "name": "Vogtland",
+    "lat": 50.5433275,
+    "lng": 12.0274781,
+    "state": "Sachsen"
+  },
+  {
+    "name": "VAIhingen",
+    "lat": 48.9321398,
+    "lng": 8.9568316,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "VogelsBerg",
+    "lat": 50.4932938,
+    "lng": 9.2400745,
+    "state": "Hessen"
+  },
+  {
+    "name": "VEChta",
+    "lat": 52.7310691,
+    "lng": 8.2873162,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "VERden",
+    "lat": 52.9759701,
+    "lng": 9.1808391,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "Vorpommern-Greifswald",
+    "lat": 53.7245862,
+    "lng": 13.8981847,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "VIlsBiburg",
+    "lat": 48.448482,
+    "lng": 12.355795,
+    "state": "Bayern"
+  },
+  {
+    "name": "VIErsen",
+    "lat": 51.2562118,
+    "lng": 6.3905476,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "VIechTach",
+    "lat": 49.0800743,
+    "lng": 12.8862723,
+    "state": "Bayern"
+  },
+  {
+    "name": "VölKlingen",
+    "lat": 49.2522866,
+    "lng": 6.859519,
+    "state": "Saarland"
+  },
+  {
+    "name": "VOHenstrauß",
+    "lat": 49.6238348,
+    "lng": 12.341436,
+    "state": "Bayern"
+  },
+  {
+    "name": "Vorpommern-Rügen",
+    "lat": 54.2288755,
+    "lng": 12.8131533,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "Villingen-Schwenningen",
+    "lat": 48.063152,
+    "lng": 8.4929618,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "Wuppertal",
+    "lat": 51.264018,
+    "lng": 7.1780374,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "WAldeck",
+    "lat": 51.2425113,
+    "lng": 9.0381211,
+    "state": "Hessen"
+  },
+  {
+    "name": "WArendorF",
+    "lat": 51.9532449,
+    "lng": 7.9912335,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "WArtburgKreis",
+    "lat": 50.8904031,
+    "lng": 10.2412685,
+    "state": "Thüringen"
+  },
+  {
+    "name": "WANne",
+    "lat": 51.5395374,
+    "lng": 7.1606968,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "WARburg",
+    "lat": 51.4886533,
+    "lng": 9.1488385,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "WATtenscheid",
+    "lat": 51.4817107,
+    "lng": 7.1356618,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "WittenBerg",
+    "lat": 51.8666527,
+    "lng": 12.646761,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "WorBiS",
+    "lat": 51.421618,
+    "lng": 10.3610936,
+    "state": "Thüringen"
+  },
+  {
+    "name": "WerDAu",
+    "lat": 50.7361377,
+    "lng": 12.3763847,
+    "state": "Sachsen"
+  },
+  {
+    "name": "WEimar",
+    "lat": 50.9793301,
+    "lng": 11.3297921,
+    "state": "Thüringen"
+  },
+  {
+    "name": "WEiLburg",
+    "lat": 50.4847448,
+    "lng": 8.2659245,
+    "state": "Hessen"
+  },
+  {
+    "name": "WEideN",
+    "lat": 50.0297657,
+    "lng": 11.2324766,
+    "state": "Bayern"
+  },
+  {
+    "name": "WERtingen",
+    "lat": 48.5619632,
+    "lng": 10.682637,
+    "state": "Bayern"
+  },
+  {
+    "name": "WESel",
+    "lat": 51.6576909,
+    "lng": 6.617087,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "WolFenbüttel",
+    "lat": 52.1625283,
+    "lng": 10.5348215,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "WanGen",
+    "lat": 47.6856552,
+    "lng": 9.8342247,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "WilhelmsHaVen",
+    "lat": 53.5278793,
+    "lng": 8.106301,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "WIesbaden",
+    "lat": 50.0820384,
+    "lng": 8.2416556,
+    "state": "Hessen"
+  },
+  {
+    "name": "WIttLich",
+    "lat": 49.9850353,
+    "lng": 6.88844,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "WISmar",
+    "lat": 53.8909832,
+    "lng": 11.4647932,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "WITten",
+    "lat": 51.4370171,
+    "lng": 7.335124,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "WItZenhausen",
+    "lat": 51.3331901,
+    "lng": 9.8434192,
+    "state": "Hessen"
+  },
+  {
+    "name": "WittstocK",
+    "lat": 53.1604863,
+    "lng": 12.4792939,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "Winsen",
+    "lat": 53.3636474,
+    "lng": 10.2059206,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "WoLGast",
+    "lat": 54.0536473,
+    "lng": 13.7757809,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "WeilheiM",
+    "lat": 47.8452213,
+    "lng": 11.1430287,
+    "state": "Bayern"
+  },
+  {
+    "name": "WolMirStedt",
+    "lat": 52.2484924,
+    "lng": 11.6267388,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "WaiblingeN",
+    "lat": 48.8325659,
+    "lng": 9.3163822,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "WeNDel",
+    "lat": 49.4669906,
+    "lng": 7.1696192,
+    "state": "Saarland"
+  },
+  {
+    "name": "WOrms",
+    "lat": 49.6302618,
+    "lng": 8.3620898,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "WOlfsBurg",
+    "lat": 52.4205588,
+    "lng": 10.7861682,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "WOlfHagen",
+    "lat": 51.3333355,
+    "lng": 9.1968854,
+    "state": "Hessen"
+  },
+  {
+    "name": "WOLfach",
+    "lat": 48.2985845,
+    "lng": 8.222608,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "WOlfRatshausen",
+    "lat": 47.9104632,
+    "lng": 11.4266377,
+    "state": "Bayern"
+  },
+  {
+    "name": "WOlfStein",
+    "lat": 49.2934763,
+    "lng": 11.4920384,
+    "state": "Bayern"
+  },
+  {
+    "name": "WernigeRode",
+    "lat": 51.8344172,
+    "lng": 10.7862526,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "WaReN",
+    "lat": 53.5156249,
+    "lng": 12.6850606,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "WasSerburg",
+    "lat": 48.0615171,
+    "lng": 12.220026,
+    "state": "Bayern"
+  },
+  {
+    "name": "WeisSenFels",
+    "lat": 51.1999793,
+    "lng": 11.9667857,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "WesterSTede",
+    "lat": 53.2575197,
+    "lng": 7.9273367,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "WeisSWasser",
+    "lat": 51.5054285,
+    "lng": 14.6381818,
+    "state": "Sachsen"
+  },
+  {
+    "name": "WaldshuT",
+    "lat": 47.6246179,
+    "lng": 8.2120605,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "WitTLage",
+    "lat": 52.3202944,
+    "lng": 8.3694195,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "WitTMund",
+    "lat": 53.5364786,
+    "lng": 7.7462334,
+    "state": "Niedersachsen"
+  },
+  {
+    "name": "WeißenbUrG",
+    "lat": 49.0305748,
+    "lng": 10.9718974,
+    "state": "Bayern"
+  },
+  {
+    "name": "WUNsiedel",
+    "lat": 50.0373241,
+    "lng": 12.0027278,
+    "state": "Bayern"
+  },
+  {
+    "name": "WURzen",
+    "lat": 51.3709574,
+    "lng": 12.7410574,
+    "state": "Sachsen"
+  },
+  {
+    "name": "WesterWald",
+    "lat": 50.5573089,
+    "lng": 7.7732177,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "WetZlar",
+    "lat": 50.570561,
+    "lng": 8.531245,
+    "state": "Hessen"
+  },
+  {
+    "name": "WanZLeben",
+    "lat": 52.0592898,
+    "lng": 11.4431958,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "Zwickau",
+    "lat": 50.7185043,
+    "lng": 12.4939267,
+    "state": "Sachsen"
+  },
+  {
+    "name": "ZErbst",
+    "lat": 51.9697398,
+    "lng": 12.0745464,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "ZELl",
+    "lat": 50.0275681,
+    "lng": 7.1813233,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "ZIttau",
+    "lat": 50.8960964,
+    "lng": 14.8064807,
+    "state": "Sachsen"
+  },
+  {
+    "name": "ZIeGenhain",
+    "lat": 50.9112278,
+    "lng": 9.2391073,
+    "state": "Hessen"
+  },
+  {
+    "name": "ZschoPau",
+    "lat": 50.7469606,
+    "lng": 13.0695613,
+    "state": "Sachsen"
+  },
+  {
+    "name": "ZeulenRoda",
+    "lat": 50.6487438,
+    "lng": 11.9795071,
+    "state": "Thüringen"
+  },
+  {
+    "name": "ZoSsen",
+    "lat": 52.2159073,
+    "lng": 13.4488958,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "ZWeibrücken",
+    "lat": 49.248655,
+    "lng": 7.3641981,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "ZeitZ",
+    "lat": 51.0491637,
+    "lng": 12.1349991,
+    "state": "Sachsen-Anhalt"
+  }
+]

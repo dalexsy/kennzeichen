@@ -9,6 +9,7 @@ import { LocalStorageService } from './services/local-storage';
 import { LicensePlateDisplay } from './components/license-plate-display/license-plate-display';
 import { SearchInput } from './components/search-input/search-input';
 import { LicensePlateList } from './components/kennzeichen-list/kennzeichen-list';
+import { MapComponent } from './components/map/map';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,8 @@ import { LicensePlateList } from './components/kennzeichen-list/kennzeichen-list
     CommonModule,
     LicensePlateDisplay,
     SearchInput,
-    LicensePlateList
+    LicensePlateList,
+    MapComponent
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss'

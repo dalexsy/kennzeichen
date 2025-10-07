@@ -1,6 +1,9 @@
 // Use main styles
 @use 'styles/main' as *;
 
+// Import Leaflet CSS
+@import 'leaflet/dist/leaflet.css';
+
 // Font Face Declaration - using relative path that works with base-href
 @font-face {
   font-family: 'EuroPlate';
@@ -86,4 +89,68 @@ app-root {
   min-height: 200px;
   color: $text-secondary;
   text-align: center;
+}
+
+// Leaflet popup overrides - must be in global styles
+.leaflet-popup-content-wrapper {
+  border-radius: 0.5rem !important;
+  font-family: $body-font !important;
+  background-color: $background-secondary !important;
+  color: $text-primary !important;
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1) !important;
+}
+
+.leaflet-popup-content {
+  margin: 1rem !important;
+  font-size: 1rem !important;
+  line-height: 1.5 !important;
+}
+
+.marker-popup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.marker-popup .popup-code {
+  font-family: $font-family-license-plate !important;
+  font-size: 1.5rem !important;
+  letter-spacing: 1px !important;
+  color: $text-primary !important;
+}
+
+.marker-popup .popup-city {
+  color: #18c09e !important;
+  font-weight: bold !important;
+}
+
+.marker-popup .popup-state {
+  color: $text-secondary !important;
+}
+
+.marker-popup .popup-origin {
+  color: #acacac !important;
+}
+
+.leaflet-popup-tip {
+  background: $background-secondary !important;
+}
+
+.leaflet-container {
+  font-family: $body-font !important;
+}
+
+.leaflet-popup-close-button {
+  color: $text-secondary !important;
+  font-size: 1.5rem !important;
+  line-height: 1 !important;
+  width: 1.5rem !important;
+  height: 1.5rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  &:hover {
+    color: $text-primary !important;
+  }
 }

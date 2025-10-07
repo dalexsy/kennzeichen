@@ -9,9 +9,37 @@
     top: 0;
     background-color: $background-primary;
     z-index: 20;
+    padding-bottom: 1rem;
   }
 
   .main {
+    .content-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem;
+
+      @media (min-width: 768px) {
+        flex-direction: row;
+        gap: 2rem;
+      }
+    }
+
+    .map-section {
+      flex: 0 0 auto;
+      background-color: $background-primary;
+
+      @media (min-width: 768px) {
+        flex: 1;
+        max-width: 500px;
+        position: sticky;
+        top: calc(200px + 4rem);
+        align-self: flex-start;
+        max-height: calc(100vh - 200px - 2rem);
+      }
+    }
   }
 
   .plate-display {
@@ -34,5 +62,8 @@
   }
 
   .list {
+    @media (min-width: 768px) {
+      flex: 1;
+    }
   }
 }

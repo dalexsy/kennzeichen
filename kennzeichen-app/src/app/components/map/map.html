@@ -1,0 +1,10 @@
+<button *ngIf="hasMarkers" class="map-toggle" (click)="toggleMap()" [attr.aria-label]="isMapVisible ? 'Hide map' : 'Show map'">
+  <span class="material-icons">{{ isMapVisible ? 'close' : 'map' }}</span>
+  <span class="toggle-text">{{ isMapVisible ? 'Close' : 'Map' }}</span>
+</button>
+
+<div class="map-overlay" [class.visible]="isMapVisible" (click)="onOverlayClick($event)">
+  <div class="map-container" (click)="onMapClick($event)">
+    <div #mapContainer class="map" id="map" style="height: 100%; width: 100%;"></div>
+  </div>
+</div>

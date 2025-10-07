@@ -1,34 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npx @angular/cli@latest new:*)",
-      "Bash(mkdir:*)",
-      "Bash(cp:*)",
-      "Bash(npx ng generate component:*)",
-      "Bash(npx ng generate service:*)",
-      "Bash(npm start)",
-      "Bash(npx ng serve:*)",
-      "Bash(netstat:*)",
-      "Bash(findstr:*)",
-      "WebFetch(domain:localhost)",
-      "Bash(curl:*)",
-      "Bash(node:*)",
-      "Bash(npm run build:*)",
-      "Bash(ng serve:*)",
-      "Bash(git add:*)",
-      "Bash(git config:*)",
-      "Bash(del nul)",
-      "Bash(git commit:*)",
-      "Bash(ng build)",
-      "Bash(ng build:*)",
-      "Bash(npx tsc:*)",
-      "Bash(rm:*)",
-      "Bash(dir:*)",
-      "Bash(find:*)",
-      "Bash(git push:*)",
-      "Bash(gh run list:*)",
-      "Bash(gh api:*)",
-      "WebFetch(domain:github.com)"
+      "Bash",
+      "WebFetch",
+      "WebSearch"
     ],
     "deny": [],
     "ask": []
