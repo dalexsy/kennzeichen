@@ -1,4 +1,5 @@
 @use '../../../styles/main' as *;
+@use 'sass:color';
 
 .search-input {
   width: 100%;
@@ -13,13 +14,18 @@
   }
 
   .field {
-    border: 0.125rem solid var(--border-primary);
+    border: 0;
     background-color: $background-secondary;
     color: $text-primary;
     padding: 1rem 3rem 1rem 1rem;
     font-family: $body-font;
     width: 100%;
     border-radius: 5rem;
+    text-transform: uppercase;
+
+    &::placeholder {
+      text-transform: none;
+    }
 
     &:focus {
       outline: none;
@@ -27,24 +33,39 @@
     }
   }
 
-  .clear {
+  .seen {
     position: absolute;
     right: 1rem;
     top: 50%;
     transform: translateY(-50%);
-    background: none;
+    background-color: $accent-tertiary;
     border: none;
-    color: $text-secondary;
+    color: white;
     cursor: pointer;
-    width: 1.5rem;
-    height: 1.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
 
-    &:hover {
-      background-color: var(--border-secondary);
+    &:active {
+      opacity: 0.7;
+    }
+
+    &.already-seen {
+      background-color: $border-primary;
+      color: white;
+      cursor: default;
+
+      &:hover {
+        opacity: 1;
+      }
+
+      &:active {
+        opacity: 1;
+      }
     }
   }
 }

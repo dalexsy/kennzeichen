@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "kennzeichen-app": {
+    "license-plate-app": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -62,10 +62,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "kennzeichen-app:build:production"
+              "buildTarget": "license-plate-app:build:production"
             },
             "development": {
-              "buildTarget": "kennzeichen-app:build:development"
+              "buildTarget": "license-plate-app:build:development"
             }
           },
           "defaultConfiguration": "development"

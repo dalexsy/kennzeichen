@@ -12,15 +12,17 @@
       spellcheck="false"
     />
 
-    <button
-      *ngIf="value"
-      type="button"
-      class="clear"
-      (click)="onClear()"
-      aria-label="Clear search"
-    >
-      ✕
-    </button>
+    @if (value) {
+      <button
+        type="button"
+        class="seen"
+        [class.already-seen]="localStorageService.getSeenDate(value.toUpperCase())"
+        (click)="onSeen()"
+        [attr.aria-label]="getSeenButtonText()"
+      >
+        {{ getSeenButtonText() }}
+      </button>
+    }
   </div>
 
 </div>

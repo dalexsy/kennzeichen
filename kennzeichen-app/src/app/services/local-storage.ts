@@ -74,6 +74,17 @@ export class LocalStorageService {
     return this.seenLicensePlatesSubject.value.has(code);
   }
 
+  getSeenDate(code: string): string | null {
+    try {
+      const seenData = this.getSeenDetails();
+      const found = seenData.find(item => item.code === code);
+      return found ? found.seenAt : null;
+    } catch (error) {
+      console.error('Error getting seen date:', error);
+      return null;
+    }
+  }
+
   getSeenCodes(): string[] {
     return Array.from(this.seenLicensePlatesSubject.value);
   }

@@ -29,5 +29,8 @@
     <div class="origin">
       <span [innerHTML]="getHighlightedOrigin()"></span>
     </div>
+    @if (isSeen && seenDate) {
+      <div class="seen-date">{{ getSeenDateText() }}</div>
+    }
   </div>
 </div>

@@ -11,8 +11,8 @@
 .license-plate {
   display: flex;
   background-color: $background-secondary;
-  border: 2px solid $text-primary;
   border-radius: 4px;
+  box-shadow: rgba(102, 84, 67, 0.2) 2px 2px;
   font-family: $font-family-license-plate;
   margin: 0;
   height: 5rem;
@@ -24,7 +24,7 @@
   letter-spacing: 2px;
 
   .eu-section {
-    background: #003399;
+    background: #4067c9;
     color: white;
     display: flex;
     flex-direction: column;
@@ -32,7 +32,6 @@
     justify-content: center;
     width: 40px;
     text-align: center;
-    border-right: 1px solid $text-primary;
   }
 
   .stars {
@@ -109,6 +108,7 @@
 
   .placeholder {
     color: $text-secondary;
+    opacity: 0.7;
   }
 
   .separator {
@@ -154,12 +154,6 @@
       background-color: #f39c12;
     }
   }
-
-  .numbers {
-    .placeholder {
-      color: $text-secondary;
-    }
-  }
 }
 
 .region-info {
@@ -173,7 +167,8 @@
     font-weight: 500;
     position: relative;
     padding: 0.25rem 1rem;
-    color: #18c09e;
+    text-align: center;
+    color: $text-primary;
 
     &::before {
       content: '';
@@ -182,7 +177,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: #18c09e;
+      background: $accent-secondary;
       clip-path: polygon(
         0.5rem 50%,
         0rem 0%,
@@ -191,8 +186,11 @@
         calc(100% - 0rem) 100%,
         0rem 100%
       );
-      opacity: 0.15;
       z-index: -1;
     }
+  }
+
+  .state-name {
+    text-align: center;
   }
 }

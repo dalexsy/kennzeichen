@@ -6,25 +6,31 @@
   color-scheme: light dark;
 
   // Light theme (default)
-  --text-primary: #212121;
-  --text-secondary: #757575;
-  --background-primary: #dffcf2;
-  --background-secondary: #ffffff;
+  --text-primary: #665443;
+  --text-secondary: #8f7e6e;
+  --background-primary: #fffae4;
+  --background-secondary: white;
   --border-primary: #bdbdbd;
   --border-secondary: #e0e0e0;
-  --primary: #18c09e;
+  --accent-primary: #f7a45f;
+  --accent-secondary: #ffe8ac;
+  --accent-secondary-hover: #facf76;
+  --accent-tertiary: #18c09e;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     // Dark theme
-    --text-primary: #e0e0e0;
-    --text-secondary: #a0a0a0;
-    --background-primary: #1a1a1a;
-    --background-secondary: #2d2d2d;
-    --border-primary: #424242;
-    --border-secondary: #303030;
-    --primary: #18c09e;
+    --text-primary: #e0d5c7;
+    --text-secondary: #b5a294;
+    --background-primary: #2a2419;
+    --background-secondary: #3d3529;
+    --border-primary: #5a4f43;
+    --border-secondary: #4a3f33;
+    --accent-primary: #f7a45f;
+    --accent-secondary: #ffe8ac;
+    --accent-secondary-hover: #facf76;
+    --accent-tertiary: #18c09e;
   }
 }
 
@@ -36,7 +42,10 @@ $background-primary: var(--background-primary);
 $background-secondary: var(--background-secondary);
 $border-primary: var(--border-primary);
 $border-secondary: var(--border-secondary);
-$primary: var(--primary);
+$accent-primary: var(--accent-primary);
+$accent-secondary: var(--accent-secondary);
+$accent-secondary-hover: var(--accent-secondary-hover);
+$accent-tertiary: var(--accent-tertiary);
 
 // License plate specific
 $font-family-license-plate: 'EuroPlate', monospace;

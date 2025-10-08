@@ -8,7 +8,7 @@
   gap: 1rem;
   border-radius: 0.25rem;
   flex-direction: column;
-  box-shadow: #00000033 2px 2px;
+  box-shadow: rgba(102, 84, 67, 0.2) 2px 2px;
   height: 100%;
 
   &:hover {
@@ -16,12 +16,39 @@
   }
 
   &.seen {
-    background-color: #e8f5e8;
-    border-color: #4caf50;
+    background-color: $accent-secondary;
+
+    .code {
+      color: $text-primary;
+    }
+
+    .origin,
+    .state {
+      color: rgba(102, 84, 67, 0.7); // $text-primary with opacity
+    }
+
+    .seen-date {
+      color: rgba(102, 84, 67, 0.85); // $text-primary with opacity
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .code {
+        color: #665443; // darker brown for dark mode
+      }
+
+      .origin,
+      .state {
+        color: rgba(102, 84, 67, 0.7);
+      }
+
+      .seen-date {
+        color: rgba(102, 84, 67, 0.85);
+      }
+    }
   }
 
   &.selected {
-    background-color: #18c09e;
+    background-color: $accent-primary;
     color: white;
 
     .city,
@@ -76,13 +103,19 @@
   }
 
   .city {
-    color: #18c09e;
+    color: $accent-primary;
     font-weight: bold;
   }
 
   .origin {
-    color: #acacac;
+    color: $text-secondary;
     text-align: right;
+  }
+
+  .seen-date {
+    color: $accent-secondary;
+    font-size: 0.875rem;
+    font-weight: 500;
   }
 
   .state {

@@ -208,7 +208,6 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
           <div class="popup-code">${licensePlate.code}</div>
           <div class="popup-city">${licensePlate.city_district}</div>
           <div class="popup-state">${licensePlate.federal_state}</div>
-          <div class="popup-origin">${licensePlate.derived_from}</div>
         </div>
       `);
 

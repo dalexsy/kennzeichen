@@ -3,14 +3,15 @@ import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { LicensePlate } from '../../models/license-plate.interface';
 import { LicensePlateGroup, LicensePlateService } from '../../services/license-plate';
-import { LicensePlateItem } from '../kennzeichen-item/kennzeichen-item';
+import { LocalStorageService } from '../../services/local-storage';
+import { LicensePlateItem } from '../license-plate-item/license-plate-item';
 import { ViewToggle } from '../view-toggle/view-toggle';
 
 @Component({
   selector: 'app-license-plate-list',
   imports: [CommonModule, LicensePlateItem, ViewToggle],
-  templateUrl: './kennzeichen-list.html',
-  styleUrl: './kennzeichen-list.scss'
+  templateUrl: './license-plate-list.html',
+  styleUrl: './license-plate-list.scss'
 })
 export class LicensePlateList {
   @Input() groupedLicensePlates$!: Observable<LicensePlateGroup[]>;
@@ -22,6 +23,7 @@ export class LicensePlateList {
   @Output() viewChange = new EventEmitter<'alphabetical' | 'grouped'>();
 
   private licensePlateService = inject(LicensePlateService);
+  private localStorageService = inject(LocalStorageService);
   viewMode$ = this.licensePlateService.viewMode$;
 
   onItemClicked(licensePlate: LicensePlate): void {
@@ -42,5 +44,9 @@ export class LicensePlateList {
 
   getTotalCount(groups: LicensePlateGroup[]): number {
     return groups.reduce((total, group) => total + group.licensePlates.length, 0);
+  }
+
+  getSeenDate(code: string): string | null {
+    return this.localStorageService.getSeenDate(code);
   }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "kennzeichen-app",
+  "name": "license-plate-app",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",

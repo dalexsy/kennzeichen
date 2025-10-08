@@ -169,7 +169,7 @@ export class LicensePlateService {
   }
 
   private loadLicensePlates(): void {
-    this.http.get<LicensePlateData>('kennzeichen.json')
+    this.http.get<LicensePlateData>('license-plates.json')
       .subscribe({
         next: (data) => {
           this.licensePlatesSubject.next(data.license_plates);

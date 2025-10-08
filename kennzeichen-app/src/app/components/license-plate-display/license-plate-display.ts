@@ -42,6 +42,16 @@ export class LicensePlateDisplay {
   }
 
   get placeholderNumbers(): string {
+    if (!this.enteredText) {
+      return '123';
+    }
+
+    // Get the top suggestion and use its area code if available
+    const suggestions = this.licensePlateService.getSuggestions(this.enteredText, 1);
+    if (suggestions.length > 0 && suggestions[0].area_code) {
+      return suggestions[0].area_code;
+    }
+
     return '123';
   }
 

@@ -9,7 +9,9 @@
       <div class="controls">
         <app-search-input
           [externalValue]="currentSearchTerm"
+          [seenCodes$]="seenCodes$"
           (searchChange)="onSearchChange($event)"
+          (seenClick)="onSeenClick($event)"
           class="search"
         ></app-search-input>
       </div>

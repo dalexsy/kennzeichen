@@ -8,7 +8,7 @@ import { LocalStorageService } from './services/local-storage';
 
 import { LicensePlateDisplay } from './components/license-plate-display/license-plate-display';
 import { SearchInput } from './components/search-input/search-input';
-import { LicensePlateList } from './components/kennzeichen-list/kennzeichen-list';
+import { LicensePlateList } from './components/license-plate-list/license-plate-list';
 import { MapComponent } from './components/map/map';
 
 @Component({
@@ -56,6 +56,12 @@ export class App implements OnInit {
     this.currentSearchTerm = searchTerm;
     this.selectedCode = '';  // Clear selection when typing
     this.licensePlateService.setSearchTerm(searchTerm);
+  }
+
+  onSeenClick(code: string): void {
+    if (code) {
+      this.localStorageService.markAsSeen(code.toUpperCase());
+    }
   }
 
   onStateChange(state: string): void {

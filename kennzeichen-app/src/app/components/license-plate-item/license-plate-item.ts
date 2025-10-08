@@ -6,14 +6,15 @@ import { RegionBadge } from '../region-badge/region-badge';
 @Component({
   selector: 'app-license-plate-item',
   imports: [CommonModule, RegionBadge],
-  templateUrl: './kennzeichen-item.html',
-  styleUrl: './kennzeichen-item.scss'
+  templateUrl: './license-plate-item.html',
+  styleUrl: './license-plate-item.scss'
 })
 export class LicensePlateItem {
   @Input() licensePlate!: LicensePlate;
   @Input() isSeen: boolean = false;
   @Input() isSelected: boolean = false;
   @Input() searchTerm: string = '';
+  @Input() seenDate: string | null = null;
   @Output() itemClicked = new EventEmitter<LicensePlate>();
 
   onClick(): void {
@@ -59,5 +60,32 @@ export class LicensePlateItem {
     }
 
     return result;
+  }
+
+  getSeenDateText(): string {
+    if (!this.seenDate) {
+      return '';
+    }
+
+    const seenDateObj = new Date(this.seenDate);
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    // Reset time parts for comparison
+    today.setHours(0, 0, 0, 0);
+    yesterday.setHours(0, 0, 0, 0);
+    seenDateObj.setHours(0, 0, 0, 0);
+
+    if (seenDateObj.getTime() === today.getTime()) {
+      return 'heute gesehen';
+    } else if (seenDateObj.getTime() === yesterday.getTime()) {
+      return 'gestern gesehen';
+    } else {
+      const day = seenDateObj.getDate().toString().padStart(2, '0');
+      const month = (seenDateObj.getMonth() + 1).toString().padStart(2, '0');
+      const year = seenDateObj.getFullYear();
+      return `gesehen am ${day}.${month}.${year}`;
+    }
   }
 }

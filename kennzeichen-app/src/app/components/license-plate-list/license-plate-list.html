@@ -44,6 +44,7 @@
               [isSeen]="(seenCodes$ | async)?.has(licensePlate.code) || false"
               [isSelected]="licensePlate.code === selectedCode"
               [searchTerm]="searchTerm"
+              [seenDate]="getSeenDate(licensePlate.code)"
               (itemClicked)="onItemClicked($event)"
             ></app-license-plate-item>
           </div>

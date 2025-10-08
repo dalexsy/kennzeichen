@@ -3,6 +3,9 @@ export interface LicensePlate {
   city_district: string;
   derived_from: string;
   federal_state: string;
+  area_code?: string;
+  lat?: number;
+  lng?: number;
 }
 
 export interface LicensePlateData {
