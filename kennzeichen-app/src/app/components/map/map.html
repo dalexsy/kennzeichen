@@ -1,8 +1,9 @@
 <button
-  *ngIf="hasMarkers"
+  *ngIf="hasMarkers || isMapVisible"
   class="map-toggle"
   (click)="toggleMap()"
   [attr.aria-label]="isMapVisible ? 'Hide map' : 'Show map'"
+  [class.hidden]="!hasMarkers && !isMapVisible"
 >
   <span class="material-icons">{{ isMapVisible ? 'close' : 'map' }}</span>
   <span class="toggle-text">{{ isMapVisible ? 'Schließen' : 'Karte' }}</span>

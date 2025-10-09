@@ -28,7 +28,7 @@ export class GeocodingService {
 
   private loadStaticCoordinates() {
     // Load all German cities from complete static file - no API calls needed
-    this.http.get<CityCoordinates[]>('/german-cities-complete.json').subscribe(cities => {
+    this.http.get<CityCoordinates[]>('german-cities-complete.json').subscribe(cities => {
       cities.forEach(city => {
         const cacheKey = `${city.name}-${city.state || 'unknown'}`;
         this.cache.set(cacheKey, city);

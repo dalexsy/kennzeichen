@@ -11,12 +11,13 @@
   }
 
   .spinner {
-    width: 24px;
-    height: 24px;
-    border: 2px solid $background-primary;
-    border-top: 2px solid $text-secondary;
+    width: 3rem;
+    height: 3rem;
+    border: 0.25rem solid $border-primary;
+    border-top: 0.25rem solid $accent-primary;
+    border-radius: 50%;
     animation: spin 1s linear infinite;
-    margin-bottom: 8px;
+    margin-bottom: 1rem;
   }
 
   .list-container {
