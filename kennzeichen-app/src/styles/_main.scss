@@ -7,12 +7,16 @@
 
   // Light theme (default)
   --text-primary: #665443;
+  --text-primary-outline: #665443cc;
   --text-secondary: #8f7e6e;
   --background-primary: #fffae4;
   --background-secondary: white;
   --border-primary: #bdbdbd;
   --border-secondary: #e0e0e0;
   --accent-primary: #f7a45f;
+  --accent-primary-light: #f9b679;
+  --accent-primary-selected: #fba258;
+  --accent-primary-selected-light: #ffab5f;
   --accent-secondary: #ffe8ac;
   --accent-secondary-hover: #facf76;
   --accent-tertiary: #18c09e;
@@ -22,20 +26,25 @@
   :root {
     // Dark theme
     --text-primary: #e0d5c7;
+    --text-primary-outline: #665443cc;
     --text-secondary: #b5a294;
     --background-primary: #2a2419;
     --background-secondary: #3d3529;
     --border-primary: #5a4f43;
     --border-secondary: #4a3f33;
     --accent-primary: #f7a45f;
-    --accent-secondary: #ffe8ac;
-    --accent-secondary-hover: #facf76;
+    --accent-primary-light: #d18a4d;
+    --accent-primary-selected: #8a4001;
+    --accent-primary-selected-light: #a35102;
+    --accent-secondary: #c9a665;
+    --accent-secondary-hover: #d4b06a;
     --accent-tertiary: #18c09e;
   }
 }
 
 // SCSS variables using CSS custom properties
 $text-primary: var(--text-primary);
+$text-primary-outline: var(--text-primary-outline);
 $text-secondary: var(--text-secondary);
 $body-font: 'Rubik', sans-serif;
 $background-primary: var(--background-primary);
@@ -43,6 +52,9 @@ $background-secondary: var(--background-secondary);
 $border-primary: var(--border-primary);
 $border-secondary: var(--border-secondary);
 $accent-primary: var(--accent-primary);
+$accent-primary-light: var(--accent-primary-light);
+$accent-primary-selected: var(--accent-primary-selected);
+$accent-primary-selected-light: var(--accent-primary-selected-light);
 $accent-secondary: var(--accent-secondary);
 $accent-secondary-hover: var(--accent-secondary-hover);
 $accent-tertiary: var(--accent-tertiary);

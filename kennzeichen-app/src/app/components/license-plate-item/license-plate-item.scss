@@ -1,5 +1,14 @@
 @use '../../../styles/main' as *;
 
+@keyframes slide {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(800px);
+  }
+}
+
 .license-plate-item {
   background: $background-secondary;
   cursor: pointer;
@@ -48,14 +57,42 @@
   }
 
   &.selected {
-    background-color: $accent-primary;
-    color: white;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: -800px;
+      right: -800px;
+      top: 0;
+      bottom: 0;
+      z-index: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        $accent-primary-selected 0,
+        $accent-primary-selected 20px,
+        $accent-primary-selected-light 20px,
+        $accent-primary-selected-light 40px
+      );
+      animation: slide 20s linear infinite;
+    }
+
+    .header,
+    .details {
+      position: relative;
+      z-index: 1;
+    }
 
     .city,
     .origin,
     .state,
     .code {
-      color: white;
+      color: $text-primary;
+    }
+
+    .city {
+      color: #8a4001;
     }
   }
 
