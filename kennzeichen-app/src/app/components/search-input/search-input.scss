@@ -58,6 +58,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 0.25rem;
+
+    .material-icons {
+      font-size: 1rem;
+    }
 
     &:active {
       opacity: 0.7;
@@ -66,14 +71,18 @@
     &.already-seen {
       background-color: $border-primary;
       color: white;
-      cursor: default;
+      cursor: pointer;
+
+      .material-icons {
+        transform: rotate(180deg);
+      }
 
       &:hover {
-        opacity: 1;
+        opacity: 0.8;
       }
 
       &:active {
-        opacity: 1;
+        opacity: 0.7;
       }
     }
   }

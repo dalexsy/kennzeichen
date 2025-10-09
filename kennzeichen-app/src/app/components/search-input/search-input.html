@@ -17,10 +17,13 @@
         type="button"
         class="seen"
         [class.already-seen]="localStorageService.getSeenDate(value.toUpperCase())"
-        (click)="onSeen()"
-        [attr.aria-label]="getSeenButtonText()"
+        (click)="onSeenToggle()"
+        [attr.aria-label]="getSeenButtonLabel()"
       >
-        {{ getSeenButtonText() }}
+        <span class="button-text">{{ getSeenButtonText() }}</span>
+        @if (localStorageService.getSeenDate(value.toUpperCase())) {
+          <span class="material-icons">refresh</span>
+        }
       </button>
     }
   </div>

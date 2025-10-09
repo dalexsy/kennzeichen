@@ -72,20 +72,29 @@ export class LicensePlateItem {
     const yesterday = new Date(today);
     yesterday.setDate(yesterday.getDate() - 1);
 
-    // Reset time parts for comparison
     today.setHours(0, 0, 0, 0);
     yesterday.setHours(0, 0, 0, 0);
     seenDateObj.setHours(0, 0, 0, 0);
 
-    if (seenDateObj.getTime() === today.getTime()) {
+    const diffTime = today.getTime() - seenDateObj.getTime();
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays === 0) {
       return 'heute gesehen';
-    } else if (seenDateObj.getTime() === yesterday.getTime()) {
+    } else if (diffDays === 1) {
       return 'gestern gesehen';
+    } else if (diffDays === 2) {
+      return 'vorgestern gesehen';
+    } else if (diffDays <= 7) {
+      return 'vor ein paar Tagen gesehen';
+    } else if (diffDays <= 14) {
+      return 'vor einer Woche gesehen';
+    } else if (diffDays <= 30) {
+      return 'vor ein paar Wochen gesehen';
+    } else if (diffDays <= 60) {
+      return 'vor einem Monat gesehen';
     } else {
-      const day = seenDateObj.getDate().toString().padStart(2, '0');
-      const month = (seenDateObj.getMonth() + 1).toString().padStart(2, '0');
-      const year = seenDateObj.getFullYear();
-      return `gesehen am ${day}.${month}.${year}`;
+      return 'vor langer Zeit gesehen';
     }
   }
 }

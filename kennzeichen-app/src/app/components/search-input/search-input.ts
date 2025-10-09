@@ -59,9 +59,31 @@ export class SearchInput implements ControlValueAccessor {
     this.inputChange.emit('');
   }
 
-  onSeen(): void {
-    this.seenClick.emit(this.value);
+  onSeenToggle(): void {
+    const code = this.value.toUpperCase();
+    const seenDate = this.localStorageService.getSeenDate(code);
+
+    if (seenDate) {
+      this.localStorageService.removeSeen(code);
+    } else {
+      this.seenClick.emit(this.value);
+    }
     this.onClear();
+  }
+
+  getSeenButtonLabel(): string {
+    if (!this.value) {
+      return 'Mark as seen';
+    }
+
+    const code = this.value.toUpperCase();
+    const seenDate = this.localStorageService.getSeenDate(code);
+
+    if (!seenDate) {
+      return 'Mark as seen';
+    }
+
+    return 'Mark as unseen';
   }
 
   getSeenButtonText(): string {
@@ -76,35 +98,7 @@ export class SearchInput implements ControlValueAccessor {
       return 'Gesehen?';
     }
 
-    const seenDateObj = new Date(seenDate);
-    const today = new Date();
-    const yesterday = new Date(today);
-    yesterday.setDate(yesterday.getDate() - 1);
-
-    // Reset time parts for comparison
-    today.setHours(0, 0, 0, 0);
-    yesterday.setHours(0, 0, 0, 0);
-    seenDateObj.setHours(0, 0, 0, 0);
-
-    if (seenDateObj.getTime() === today.getTime()) {
-      return 'Heute schon gesehen';
-    } else if (seenDateObj.getTime() === yesterday.getTime()) {
-      return 'Gestern schon gesehen';
-    } else {
-      // Calculate days ago
-      const diffTime = today.getTime() - seenDateObj.getTime();
-      const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-
-      if (diffDays === 2) {
-        return 'Vorgestern schon gesehen';
-      } else if (diffDays <= 7) {
-        return `Vor ${diffDays} Tagen schon gesehen`;
-      } else {
-        const day = seenDateObj.getDate().toString().padStart(2, '0');
-        const month = (seenDateObj.getMonth() + 1).toString().padStart(2, '0');
-        return `Am ${day}.${month}. schon gesehen`;
-      }
-    }
+    return 'Schon gesehen';
   }
 
   // ControlValueAccessor implementation

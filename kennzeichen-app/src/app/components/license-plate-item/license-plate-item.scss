@@ -17,7 +17,7 @@
   gap: 1rem;
   border-radius: 0.25rem;
   flex-direction: column;
-  box-shadow: rgba(102, 84, 67, 0.2) 2px 2px;
+  box-shadow: $box-shadow 2px 2px;
   height: 100%;
 
   &:hover {
@@ -33,25 +33,25 @@
 
     .origin,
     .state {
-      color: rgba(102, 84, 67, 0.7); // $text-primary with opacity
+      color: $seen-text-overlay;
     }
 
     .seen-date {
-      color: rgba(102, 84, 67, 0.85); // $text-primary with opacity
+      color: $seen-text-overlay-strong;
     }
 
     @media (prefers-color-scheme: dark) {
       .code {
-        color: #665443; // darker brown for dark mode
+        color: #665443;
       }
 
       .origin,
       .state {
-        color: rgba(102, 84, 67, 0.7);
+        color: $seen-text-overlay;
       }
 
       .seen-date {
-        color: rgba(102, 84, 67, 0.85);
+        color: $seen-text-overlay-strong;
       }
     }
   }
@@ -92,7 +92,7 @@
     }
 
     .city {
-      color: #8a4001;
+      color: $selected-city;
     }
   }
 
@@ -125,7 +125,7 @@
   }
 
   .seen-badge {
-    background-color: #4caf50;
+    background-color: $seen-badge;
     color: white;
     padding: 0.25rem 0.5rem;
     border-radius: 0.25rem;

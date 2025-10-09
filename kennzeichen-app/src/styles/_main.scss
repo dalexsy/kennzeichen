@@ -6,7 +6,7 @@
   color-scheme: light dark;
 
   // Light theme (default)
-  --text-primary: #665443;
+  --text-primary: #604328;
   --text-primary-outline: #665443cc;
   --text-secondary: #8f7e6e;
   --background-primary: #fffae4;
@@ -20,6 +20,13 @@
   --accent-secondary: #ffe8ac;
   --accent-secondary-hover: #facf76;
   --accent-tertiary: #18c09e;
+  --seen-badge: #4caf50;
+  --seen-text-overlay: rgba(102, 84, 67, 0.7);
+  --seen-text-overlay-strong: rgba(102, 84, 67, 0.85);
+  --region-badge-bg: #b0a49952;
+  --map-overlay-bg: rgba(0, 0, 0, 0.5);
+  --box-shadow: rgba(102, 84, 67, 0.2);
+  --selected-city: #8a4001;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -39,6 +46,13 @@
     --accent-secondary: #c9a665;
     --accent-secondary-hover: #d4b06a;
     --accent-tertiary: #18c09e;
+    --seen-badge: #4caf50;
+    --seen-text-overlay: rgba(102, 84, 67, 0.7);
+    --seen-text-overlay-strong: rgba(102, 84, 67, 0.85);
+    --region-badge-bg: #b0a49952;
+    --map-overlay-bg: rgba(0, 0, 0, 0.5);
+    --box-shadow: rgba(102, 84, 67, 0.2);
+    --selected-city: #8a4001;
   }
 }
 
@@ -58,6 +72,13 @@ $accent-primary-selected-light: var(--accent-primary-selected-light);
 $accent-secondary: var(--accent-secondary);
 $accent-secondary-hover: var(--accent-secondary-hover);
 $accent-tertiary: var(--accent-tertiary);
+$seen-badge: var(--seen-badge);
+$seen-text-overlay: var(--seen-text-overlay);
+$seen-text-overlay-strong: var(--seen-text-overlay-strong);
+$region-badge-bg: var(--region-badge-bg);
+$map-overlay-bg: var(--map-overlay-bg);
+$box-shadow: var(--box-shadow);
+$selected-city: var(--selected-city);
 
 // License plate specific
 $font-family-license-plate: 'EuroPlate', monospace;
