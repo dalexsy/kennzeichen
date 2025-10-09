@@ -110,10 +110,18 @@ app-root {
   box-shadow: rgba(102, 84, 67, 0.2) 3px 3px !important;
 }
 
+.leaflet-tile-pane {
+  filter: brightness(0.8) sepia(0.8);
+}
+
+.leaflet-popup-close-button {
+  top: 0.5rem !important;
+  right: 0.5rem !important;
+}
+
 .marker-popup {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
 }
 
 .marker-popup .popup-code {
@@ -121,6 +129,7 @@ app-root {
   font-size: 1.5rem !important;
   letter-spacing: 1px !important;
   color: $text-primary !important;
+  line-height: 1.2 !important;
 }
 
 .marker-popup .popup-city {

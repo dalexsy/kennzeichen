@@ -18,6 +18,9 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
   private map: L.Map | null = null;
   private markers: Map<string, L.Marker> = new Map();
   private selectedMarker: L.Marker | null = null;
+  private currentTileLayer: L.TileLayer | null = null;
+  private darkModeMediaQuery: MediaQueryList | null = null;
+  private handleThemeChange = () => this.updateTileLayer();
 
   isMapVisible = false;
   hasMarkers = false;
@@ -58,6 +61,7 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnInit() {
     this.initializeMap();
+    this.setupThemeListener();
     // Don't load all markers on init - wait for user to filter
   }
 
@@ -109,21 +113,21 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
     if (this.map) {
       this.map.remove();
     }
+    if (this.darkModeMediaQuery) {
+      this.darkModeMediaQuery.removeEventListener('change', this.handleThemeChange);
+    }
   }
 
   private initializeMap() {
     // Initialize map centered on Germany
     this.map = L.map(this.mapContainer.nativeElement, {
       preferCanvas: false,
-      attributionControl: true,
+      attributionControl: false,
       zoomControl: true
     }).setView([51.1657, 10.4515], 6);
 
-    // Add OpenStreetMap tiles
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      maxZoom: 18
-    }).addTo(this.map);
+    // Add appropriate tile layer based on theme
+    this.updateTileLayer();
 
     // Fix for default markers not showing
     this.fixLeafletIcons();
@@ -137,23 +141,7 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private fixLeafletIcons() {
-    // Fix for Leaflet default icon paths in Angular
-    const iconRetinaUrl = 'marker-icon-2x.png';
-    const iconUrl = 'marker-icon.png';
-    const shadowUrl = 'marker-shadow.png';
-
-    const iconDefault = L.icon({
-      iconRetinaUrl,
-      iconUrl,
-      shadowUrl,
-      iconSize: [25, 41],
-      iconAnchor: [12, 41],
-      popupAnchor: [0, -41],
-      tooltipAnchor: [16, -28],
-      shadowSize: [41, 41]
-    });
-
-    L.Marker.prototype.options.icon = iconDefault;
+    // Using custom DivIcon markers instead of default icons
   }
 
   private loadLicensePlateLocations() {
@@ -239,18 +227,18 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
     this.hasMarkers = this.markers.size > 0;
   }
 
-  private createMarkerIcon(isSelected: boolean): L.Icon {
-    const iconUrl = isSelected ? 'marker-icon-selected.png' : 'marker-icon.png';
+  private createMarkerIcon(isSelected: boolean): L.DivIcon {
+    const size = isSelected ? 32 : 24;
+    const pinClass = isSelected ? 'marker-pin selected' : 'marker-pin';
+    const html = `<div class="${pinClass}"></div>`;
+    const remOffset = 16; // approximately 1rem in pixels
 
-    return L.icon({
-      iconUrl: iconUrl,
-      iconRetinaUrl: isSelected ? 'marker-icon-selected-2x.png' : 'marker-icon-2x.png',
-      shadowUrl: 'marker-shadow.png',
-      iconSize: isSelected ? [30, 49] : [25, 41],
-      iconAnchor: isSelected ? [15, 49] : [12, 41],
-      popupAnchor: [0, isSelected ? -49 : -41],
-      tooltipAnchor: [16, -28],
-      shadowSize: [41, 41]
+    return L.divIcon({
+      className: 'custom-marker-wrapper',
+      html: html,
+      iconSize: [size, size],
+      iconAnchor: [size / 2, size + remOffset],
+      popupAnchor: [0, -size - remOffset]
     });
   }
 
@@ -277,5 +265,39 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
     if (!this.selectedCode) {
       this.selectedMarker = null;
     }
+  }
+
+  private setupThemeListener() {
+    this.darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    this.darkModeMediaQuery.addEventListener('change', this.handleThemeChange);
+  }
+
+  private updateTileLayer() {
+    if (!this.map) return;
+
+    // Remove existing tile layer
+    if (this.currentTileLayer) {
+      this.map.removeLayer(this.currentTileLayer);
+    }
+
+    // Check if dark mode is active
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    const thunderforestApiKey = 'd45b5f13492c4c4ab99727aee1164ac7';
+
+    // Add appropriate tile layer
+    if (isDarkMode) {
+      this.currentTileLayer = L.tileLayer(`https://{s}.tile.thunderforest.com/transport-dark/{z}/{x}/{y}.png?apikey=${thunderforestApiKey}`, {
+        attribution: 'Maps © <a href="https://www.thunderforest.com">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 22
+      });
+    } else {
+      this.currentTileLayer = L.tileLayer(`https://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=${thunderforestApiKey}`, {
+        attribution: 'Maps © <a href="https://www.thunderforest.com">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 22
+      });
+    }
+
+    this.currentTileLayer.addTo(this.map);
   }
 }
