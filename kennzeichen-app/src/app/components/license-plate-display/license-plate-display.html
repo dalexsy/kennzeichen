@@ -20,7 +20,7 @@
 
     <div class="main">
       <div class="code">
-        <span class="entered">{{ displayText.slice(0, enteredText.length) }}</span
+        <span class="entered" *ngFor="let char of animatedChars.slice(0, enteredText.length); let i = index">{{ char }}</span
         ><span class="placeholder">{{ displayText.slice(enteredText.length) }}</span>
       </div>
 
@@ -30,7 +30,7 @@
       </div>
 
       <div class="numbers">
-        <span class="placeholder">{{ placeholderNumbers }}</span>
+        <span *ngFor="let digit of animatedNumbers" [class.placeholder]="!hasActualNumbers">{{ digit }}</span>
       </div>
     </div>
   </div>
