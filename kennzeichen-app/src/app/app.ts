@@ -77,7 +77,7 @@ export class App implements OnInit {
     } else {
       this.selectedCode = licensePlate.code;
       this.currentSearchTerm = licensePlate.code;
-      this.licensePlateService.setSearchTerm('');  // Don't filter the list
+      this.licensePlateService.setSearchTerm(licensePlate.code);
     }
   }
 

@@ -19,7 +19,7 @@ export class LicensePlateDisplay {
 
   get displayText(): string {
     if (!this.enteredText) {
-      return 'XXX';
+      return 'ABC';
     }
 
     // Get the top suggestion based on entered text

@@ -23,6 +23,7 @@
       <app-map
         [licensePlates]="(filteredLicensePlates$ | async) || []"
         [selectedCode]="selectedCode"
+        (codeSelected)="onLicensePlateClicked($event)"
         class="map-section"
       ></app-map>
 

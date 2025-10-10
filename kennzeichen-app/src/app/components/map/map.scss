@@ -1,4 +1,5 @@
 @use '../../../styles/main' as *;
+@use 'sass:color';
 
 .map-toggle {
   position: fixed;
@@ -105,9 +106,29 @@
   border-radius: 50% 50% 50% 0;
   transform: rotate(-45deg);
   border: 2px solid $background-primary;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &.selected {
     background-color: $accent-primary;
     border-color: $accent-secondary;
+  }
+
+  .marker-code {
+    transform: rotate(45deg);
+    color: white;
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-align: center;
+    line-height: 1;
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  }
+}
+
+:host ::ng-deep .marker-popup {
+  .popup-code {
+    font-weight: 700;
+    text-decoration: none;
   }
 }

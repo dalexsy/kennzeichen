@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, ElementRef, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, ElementRef, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import * as L from 'leaflet';
 import { GeocodingService, CityCoordinates } from '../../services/geocoding';
@@ -14,6 +14,7 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild('mapContainer', { static: true }) mapContainer!: ElementRef;
   @Input() licensePlates: LicensePlate[] = [];
   @Input() selectedCode: string = '';
+  @Output() codeSelected = new EventEmitter<LicensePlate>();
 
   private map: L.Map | null = null;
   private markers: Map<string, L.Marker> = new Map();
@@ -25,11 +26,20 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
   isMapVisible = false;
   hasMarkers = false;
 
+  get shouldShowMapButton(): boolean {
+    return this.hasMarkers || this.isMapVisible || (this.licensePlates.length > 0 && this.licensePlates.length <= 100);
+  }
+
   constructor(private geocodingService: GeocodingService) {}
 
   toggleMap() {
     this.isMapVisible = !this.isMapVisible;
     if (this.isMapVisible && this.map) {
+      // Load markers if not already loaded
+      if (this.markers.size === 0 && this.licensePlates.length > 0 && this.licensePlates.length <= 100) {
+        this.refreshMap();
+      }
+
       // Force map to redraw when shown - need longer delay for overlay transition
       setTimeout(() => {
         if (this.map) {
@@ -73,7 +83,6 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
 
       if (!changes['licensePlates'].firstChange) {
         if (shouldShowMarkers) {
-          console.log('Map updating with', this.licensePlates.length, 'plates');
           this.refreshMap();
         } else {
           this.clearMarkers();
@@ -187,17 +196,33 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
 
     // Create custom icon for selected state
     const isSelected = this.selectedCode === licensePlate.code;
-    const icon = this.createMarkerIcon(isSelected);
+    const icon = this.createMarkerIcon(isSelected, licensePlate.code);
 
     const marker = L.marker([coordinates.lat, coordinates.lng], { icon })
       .addTo(this.map)
       .bindPopup(`
         <div class="marker-popup">
-          <div class="popup-code">${licensePlate.code}</div>
+          <a href="#" class="popup-code">${licensePlate.code}</a>
           <div class="popup-city">${licensePlate.city_district}</div>
           <div class="popup-state">${licensePlate.federal_state}</div>
         </div>
       `);
+
+    // Add click handler for popup code link
+    marker.on('popupopen', () => {
+      const popup = marker.getPopup();
+      if (popup) {
+        const popupElement = popup.getElement();
+        const codeLink = popupElement?.querySelector('.popup-code') as HTMLAnchorElement;
+        if (codeLink) {
+          codeLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.codeSelected.emit(licensePlate);
+            this.isMapVisible = false;
+          });
+        }
+      }
+    });
 
     // Open popup if this is the selected license plate
     if (isSelected) {
@@ -227,18 +252,26 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
     this.hasMarkers = this.markers.size > 0;
   }
 
-  private createMarkerIcon(isSelected: boolean): L.DivIcon {
-    const size = isSelected ? 32 : 24;
+  private createMarkerIcon(isSelected: boolean, code: string): L.DivIcon {
+    const remInPixels = 16; // 1rem = 16px
+    const markerSizeRem = 2;
+    const size = markerSizeRem * remInPixels; // 2rem = 32px
+    const tailOffsetRem = 1; // Extra offset for the teardrop tail
+    const tailOffset = tailOffsetRem * remInPixels;
+
     const pinClass = isSelected ? 'marker-pin selected' : 'marker-pin';
-    const html = `<div class="${pinClass}"></div>`;
-    const remOffset = 16; // approximately 1rem in pixels
+    const html = `
+      <div class="${pinClass}">
+        <span class="marker-code">${code}</span>
+      </div>
+    `;
 
     return L.divIcon({
       className: 'custom-marker-wrapper',
       html: html,
       iconSize: [size, size],
-      iconAnchor: [size / 2, size + remOffset],
-      popupAnchor: [0, -size - remOffset]
+      iconAnchor: [size / 2, size + tailOffset],
+      popupAnchor: [0, -size - tailOffset]
     });
   }
 
@@ -246,7 +279,7 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
     // Reset all markers to normal
     this.markers.forEach((marker, code) => {
       const isSelected = code === this.selectedCode;
-      const icon = this.createMarkerIcon(isSelected);
+      const icon = this.createMarkerIcon(isSelected, code);
       marker.setIcon(icon);
 
       if (isSelected) {
