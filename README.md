@@ -21,6 +21,13 @@ The area codes are mapped from multiple datasets and may not be 100% accurate, b
 ## Development
 
 ```bash
+npm install  # installs dependencies in kennzeichen-app/
+npm start    # runs ng serve from kennzeichen-app/
+```
+
+Or from the kennzeichen-app directory:
+
+```bash
 cd kennzeichen-app
 npm install
 npm start

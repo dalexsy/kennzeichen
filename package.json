@@ -1,0 +1,11 @@
+{
+  "name": "kennzeichen",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "postinstall": "cd kennzeichen-app && npm install",
+    "start": "cd kennzeichen-app && npm start",
+    "build": "cd kennzeichen-app && npm run build",
+    "test": "cd kennzeichen-app && npm test"
+  }
+}
