@@ -33,6 +33,9 @@ export class LicensePlateList implements AfterViewInit, AfterViewChecked, OnDest
   totalSections = 0;
   private lastSectionCount = 0;
   private isScrolling = false;
+  private scrollListener = () => this.cdr.detectChanges();
+  private lastClickTime = 0;
+  private clickTimeout: any = null;
 
   onItemClicked(licensePlate: LicensePlate): void {
     this.itemClicked.emit(licensePlate);
@@ -60,9 +63,11 @@ export class LicensePlateList implements AfterViewInit, AfterViewChecked, OnDest
 
   ngAfterViewInit(): void {
     this.updateNavButtonVisibility();
+    window.addEventListener('scroll', this.scrollListener);
   }
 
   ngOnDestroy(): void {
+    window.removeEventListener('scroll', this.scrollListener);
   }
 
   ngAfterViewChecked(): void {
@@ -96,7 +101,7 @@ export class LicensePlateList implements AfterViewInit, AfterViewChecked, OnDest
 
     const sections = Array.from(container.querySelectorAll('.group')) as HTMLElement[];
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    const stickyHeaderOffset = 15 * 16;
+    const stickyHeaderOffset = 253;
 
     let currentIndex = 0;
 
@@ -104,7 +109,7 @@ export class LicensePlateList implements AfterViewInit, AfterViewChecked, OnDest
       const rect = sections[i].getBoundingClientRect();
       const absoluteTop = rect.top + scrollTop;
 
-      if (absoluteTop <= scrollTop + stickyHeaderOffset + 10) {
+      if (absoluteTop <= scrollTop + stickyHeaderOffset + 50) {
         currentIndex = i;
         break;
       }
@@ -116,54 +121,86 @@ export class LicensePlateList implements AfterViewInit, AfterViewChecked, OnDest
   scrollToNextSection(): void {
     if (this.isScrolling) return;
 
-    const container = this.listContainer?.nativeElement;
-    if (!container) return;
+    const now = Date.now();
+    const timeSinceLastClick = now - this.lastClickTime;
 
-    const sections = Array.from(container.querySelectorAll('.group')) as HTMLElement[];
-    const currentIndex = this.getCurrentSectionIndex();
-
-    if (currentIndex < sections.length - 1) {
-      this.isScrolling = true;
-      this.scrollToSection(sections[currentIndex + 1]);
-
-      setTimeout(() => {
-        this.isScrolling = false;
-      }, 500);
+    // Double-click detection (within 300ms)
+    if (timeSinceLastClick < 300) {
+      clearTimeout(this.clickTimeout);
+      this.scrollToBottom();
+      this.lastClickTime = 0;
+      return;
     }
+
+    this.lastClickTime = now;
+
+    // Single click with delay to detect potential double-click
+    this.clickTimeout = setTimeout(() => {
+      const container = this.listContainer?.nativeElement;
+      if (!container) return;
+
+      const sections = Array.from(container.querySelectorAll('.group')) as HTMLElement[];
+      const currentIndex = this.getCurrentSectionIndex();
+
+      if (currentIndex < sections.length - 1) {
+        this.isScrolling = true;
+        this.scrollToSection(sections[currentIndex + 1]);
+
+        setTimeout(() => {
+          this.isScrolling = false;
+        }, 600);
+      }
+    }, 300);
   }
 
   scrollToPreviousSection(): void {
     if (this.isScrolling) return;
 
-    const container = this.listContainer?.nativeElement;
-    if (!container) return;
+    const now = Date.now();
+    const timeSinceLastClick = now - this.lastClickTime;
 
-    const sections = Array.from(container.querySelectorAll('.group')) as HTMLElement[];
-    const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    const stickyHeaderOffset = 15 * 16;
-    let currentIndex = this.getCurrentSectionIndex();
-
-    const currentSection = sections[currentIndex];
-    const rect = currentSection.getBoundingClientRect();
-    const absoluteTop = rect.top + scrollTop;
-
-    if (absoluteTop < scrollTop + stickyHeaderOffset - 10) {
-      this.isScrolling = true;
-      this.scrollToSection(currentSection);
-      setTimeout(() => {
-        this.isScrolling = false;
-      }, 500);
-    } else if (currentIndex > 0) {
-      this.isScrolling = true;
-      this.scrollToSection(sections[currentIndex - 1]);
-      setTimeout(() => {
-        this.isScrolling = false;
-      }, 500);
+    // Double-click detection (within 300ms)
+    if (timeSinceLastClick < 300) {
+      clearTimeout(this.clickTimeout);
+      this.scrollToTop();
+      this.lastClickTime = 0;
+      return;
     }
+
+    this.lastClickTime = now;
+
+    // Single click with delay to detect potential double-click
+    this.clickTimeout = setTimeout(() => {
+      const container = this.listContainer?.nativeElement;
+      if (!container) return;
+
+      const sections = Array.from(container.querySelectorAll('.group')) as HTMLElement[];
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const stickyHeaderOffset = 253;
+      let currentIndex = this.getCurrentSectionIndex();
+
+      const currentSection = sections[currentIndex];
+      const rect = currentSection.getBoundingClientRect();
+      const absoluteTop = rect.top + scrollTop;
+
+      if (absoluteTop < scrollTop + stickyHeaderOffset - 50) {
+        this.isScrolling = true;
+        this.scrollToSection(currentSection);
+        setTimeout(() => {
+          this.isScrolling = false;
+        }, 600);
+      } else if (currentIndex > 0) {
+        this.isScrolling = true;
+        this.scrollToSection(sections[currentIndex - 1]);
+        setTimeout(() => {
+          this.isScrolling = false;
+        }, 600);
+      }
+    }, 300);
   }
 
   private scrollToSection(section: HTMLElement): void {
-    const stickyHeaderOffset = 15 * 16;
+    const stickyHeaderOffset = 253;
     const rect = section.getBoundingClientRect();
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
     const absoluteTop = rect.top + scrollTop;
@@ -173,6 +210,35 @@ export class LicensePlateList implements AfterViewInit, AfterViewChecked, OnDest
       top: targetScroll,
       behavior: 'smooth'
     });
+  }
+
+  private scrollToTop(): void {
+    this.isScrolling = true;
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+    setTimeout(() => {
+      this.isScrolling = false;
+    }, 600);
+  }
+
+  private scrollToBottom(): void {
+    this.isScrolling = true;
+    const documentHeight = Math.max(
+      document.body.scrollHeight,
+      document.body.offsetHeight,
+      document.documentElement.clientHeight,
+      document.documentElement.scrollHeight,
+      document.documentElement.offsetHeight
+    );
+    window.scrollTo({
+      top: documentHeight,
+      behavior: 'smooth'
+    });
+    setTimeout(() => {
+      this.isScrolling = false;
+    }, 600);
   }
 
   canScrollNext(): boolean {
