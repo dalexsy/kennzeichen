@@ -266,9 +266,9 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
 
   private createMarkerIcon(isSelected: boolean, code: string): L.DivIcon {
     const remInPixels = 16; // 1rem = 16px
-    const markerSizeRem = 2;
-    const size = markerSizeRem * remInPixels; // 2rem = 32px
-    const tailOffsetRem = 1; // Extra offset for the teardrop tail
+    const markerSizeRem = 2.5;
+    const size = markerSizeRem * remInPixels; // 2.5rem = 40px
+    const tailOffsetRem = 1.25; // Extra offset for the teardrop tail
     const tailOffset = tailOffsetRem * remInPixels;
 
     const pinClass = isSelected ? 'marker-pin selected' : 'marker-pin';

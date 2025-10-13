@@ -21,6 +21,7 @@ export class LicensePlateList implements AfterViewInit, AfterViewChecked, OnDest
   @Input() selectedCode: string = '';
   @Input() isLoading: boolean = false;
   @Input() isMapButtonVisible: boolean = false;
+  @Input() targetScrollPosition: number = -1;
   @Output() itemClicked = new EventEmitter<LicensePlate>();
   @Output() viewChange = new EventEmitter<'alphabetical' | 'grouped'>();
 
@@ -81,6 +82,14 @@ export class LicensePlateList implements AfterViewInit, AfterViewChecked, OnDest
         setTimeout(() => {
           this.updateNavButtonVisibility();
         }, 0);
+      }
+
+      // Apply target scroll position if set
+      if (this.targetScrollPosition >= 0) {
+        window.scrollTo({
+          top: this.targetScrollPosition,
+          behavior: 'instant'
+        });
       }
     }
   }

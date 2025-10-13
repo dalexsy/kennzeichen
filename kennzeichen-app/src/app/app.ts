@@ -37,6 +37,9 @@ export class App implements OnInit {
   currentSearchTerm = '';
   selectedCode = '';
   isLoading = true;
+  targetScrollPosition = -1;
+  private savedScrollPosition = 0;
+  private savedSearchTerm = '';
 
   get isMapButtonVisible(): boolean {
     return this.mapComponent?.shouldShowMapButton || false;
@@ -77,10 +80,23 @@ export class App implements OnInit {
   onLicensePlateClicked(licensePlate: LicensePlate): void {
     // Toggle selection
     if (this.selectedCode === licensePlate.code) {
+      // Deselecting - set target scroll position to prevent flicker
+      this.targetScrollPosition = this.savedScrollPosition;
+
+      // Restore previous state
       this.selectedCode = '';
-      this.currentSearchTerm = '';
-      this.licensePlateService.setSearchTerm('');
+      this.currentSearchTerm = this.savedSearchTerm;
+      this.licensePlateService.setSearchTerm(this.savedSearchTerm);
+
+      // Reset target scroll position after view has updated
+      setTimeout(() => {
+        this.targetScrollPosition = -1;
+      }, 100);
     } else {
+      // Selecting - save current state
+      this.savedScrollPosition = window.scrollY || document.documentElement.scrollTop;
+      this.savedSearchTerm = this.currentSearchTerm;
+
       this.selectedCode = licensePlate.code;
       this.currentSearchTerm = licensePlate.code;
       this.licensePlateService.setSearchTerm(licensePlate.code);
