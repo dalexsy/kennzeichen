@@ -20,8 +20,7 @@
 
     <div class="main">
       <div class="code">
-        <span class="entered" *ngFor="let char of animatedChars.slice(0, enteredText.length); let i = index">{{ char }}</span
-        ><span class="placeholder">{{ displayText.slice(enteredText.length) }}</span>
+        <span *ngFor="let char of animatedChars; let i = index" [class.entered]="i < enteredText.length" [class.placeholder]="i >= enteredText.length">{{ char }}</span>
       </div>
 
       <div class="separator">

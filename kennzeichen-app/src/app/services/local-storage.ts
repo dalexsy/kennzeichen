@@ -11,6 +11,7 @@ export interface SeenLicensePlate {
 })
 export class LocalStorageService {
   private readonly SEEN_KEY = 'license-plates-seen';
+  private readonly VIEW_MODE_KEY = 'view-mode-preference';
   private seenLicensePlatesSubject = new BehaviorSubject<Set<string>>(new Set());
 
   public seenLicensePlates$ = this.seenLicensePlatesSubject.asObservable();
@@ -149,6 +150,25 @@ export class LocalStorageService {
     } catch (error) {
       console.error('Error getting recently seen:', error);
       return [];
+    }
+  }
+
+  // View mode preference
+  saveViewMode(mode: 'alphabetical' | 'grouped'): void {
+    try {
+      localStorage.setItem(this.VIEW_MODE_KEY, mode);
+    } catch (error) {
+      console.error('Error saving view mode:', error);
+    }
+  }
+
+  getViewMode(): 'alphabetical' | 'grouped' | null {
+    try {
+      const mode = localStorage.getItem(this.VIEW_MODE_KEY);
+      return mode as 'alphabetical' | 'grouped' | null;
+    } catch (error) {
+      console.error('Error getting view mode:', error);
+      return null;
     }
   }
 }

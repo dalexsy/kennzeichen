@@ -1,3 +1,6 @@
+// Forward mixins and variables
+@forward 'abstracts';
+
 // Google Fonts Import
 @import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
 
@@ -41,18 +44,18 @@
     --border-secondary: #4a3f33;
     --accent-primary: #f7a45f;
     --accent-primary-light: #d18a4d;
-    --accent-primary-selected: #8a4001;
-    --accent-primary-selected-light: #a35102;
+    --accent-primary-selected: #6a3100;
+    --accent-primary-selected-light: #6e3601;
     --accent-secondary: #745538;
     --accent-secondary-hover: #d4b06a;
     --accent-tertiary: #18c09e;
     --seen-badge: #4caf50;
-    --seen-text-overlay: rgba(102, 84, 67, 0.7);
-    --seen-text-overlay-strong: rgba(102, 84, 67, 0.85);
+    --seen-text-overlay: #b0a499;
+    --seen-text-overlay-strong: #e0d5c2;
     --region-badge-bg: #b0a49952;
     --map-overlay-bg: rgba(0, 0, 0, 0.5);
     --box-shadow: rgba(102, 84, 67, 0.2);
-    --selected-city: #8a4001;
+    --selected-city: #e78532;
   }
 }
 

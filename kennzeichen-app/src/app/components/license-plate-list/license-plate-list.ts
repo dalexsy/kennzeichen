@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, inject, ElementRef, ViewChild, AfterViewInit, AfterViewChecked, ChangeDetectorRef, OnDestroy, HostListener } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject, ElementRef, ViewChild, AfterViewInit, AfterViewChecked, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { LicensePlate } from '../../models/license-plate.interface';
@@ -20,6 +20,7 @@ export class LicensePlateList implements AfterViewInit, AfterViewChecked, OnDest
   @Input() searchTerm: string = '';
   @Input() selectedCode: string = '';
   @Input() isLoading: boolean = false;
+  @Input() isMapButtonVisible: boolean = false;
   @Output() itemClicked = new EventEmitter<LicensePlate>();
   @Output() viewChange = new EventEmitter<'alphabetical' | 'grouped'>();
 
@@ -31,7 +32,6 @@ export class LicensePlateList implements AfterViewInit, AfterViewChecked, OnDest
   showNavButtons = false;
   totalSections = 0;
   private lastSectionCount = 0;
-  private scrollCheckInterval?: number;
   private isScrolling = false;
 
   onItemClicked(licensePlate: LicensePlate): void {
@@ -60,16 +60,9 @@ export class LicensePlateList implements AfterViewInit, AfterViewChecked, OnDest
 
   ngAfterViewInit(): void {
     this.updateNavButtonVisibility();
-    // Check scroll position periodically to update arrow visibility
-    this.scrollCheckInterval = window.setInterval(() => {
-      this.cdr.detectChanges();
-    }, 100);
   }
 
   ngOnDestroy(): void {
-    if (this.scrollCheckInterval) {
-      clearInterval(this.scrollCheckInterval);
-    }
   }
 
   ngAfterViewChecked(): void {
@@ -78,10 +71,8 @@ export class LicensePlateList implements AfterViewInit, AfterViewChecked, OnDest
       const sections = container.querySelectorAll('.group');
       const currentCount = sections.length;
 
-      // Only update if section count changed to avoid excessive updates
       if (currentCount !== this.lastSectionCount) {
         this.lastSectionCount = currentCount;
-        // Use setTimeout to defer the update and avoid ExpressionChangedAfterItHasBeenCheckedError
         setTimeout(() => {
           this.updateNavButtonVisibility();
         }, 0);

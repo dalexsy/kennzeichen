@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable, BehaviorSubject } from 'rxjs';
 
@@ -24,6 +24,8 @@ import { MapComponent } from './components/map/map';
   styleUrl: './app.scss'
 })
 export class App implements OnInit {
+  @ViewChild(MapComponent) mapComponent?: MapComponent;
+
   title = 'German License Plate Lookup';
 
   // Observables from services
@@ -35,6 +37,10 @@ export class App implements OnInit {
   currentSearchTerm = '';
   selectedCode = '';
   isLoading = true;
+
+  get isMapButtonVisible(): boolean {
+    return this.mapComponent?.shouldShowMapButton || false;
+  }
 
   constructor(
     private licensePlateService: LicensePlateService,

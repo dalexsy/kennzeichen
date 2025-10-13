@@ -64,7 +64,7 @@
 
   .group-heading {
     position: sticky;
-    top: 15.5rem;
+    top: 253px;
     background-color: $background-primary;
     z-index: 10;
     gap: 1rem;
@@ -72,13 +72,69 @@
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
+
+    @include tablet-up {
+      padding-right: 3.5rem;
+    }
   }
 
   .group-items {
     display: grid;
     gap: 1rem;
-    padding: 0 1rem;
+    padding: 0 0.125rem;
     grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  }
+
+  .section-nav {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    z-index: 100;
+    transition: bottom 0.2s;
+
+    &.map-button-visible {
+      bottom: 5.5rem;
+    }
+
+    @include tablet-up {
+      top: 16.5rem;
+      bottom: auto;
+    }
+
+    @include desktop-up {
+      right: calc(50% - 600px - 3rem);
+    }
+  }
+
+  .nav-button {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background-color: $accent-tertiary;
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 2px 2px $box-shadow;
+    transition: all 0.2s;
+
+    .material-icons {
+      font-size: 1.5rem;
+    }
+
+    &:hover {
+      background-color: $accent-primary-selected;
+      transform: scale(1.05);
+    }
+
+    &:active {
+      background-color: $accent-primary-selected-light;
+    }
   }
 }
 

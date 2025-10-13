@@ -1,1 +1,19 @@
-// Empty - no mixins needed
+// Dark mode mixin for consistent theming
+@mixin dark-mode {
+  @media (prefers-color-scheme: dark) {
+    @content;
+  }
+}
+
+// Mobile-first breakpoint mixin
+@mixin tablet-up {
+  @media (min-width: 768px) {
+    @content;
+  }
+}
+
+@mixin desktop-up {
+  @media (min-width: 1280px) {
+    @content;
+  }
+}

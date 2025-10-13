@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, combineLatest, map } from 'rxjs';
 import { LicensePlate, LicensePlateData, LicensePlateWithSeen } from '../models/license-plate.interface';
+import { LocalStorageService } from './local-storage';
 
 export interface LicensePlateGroup {
   state: string;
@@ -12,10 +13,13 @@ export interface LicensePlateGroup {
   providedIn: 'root'
 })
 export class LicensePlateService {
+  private localStorageService = inject(LocalStorageService);
   private licensePlatesSubject = new BehaviorSubject<LicensePlate[]>([]);
   private searchTermSubject = new BehaviorSubject<string>('');
   private stateFilterSubject = new BehaviorSubject<string>('');
-  private viewModeSubject = new BehaviorSubject<'alphabetical' | 'grouped'>('alphabetical');
+  private viewModeSubject = new BehaviorSubject<'alphabetical' | 'grouped'>(
+    this.localStorageService.getViewMode() || 'alphabetical'
+  );
 
   public licensePlates$ = this.licensePlatesSubject.asObservable();
   public searchTerm$ = this.searchTermSubject.asObservable();
@@ -190,6 +194,7 @@ export class LicensePlateService {
 
   setViewMode(mode: 'alphabetical' | 'grouped'): void {
     this.viewModeSubject.next(mode);
+    this.localStorageService.saveViewMode(mode);
   }
 
   getLicensePlateByCode(code: string): LicensePlate | undefined {

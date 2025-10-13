@@ -27,7 +27,19 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
   hasMarkers = false;
 
   get shouldShowMapButton(): boolean {
-    return this.hasMarkers || this.isMapVisible || (this.licensePlates.length > 0 && this.licensePlates.length <= 100);
+    if (this.hasMarkers || this.isMapVisible) {
+      return true;
+    }
+
+    // Only show map button if we have plates with valid locations
+    if (this.licensePlates.length > 0 && this.licensePlates.length <= 100) {
+      const hasValidLocations = this.licensePlates.some(
+        plate => plate.derived_from && plate.derived_from !== 'willkürlich gewählt'
+      );
+      return hasValidLocations;
+    }
+
+    return false;
   }
 
   constructor(private geocodingService: GeocodingService) {}
@@ -316,18 +328,18 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
     // Check if dark mode is active
     const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-    const thunderforestApiKey = 'd45b5f13492c4c4ab99727aee1164ac7';
-
     // Add appropriate tile layer
     if (isDarkMode) {
-      this.currentTileLayer = L.tileLayer(`https://{s}.tile.thunderforest.com/transport-dark/{z}/{x}/{y}.png?apikey=${thunderforestApiKey}`, {
-        attribution: 'Maps © <a href="https://www.thunderforest.com">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        maxZoom: 22
+      this.currentTileLayer = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {
+        minZoom: 0,
+        maxZoom: 20,
+        attribution: '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       });
     } else {
-      this.currentTileLayer = L.tileLayer(`https://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=${thunderforestApiKey}`, {
-        attribution: 'Maps © <a href="https://www.thunderforest.com">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        maxZoom: 22
+      this.currentTileLayer = L.tileLayer('https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png', {
+        minZoom: 0,
+        maxZoom: 20,
+        attribution: '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       });
     }
 

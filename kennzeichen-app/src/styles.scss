@@ -111,7 +111,11 @@ app-root {
 }
 
 .leaflet-tile-pane {
-  filter: brightness(0.8) sepia(0.8);
+  filter: sepia(0.1) saturate(2) hue-rotate(378deg);
+
+  @include dark-mode {
+    filter: sepia(0.4) contrast(1.4);
+  }
 }
 
 .leaflet-popup-close-button {

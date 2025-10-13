@@ -7,6 +7,7 @@
   <div
     *ngIf="!isLoading && (groupedLicensePlates$ | async) as groupedList"
     class="list-container"
+    #listContainer
   >
     <div
       *ngIf="getTotalCount(groupedList) === 0"
@@ -51,5 +52,25 @@
         </div>
       </div>
     </div>
+
+  </div>
+
+  <div *ngIf="showNavButtons && getTotalCount((groupedLicensePlates$ | async) || []) > 0" class="section-nav" [class.map-button-visible]="isMapButtonVisible">
+    <button
+      *ngIf="canScrollPrevious()"
+      class="nav-button prev"
+      (click)="scrollToPreviousSection()"
+      aria-label="Previous section"
+    >
+      <span class="material-icons">keyboard_arrow_up</span>
+    </button>
+    <button
+      *ngIf="canScrollNext()"
+      class="nav-button next"
+      (click)="scrollToNextSection()"
+      aria-label="Next section"
+    >
+      <span class="material-icons">keyboard_arrow_down</span>
+    </button>
   </div>
 </div>

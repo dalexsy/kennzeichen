@@ -13,7 +13,7 @@
     z-index: 20;
     padding-bottom: 1rem;
 
-    @media (min-width: 768px) {
+    @include tablet-up {
       position: sticky;
       left: auto;
       right: auto;
@@ -23,7 +23,7 @@
   .main {
     padding-top: 13rem;
 
-    @media (min-width: 768px) {
+    @include tablet-up {
       padding-top: 0;
     }
 
@@ -33,9 +33,9 @@
       gap: 2rem;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 1rem;
+      padding: 0 1rem;
 
-      @media (min-width: 768px) {
+      @include tablet-up {
         flex-direction: row;
         gap: 2rem;
       }
@@ -44,14 +44,14 @@
     .map-section {
       flex: 0 0 auto;
       background-color: $background-primary;
+      margin-top: 1rem;
 
-      @media (min-width: 768px) {
+      @include tablet-up {
         flex: 1;
         max-width: 500px;
         position: sticky;
-        top: calc(200px + 4rem);
+        top: calc(253px + 1rem);
         align-self: flex-start;
-        max-height: calc(100vh - 200px - 2rem);
       }
     }
   }
@@ -76,7 +76,7 @@
   }
 
   .list {
-    @media (min-width: 768px) {
+    @include tablet-up {
       flex: 1;
     }
   }
