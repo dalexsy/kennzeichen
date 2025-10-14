@@ -1,4 +1,4 @@
-<div class="license-plate-list">
+<div class="license-plate-list" [class.has-nav-buttons]="showNavButtons">
   <div *ngIf="isLoading" class="loading">
     <div class="spinner"></div>
     <p>Kennzeichendaten werden geladen...</p>
@@ -30,9 +30,20 @@
           *ngFor="let group of groupedList; let i = index; trackBy: trackByState"
           class="group"
         >
-          <h3 class="group-heading">
-            {{ group.state }} ({{ group.licensePlates.length }})
+          <h3 class="group-heading" [class.focused]="isGroupFocused(group.state)">
+            <div class="heading-content" (click)="onGroupHeadingClick(group)">
+              <span class="state-color-tile" [class]="getStateColorClass(group.state)" *ngIf="(viewMode$ | async) === 'grouped'"></span>
+              <span class="heading-text">{{ group.state }} ({{ group.licensePlates.length }})</span>
+            </div>
+            <button
+              *ngIf="focusedGroup"
+              class="show-all-button"
+              (click)="onGroupHeadingClick(group)"
+            >
+              Alles zeigen
+            </button>
             <app-view-toggle
+              *ngIf="!focusedGroup"
               [currentView]="(viewMode$ | async) || 'alphabetical'"
               (viewChange)="onViewChange($event)"
               class="view-toggle"

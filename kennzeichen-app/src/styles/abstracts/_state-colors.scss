@@ -1,0 +1,50 @@
+@mixin state-colors {
+  &.state-0 {
+    background-color: #a14c2e;
+  }
+  &.state-1 {
+    background-color: #b35c37;
+  }
+  &.state-2 {
+    background-color: #c56f3a;
+  }
+  &.state-3 {
+    background-color: #d6833d;
+  }
+  &.state-4 {
+    background-color: #e79a40;
+  }
+  &.state-5 {
+    background-color: #e9b643;
+  }
+  &.state-6 {
+    background-color: #c9b747;
+  }
+  &.state-7 {
+    background-color: #a1a74c;
+  }
+  &.state-8 {
+    background-color: #7e9454;
+  }
+  &.state-9 {
+    background-color: #5f805a;
+  }
+  &.state-10 {
+    background-color: #4e6f62;
+  }
+  &.state-11 {
+    background-color: #4a616c;
+  }
+  &.state-12 {
+    background-color: #565a77;
+  }
+  &.state-13 {
+    background-color: #64567e;
+  }
+  &.state-14 {
+    background-color: #72567c;
+  }
+  &.state-15 {
+    background-color: #7f5578;
+  }
+}

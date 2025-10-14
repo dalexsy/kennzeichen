@@ -23,7 +23,9 @@
       <app-map
         [licensePlates]="(filteredLicensePlates$ | async) || []"
         [selectedCode]="selectedCode"
+        [stateFilter]="licensePlateService.getCurrentStateFilter()"
         (codeSelected)="onLicensePlateClicked($event)"
+        (stateFilterChange)="onStateChange($event)"
         class="map-section"
       ></app-map>
 
@@ -35,8 +37,10 @@
         [isLoading]="isLoading"
         [isMapButtonVisible]="isMapButtonVisible"
         [targetScrollPosition]="targetScrollPosition"
+        [focusedGroup]="focusedGroup"
         (itemClicked)="onLicensePlateClicked($event)"
         (viewChange)="onViewChange($event)"
+        (groupHeadingClicked)="onGroupHeadingClicked($event)"
         class="list"
       ></app-license-plate-list>
     </div>

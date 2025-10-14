@@ -110,6 +110,10 @@ app-root {
   box-shadow: rgba(102, 84, 67, 0.2) 3px 3px !important;
 }
 
+.leaflet-marker-pane {
+  // filter: sepia(0.3) brightness(1.4);
+}
+
 .leaflet-tile-pane {
   filter: sepia(0.1) saturate(2) hue-rotate(378deg);
 

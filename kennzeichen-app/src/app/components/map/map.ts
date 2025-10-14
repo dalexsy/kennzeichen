@@ -4,6 +4,12 @@ import * as L from 'leaflet';
 import { GeocodingService, CityCoordinates } from '../../services/geocoding';
 import { LicensePlate } from '../../models/license-plate.interface';
 
+export interface StateInfo {
+  name: string;
+  code: string;
+  index: number;
+}
+
 @Component({
   selector: 'app-map',
   imports: [CommonModule],
@@ -14,7 +20,9 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild('mapContainer', { static: true }) mapContainer!: ElementRef;
   @Input() licensePlates: LicensePlate[] = [];
   @Input() selectedCode: string = '';
+  @Input() stateFilter: string = '';
   @Output() codeSelected = new EventEmitter<LicensePlate>();
+  @Output() stateFilterChange = new EventEmitter<string>();
 
   private map: L.Map | null = null;
   private markers: Map<string, L.Marker> = new Map();
@@ -25,6 +33,8 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
 
   isMapVisible = false;
   hasMarkers = false;
+  private stateIndexMap: Map<string, number> = new Map();
+  states: StateInfo[] = [];
 
   get shouldShowMapButton(): boolean {
     if (this.hasMarkers || this.isMapVisible) {
@@ -32,7 +42,7 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     // Only show map button if we have plates with valid locations
-    if (this.licensePlates.length > 0 && this.licensePlates.length <= 100) {
+    if (this.licensePlates.length > 0 && this.licensePlates.length <= 200) {
       const hasValidLocations = this.licensePlates.some(
         plate => plate.derived_from && plate.derived_from !== 'willkürlich gewählt'
       );
@@ -42,13 +52,66 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
     return false;
   }
 
-  constructor(private geocodingService: GeocodingService) {}
+  constructor(private geocodingService: GeocodingService) {
+    this.initializeStateIndices();
+  }
+
+  private initializeStateIndices(): void {
+    const germanStatesData = [
+      { name: 'Baden-Württemberg', code: 'BW' },
+      { name: 'Bayern', code: 'BY' },
+      { name: 'Berlin', code: 'BE' },
+      { name: 'Brandenburg', code: 'BB' },
+      { name: 'Bremen', code: 'HB' },
+      { name: 'Hamburg', code: 'HH' },
+      { name: 'Hessen', code: 'HE' },
+      { name: 'Mecklenburg-Vorpommern', code: 'MV' },
+      { name: 'Niedersachsen', code: 'NI' },
+      { name: 'Nordrhein-Westfalen', code: 'NW' },
+      { name: 'Rheinland-Pfalz', code: 'RP' },
+      { name: 'Saarland', code: 'SL' },
+      { name: 'Sachsen', code: 'SN' },
+      { name: 'Sachsen-Anhalt', code: 'ST' },
+      { name: 'Schleswig-Holstein', code: 'SH' },
+      { name: 'Thüringen', code: 'TH' }
+    ];
+
+    germanStatesData.forEach((state, index) => {
+      this.stateIndexMap.set(state.name, index);
+      this.states.push({
+        name: state.name,
+        code: state.code,
+        index: index
+      });
+    });
+  }
+
+  private getStateClass(state: string): string {
+    const index = this.stateIndexMap.get(state);
+    return index !== undefined ? `state-${index}` : '';
+  }
+
+  onStateTileClick(state: StateInfo): void {
+    if (this.stateFilter === state.name) {
+      this.stateFilterChange.emit('');
+    } else {
+      this.stateFilterChange.emit(state.name);
+    }
+  }
+
+  isStateActive(state: StateInfo): boolean {
+    return this.stateFilter === state.name;
+  }
+
+  isStateDimmed(state: StateInfo): boolean {
+    return this.stateFilter !== '' && this.stateFilter !== state.name;
+  }
 
   toggleMap() {
     this.isMapVisible = !this.isMapVisible;
     if (this.isMapVisible && this.map) {
       // Load markers if not already loaded
-      if (this.markers.size === 0 && this.licensePlates.length > 0 && this.licensePlates.length <= 100) {
+      if (this.markers.size === 0 && this.licensePlates.length > 0 && this.licensePlates.length <= 200) {
         this.refreshMap();
       }
 
@@ -90,8 +153,8 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes['licensePlates'] && this.map) {
       // Only show markers if user has filtered (less than all plates)
-      // or if there are 100 or fewer results
-      const shouldShowMarkers = this.licensePlates.length > 0 && this.licensePlates.length <= 100;
+      // or if there are 200 or fewer results
+      const shouldShowMarkers = this.licensePlates.length > 0 && this.licensePlates.length <= 200;
 
       if (!changes['licensePlates'].firstChange) {
         if (shouldShowMarkers) {
@@ -104,7 +167,7 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
     if (changes['selectedCode'] && this.map && !changes['selectedCode'].firstChange) {
       if (this.selectedCode) {
         // Check if we're showing filtered markers (many) or single marker mode
-        const hasFilteredMarkers = this.licensePlates.length <= 100;
+        const hasFilteredMarkers = this.licensePlates.length <= 200;
 
         if (hasFilteredMarkers && this.markers.size > 1) {
           // Already showing filtered markers - just highlight
@@ -119,7 +182,7 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
         }
       } else {
         // Deselected - clear single marker or unhighlight
-        const hasFilteredMarkers = this.licensePlates.length <= 100;
+        const hasFilteredMarkers = this.licensePlates.length <= 200;
         if (!hasFilteredMarkers || this.markers.size <= 1) {
           this.clearMarkers();
         } else {
@@ -208,7 +271,8 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
 
     // Create custom icon for selected state
     const isSelected = this.selectedCode === licensePlate.code;
-    const icon = this.createMarkerIcon(isSelected, licensePlate.code);
+    const stateClass = this.getStateClass(licensePlate.federal_state);
+    const icon = this.createMarkerIcon(isSelected, licensePlate.code, stateClass);
 
     const marker = L.marker([coordinates.lat, coordinates.lng], { icon })
       .addTo(this.map)
@@ -264,14 +328,15 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
     this.hasMarkers = this.markers.size > 0;
   }
 
-  private createMarkerIcon(isSelected: boolean, code: string): L.DivIcon {
+  private createMarkerIcon(isSelected: boolean, code: string, stateClass: string): L.DivIcon {
     const remInPixels = 16; // 1rem = 16px
     const markerSizeRem = 2.5;
     const size = markerSizeRem * remInPixels; // 2.5rem = 40px
     const tailOffsetRem = 1.25; // Extra offset for the teardrop tail
     const tailOffset = tailOffsetRem * remInPixels;
 
-    const pinClass = isSelected ? 'marker-pin selected' : 'marker-pin';
+    const selectedClass = isSelected ? 'selected' : '';
+    const pinClass = `marker-pin ${stateClass} ${selectedClass}`.trim();
     const html = `
       <div class="${pinClass}">
         <span class="marker-code">${code}</span>
@@ -291,7 +356,9 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
     // Reset all markers to normal
     this.markers.forEach((marker, code) => {
       const isSelected = code === this.selectedCode;
-      const icon = this.createMarkerIcon(isSelected, code);
+      const plate = this.licensePlates.find(p => p.code === code);
+      const stateClass = plate ? this.getStateClass(plate.federal_state) : '';
+      const icon = this.createMarkerIcon(isSelected, code, stateClass);
       marker.setIcon(icon);
 
       if (isSelected) {

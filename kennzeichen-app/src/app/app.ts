@@ -38,6 +38,7 @@ export class App implements OnInit {
   selectedCode = '';
   isLoading = true;
   targetScrollPosition = -1;
+  focusedGroup = '';
   private savedScrollPosition = 0;
   private savedSearchTerm = '';
 
@@ -46,7 +47,7 @@ export class App implements OnInit {
   }
 
   constructor(
-    private licensePlateService: LicensePlateService,
+    public licensePlateService: LicensePlateService,
     private localStorageService: LocalStorageService
   ) {
     this.filteredLicensePlates$ = this.licensePlateService.filteredLicensePlates$;
@@ -74,7 +75,30 @@ export class App implements OnInit {
   }
 
   onStateChange(state: string): void {
-    this.licensePlateService.setStateFilter(state);
+    const currentStateFilter = this.licensePlateService.getCurrentStateFilter();
+
+    if (state === '') {
+      // Clearing filter - restore previous search
+      this.targetScrollPosition = this.savedScrollPosition;
+      this.currentSearchTerm = this.savedSearchTerm;
+      this.focusedGroup = '';
+      this.licensePlateService.setStateFilter('');
+      this.licensePlateService.setSearchTerm(this.savedSearchTerm);
+
+      setTimeout(() => {
+        this.targetScrollPosition = -1;
+      }, 100);
+    } else if (currentStateFilter !== state) {
+      // Setting new filter - save current state
+      this.savedScrollPosition = window.scrollY || document.documentElement.scrollTop;
+      this.savedSearchTerm = this.currentSearchTerm;
+      this.focusedGroup = state;
+      if (this.currentSearchTerm !== '') {
+        this.licensePlateService.setSearchTerm('');
+      }
+      this.currentSearchTerm = '';
+      this.licensePlateService.setStateFilter(state);
+    }
   }
 
   onLicensePlateClicked(licensePlate: LicensePlate): void {
@@ -93,9 +117,15 @@ export class App implements OnInit {
         this.targetScrollPosition = -1;
       }, 100);
     } else {
-      // Selecting - save current state
-      this.savedScrollPosition = window.scrollY || document.documentElement.scrollTop;
-      this.savedSearchTerm = this.currentSearchTerm;
+      // Selecting - save current state only if we're not already filtered to this plate
+      const currentTerm = this.currentSearchTerm.toLowerCase();
+      const clickedCode = licensePlate.code.toLowerCase();
+
+      // Only save scroll position if we're changing the filter (not if already showing just this plate)
+      if (currentTerm !== clickedCode) {
+        this.savedScrollPosition = window.scrollY || document.documentElement.scrollTop;
+        this.savedSearchTerm = this.currentSearchTerm;
+      }
 
       this.selectedCode = licensePlate.code;
       this.currentSearchTerm = licensePlate.code;
@@ -105,6 +135,60 @@ export class App implements OnInit {
 
   onViewChange(view: 'alphabetical' | 'grouped'): void {
     this.licensePlateService.setViewMode(view);
+  }
+
+  onGroupHeadingClicked(group: LicensePlateGroup): void {
+    // Determine if we're in grouped or alphabetical mode based on whether group.state is a full state name or a single letter
+    const isGroupedByState = group.state.length > 1;
+
+    if (isGroupedByState) {
+      // In region view - check if we're already filtered to this state
+      const currentStateFilter = this.licensePlateService.getCurrentStateFilter();
+
+      if (currentStateFilter === group.state) {
+        // Already filtered to this state - untoggle by restoring previous search
+        this.targetScrollPosition = this.savedScrollPosition;
+        this.currentSearchTerm = this.savedSearchTerm;
+        this.focusedGroup = '';
+        this.licensePlateService.setStateFilter('');
+        this.licensePlateService.setSearchTerm(this.savedSearchTerm);
+
+        setTimeout(() => {
+          this.targetScrollPosition = -1;
+        }, 100);
+      } else {
+        // Filter to this state
+        this.savedScrollPosition = window.scrollY || document.documentElement.scrollTop;
+        this.savedSearchTerm = this.currentSearchTerm;
+        this.focusedGroup = group.state;
+        // Clear search term first if needed, then set state filter
+        if (this.currentSearchTerm !== '') {
+          this.licensePlateService.setSearchTerm('');
+        }
+        this.currentSearchTerm = '';
+        this.licensePlateService.setStateFilter(group.state);
+      }
+    } else {
+      // In alphabetical view - check if already filtered to this letter
+      if (this.currentSearchTerm === group.state) {
+        // Already filtered - untoggle by restoring previous search
+        this.targetScrollPosition = this.savedScrollPosition;
+        this.currentSearchTerm = this.savedSearchTerm;
+        this.licensePlateService.setSearchTerm(this.savedSearchTerm);
+        this.focusedGroup = '';
+
+        setTimeout(() => {
+          this.targetScrollPosition = -1;
+        }, 100);
+      } else {
+        // Filter by first letter
+        this.savedScrollPosition = window.scrollY || document.documentElement.scrollTop;
+        this.savedSearchTerm = this.currentSearchTerm;
+        this.currentSearchTerm = group.state;
+        this.licensePlateService.setSearchTerm(group.state);
+        this.focusedGroup = group.state;
+      }
+    }
   }
 
   getSeenCount(): number {

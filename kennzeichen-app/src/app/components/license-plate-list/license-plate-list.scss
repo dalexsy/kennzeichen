@@ -67,14 +67,75 @@
     top: 253px;
     background-color: $background-primary;
     z-index: 10;
-    gap: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
+    padding: 1rem 0;
+    gap: 1rem;
 
-    @include tablet-up {
-      padding-right: 3.5rem;
+    .heading-content {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      cursor: pointer;
+      min-width: 0;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+
+    &.focused {
+      .heading-text {
+        font-weight: 600;
+      }
+    }
+
+    .show-all-button {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      text-align: right;
+      color: $accent-tertiary;
+      padding: 0.5rem;
+      font-weight: 500;
+      font-family: $body-font;
+
+      &:hover {
+        background: $background-primary;
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .state-color-tile {
+      width: 1rem;
+      height: 1rem;
+      border-radius: 0.125rem;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      //  filter: sepia(0.3) brightness(1.4);
+
+      @include state-colors;
+    }
+
+    .heading-text {
+      flex: 1;
+      min-width: 0;
+    }
+  }
+
+  &.has-nav-buttons {
+    .group-heading {
+      @include tablet-up {
+        padding-right: 3.5rem;
+      }
+
+      @include desktop-up {
+        padding-right: 0;
+      }
     }
   }
 

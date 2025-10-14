@@ -22,8 +22,10 @@ export class LicensePlateList implements AfterViewInit, AfterViewChecked, OnDest
   @Input() isLoading: boolean = false;
   @Input() isMapButtonVisible: boolean = false;
   @Input() targetScrollPosition: number = -1;
+  @Input() focusedGroup: string = '';
   @Output() itemClicked = new EventEmitter<LicensePlate>();
   @Output() viewChange = new EventEmitter<'alphabetical' | 'grouped'>();
+  @Output() groupHeadingClicked = new EventEmitter<LicensePlateGroup>();
 
   private licensePlateService = inject(LicensePlateService);
   private localStorageService = inject(LocalStorageService);
@@ -38,12 +40,35 @@ export class LicensePlateList implements AfterViewInit, AfterViewChecked, OnDest
   private lastClickTime = 0;
   private clickTimeout: any = null;
 
+  private stateIndexMap = new Map<string, number>([
+    ['Baden-Württemberg', 0],
+    ['Bayern', 1],
+    ['Berlin', 2],
+    ['Brandenburg', 3],
+    ['Bremen', 4],
+    ['Hamburg', 5],
+    ['Hessen', 6],
+    ['Mecklenburg-Vorpommern', 7],
+    ['Niedersachsen', 8],
+    ['Nordrhein-Westfalen', 9],
+    ['Rheinland-Pfalz', 10],
+    ['Saarland', 11],
+    ['Sachsen', 12],
+    ['Sachsen-Anhalt', 13],
+    ['Schleswig-Holstein', 14],
+    ['Thüringen', 15]
+  ]);
+
   onItemClicked(licensePlate: LicensePlate): void {
     this.itemClicked.emit(licensePlate);
   }
 
   onViewChange(view: 'alphabetical' | 'grouped'): void {
     this.viewChange.emit(view);
+  }
+
+  onGroupHeadingClick(group: LicensePlateGroup): void {
+    this.groupHeadingClicked.emit(group);
   }
 
   trackByCode(index: number, licensePlate: LicensePlate): string {
@@ -60,6 +85,15 @@ export class LicensePlateList implements AfterViewInit, AfterViewChecked, OnDest
 
   getSeenDate(code: string): string | null {
     return this.localStorageService.getSeenDate(code);
+  }
+
+  getStateColorClass(stateName: string): string {
+    const index = this.stateIndexMap.get(stateName);
+    return index !== undefined ? `state-${index}` : '';
+  }
+
+  isGroupFocused(groupName: string): boolean {
+    return this.focusedGroup === groupName;
   }
 
   ngAfterViewInit(): void {

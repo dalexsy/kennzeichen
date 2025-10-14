@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject, combineLatest, map } from 'rxjs';
+import { Observable, BehaviorSubject, combineLatest, map, distinctUntilChanged } from 'rxjs';
 import { LicensePlate, LicensePlateData, LicensePlateWithSeen } from '../models/license-plate.interface';
 import { LocalStorageService } from './local-storage';
 
@@ -22,9 +22,9 @@ export class LicensePlateService {
   );
 
   public licensePlates$ = this.licensePlatesSubject.asObservable();
-  public searchTerm$ = this.searchTermSubject.asObservable();
-  public stateFilter$ = this.stateFilterSubject.asObservable();
-  public viewMode$ = this.viewModeSubject.asObservable();
+  public searchTerm$ = this.searchTermSubject.asObservable().pipe(distinctUntilChanged());
+  public stateFilter$ = this.stateFilterSubject.asObservable().pipe(distinctUntilChanged());
+  public viewMode$ = this.viewModeSubject.asObservable().pipe(distinctUntilChanged());
 
   // Filtered license plates based on search term and state filter
   public filteredLicensePlates$ = combineLatest([
@@ -207,6 +207,10 @@ export class LicensePlateService {
 
   getCurrentSearchTerm(): string {
     return this.searchTermSubject.value;
+  }
+
+  getCurrentStateFilter(): string {
+    return this.stateFilterSubject.value;
   }
 
   // Get suggestions based on partial input
