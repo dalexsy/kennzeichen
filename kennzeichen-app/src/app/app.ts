@@ -41,6 +41,7 @@ export class App implements OnInit {
   focusedGroup = '';
   private savedScrollPosition = 0;
   private savedSearchTerm = '';
+  private savedStateFilter = '';
 
   get isMapButtonVisible(): boolean {
     return this.mapComponent?.shouldShowMapButton || false;
@@ -89,9 +90,12 @@ export class App implements OnInit {
         this.targetScrollPosition = -1;
       }, 100);
     } else if (currentStateFilter !== state) {
-      // Setting new filter - save current state
+      // Setting new filter - save current state BEFORE filtering
+      // When clicking a state tile from the full list, we want to save empty string
+      // so we can return to the full list when deselecting
       this.savedScrollPosition = window.scrollY || document.documentElement.scrollTop;
       this.savedSearchTerm = this.currentSearchTerm;
+      this.savedStateFilter = ''; // Always save empty - we want to return to full list
       this.focusedGroup = state;
       if (this.currentSearchTerm !== '') {
         this.licensePlateService.setSearchTerm('');
@@ -104,13 +108,18 @@ export class App implements OnInit {
   onLicensePlateClicked(licensePlate: LicensePlate): void {
     // Toggle selection
     if (this.selectedCode === licensePlate.code) {
-      // Deselecting - set target scroll position to prevent flicker
+      // Deselecting - restore previous state completely
       this.targetScrollPosition = this.savedScrollPosition;
-
-      // Restore previous state
       this.selectedCode = '';
       this.currentSearchTerm = this.savedSearchTerm;
+      
+      // IMPORTANT: Restore both search term AND state filter
       this.licensePlateService.setSearchTerm(this.savedSearchTerm);
+      this.licensePlateService.setStateFilter(this.savedStateFilter);
+      
+      // If returning to a filtered state, restore focusedGroup
+      // If returning to full list, clear focusedGroup
+      this.focusedGroup = this.savedStateFilter;
 
       // Reset target scroll position after view has updated
       setTimeout(() => {
@@ -125,11 +134,20 @@ export class App implements OnInit {
       if (currentTerm !== clickedCode) {
         this.savedScrollPosition = window.scrollY || document.documentElement.scrollTop;
         this.savedSearchTerm = this.currentSearchTerm;
+        // Save the current state filter so we can restore it when deselecting
+        this.savedStateFilter = this.licensePlateService.getCurrentStateFilter();
       }
 
       this.selectedCode = licensePlate.code;
       this.currentSearchTerm = licensePlate.code;
-      this.licensePlateService.setSearchTerm(licensePlate.code);
+      
+      // When clicking a plate, use exact match by wrapping in special delimiter
+      // This tells the service to match exactly, not as a prefix
+      this.licensePlateService.setStateFilter('');
+      this.licensePlateService.setSearchTerm('==' + licensePlate.code);
+      
+      // Clear focusedGroup when selecting a specific plate
+      this.focusedGroup = '';
     }
   }
 
@@ -142,11 +160,10 @@ export class App implements OnInit {
     const isGroupedByState = group.state.length > 1;
 
     if (isGroupedByState) {
-      // In region view - check if we're already filtered to this state
-      const currentStateFilter = this.licensePlateService.getCurrentStateFilter();
-
-      if (currentStateFilter === group.state) {
-        // Already filtered to this state - untoggle by restoring previous search
+      // In region view - check if we're already focused on this state
+      // Check focusedGroup first since it persists even when filters are cleared
+      if (this.focusedGroup === group.state) {
+        // Already focused on this state - clear everything and return to full list
         this.targetScrollPosition = this.savedScrollPosition;
         this.currentSearchTerm = this.savedSearchTerm;
         this.focusedGroup = '';
@@ -160,6 +177,7 @@ export class App implements OnInit {
         // Filter to this state
         this.savedScrollPosition = window.scrollY || document.documentElement.scrollTop;
         this.savedSearchTerm = this.currentSearchTerm;
+        this.savedStateFilter = this.licensePlateService.getCurrentStateFilter();
         this.focusedGroup = group.state;
         // Clear search term first if needed, then set state filter
         if (this.currentSearchTerm !== '') {
@@ -175,6 +193,7 @@ export class App implements OnInit {
         this.targetScrollPosition = this.savedScrollPosition;
         this.currentSearchTerm = this.savedSearchTerm;
         this.licensePlateService.setSearchTerm(this.savedSearchTerm);
+        this.licensePlateService.setStateFilter(this.savedStateFilter);
         this.focusedGroup = '';
 
         setTimeout(() => {
@@ -184,8 +203,10 @@ export class App implements OnInit {
         // Filter by first letter
         this.savedScrollPosition = window.scrollY || document.documentElement.scrollTop;
         this.savedSearchTerm = this.currentSearchTerm;
+        this.savedStateFilter = this.licensePlateService.getCurrentStateFilter();
         this.currentSearchTerm = group.state;
         this.licensePlateService.setSearchTerm(group.state);
+        this.licensePlateService.setStateFilter('');
         this.focusedGroup = group.state;
       }
     }

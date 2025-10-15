@@ -261,6 +261,10 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
       const hasFilteredMarkers = this.licensePlates.length <= 200;
       if (!hasFilteredMarkers || this.markers.size <= 1) {
         this.clearMarkers();
+        // Return to default Germany view when unselecting
+        if (this.map) {
+          this.mapMarkerService.fitMapToMarkers(this.map, this.markers);
+        }
       } else {
         this.highlightSelectedMarker();
       }

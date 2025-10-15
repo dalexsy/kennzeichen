@@ -89,11 +89,18 @@ export class MapMarkerService {
 
   /**
    * Fits the map view to show all markers.
+   * If there are no markers, shows all of Germany.
    * If there's only one marker, centers on it with appropriate zoom.
    * If there are multiple markers, fits bounds to show all of them.
    */
   fitMapToMarkers(map: L.Map, markers: Map<string, L.Marker>): void {
-    if (!map || markers.size === 0) return;
+    if (!map) return;
+
+    if (markers.size === 0) {
+      // No markers - show all of Germany
+      map.setView([51.1657, 10.4515], 6);
+      return;
+    }
 
     if (markers.size === 1) {
       // Single marker - center on it with a good zoom level for city-states

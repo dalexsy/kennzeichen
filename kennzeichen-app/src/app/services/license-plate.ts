@@ -42,26 +42,38 @@ export class LicensePlateService {
 
       // Apply search filter
       if (searchTerm.trim()) {
-        const term = searchTerm.toLowerCase();
+        let term = searchTerm.toLowerCase();
+        let isExactMatch = false;
 
-        // First, check if we have any exact code matches
-        const codeMatches = filtered.filter(plate => plate.code.toLowerCase().startsWith(term));
+        // Check if this is an exact match request (starts with ==)
+        if (term.startsWith('==')) {
+          isExactMatch = true;
+          term = term.substring(2); // Remove the == prefix
+        }
 
-        if (codeMatches.length > 0) {
-          // If we have code matches, ONLY show those for autobahn use case
-          filtered = codeMatches;
+        if (isExactMatch) {
+          // Exact match - only show the plate with this exact code
+          filtered = filtered.filter(plate => plate.code.toLowerCase() === term);
         } else {
-          // Only if no code matches, then search in other fields
-          filtered = filtered.filter(plate => {
-            // Search in city/district name
-            const cityMatch = plate.city_district.toLowerCase().includes(term);
-            // Search in derived from
-            const derivedMatch = plate.derived_from.toLowerCase().includes(term);
-            // Search in federal state
-            const stateMatch = plate.federal_state.toLowerCase().includes(term);
+          // First, check if we have any exact code matches
+          const codeMatches = filtered.filter(plate => plate.code.toLowerCase().startsWith(term));
 
-            return cityMatch || derivedMatch || stateMatch;
-          });
+          if (codeMatches.length > 0) {
+            // If we have code matches, ONLY show those for autobahn use case
+            filtered = codeMatches;
+          } else {
+            // Only if no code matches, then search in other fields
+            filtered = filtered.filter(plate => {
+              // Search in city/district name
+              const cityMatch = plate.city_district.toLowerCase().includes(term);
+              // Search in derived from
+              const derivedMatch = plate.derived_from.toLowerCase().includes(term);
+              // Search in federal state
+              const stateMatch = plate.federal_state.toLowerCase().includes(term);
+
+              return cityMatch || derivedMatch || stateMatch;
+            });
+          }
         }
       }
 
