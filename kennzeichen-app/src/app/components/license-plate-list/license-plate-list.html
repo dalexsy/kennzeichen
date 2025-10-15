@@ -9,30 +9,29 @@
     class="list-container"
     #listContainer
   >
-    <div
-      *ngIf="getTotalCount(groupedList) === 0"
-      class="empty"
-    >
+    <div *ngIf="getTotalCount(groupedList) === 0" class="empty">
       <p class="empty-text">
-        {{ searchTerm ? 'No license plates found for "' + searchTerm + '"' : 'No license plates available' }}
+        {{
+          searchTerm
+            ? 'No license plates found for "' + searchTerm + '"'
+            : 'No license plates available'
+        }}
       </p>
       <p class="empty-hint" *ngIf="searchTerm">
         Try entering fewer letters or check your spelling.
       </p>
     </div>
 
-    <div
-      *ngIf="getTotalCount(groupedList) > 0"
-      class="results"
-    >
+    <div *ngIf="getTotalCount(groupedList) > 0" class="results">
       <div class="groups">
-        <div
-          *ngFor="let group of groupedList; let i = index; trackBy: trackByState"
-          class="group"
-        >
+        <div *ngFor="let group of groupedList; let i = index; trackBy: trackByState" class="group">
           <h3 class="group-heading" [class.focused]="isGroupFocused(group.state)">
             <div class="heading-content" (click)="onGroupHeadingClick(group)">
-              <span class="state-color-tile" [class]="getStateColorClass(group.state)" *ngIf="(viewMode$ | async) === 'grouped'"></span>
+              <span
+                class="state-color-tile"
+                [class]="getStateColorClass(group.state)"
+                *ngIf="(viewMode$ | async) === 'grouped'"
+              ></span>
               <span class="heading-text">{{ group.state }} ({{ group.licensePlates.length }})</span>
             </div>
             <button
@@ -41,6 +40,7 @@
               (click)="onGroupHeadingClick(group)"
             >
               Alles zeigen
+              <span _ngcontent-ng-c3358268225="" class="material-icons">keyboard_return</span>
             </button>
             <app-view-toggle
               *ngIf="!focusedGroup"
@@ -63,10 +63,13 @@
         </div>
       </div>
     </div>
-
   </div>
 
-  <div *ngIf="showNavButtons && getTotalCount((groupedLicensePlates$ | async) || []) > 0" class="section-nav" [class.map-button-visible]="isMapButtonVisible">
+  <div
+    *ngIf="showNavButtons && getTotalCount((groupedLicensePlates$ | async) || []) > 0"
+    class="section-nav"
+    [class.map-button-visible]="isMapButtonVisible"
+  >
     <button
       *ngIf="canScrollPrevious()"
       class="nav-button prev"

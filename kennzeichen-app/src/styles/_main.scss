@@ -2,7 +2,8 @@
 @forward 'abstracts';
 
 // Google Fonts Import
-@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300..700&display=swap');
 
 // Theme variables
 :root {
@@ -47,7 +48,7 @@
     --accent-primary-selected: #6a3100;
     --accent-primary-selected-light: #6e3601;
     --accent-secondary: #745538;
-    --accent-secondary-hover: #d4b06a;
+    --accent-secondary-hover: #140e01;
     --accent-tertiary: #18c09e;
     --seen-badge: #4caf50;
     --seen-text-overlay: #b0a499;

@@ -159,6 +159,7 @@ app-root {
 
 .leaflet-container {
   font-family: $body-font !important;
+  background: $background-primary !important;
 }
 
 .leaflet-popup-close-button {
