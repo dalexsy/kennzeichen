@@ -60,10 +60,11 @@
 .map-container {
   width: 90%;
   max-width: 600px;
-  height: 70vh;
+  height: calc(100% - 6rem);
+  top: 1rem;
   min-height: 400px;
   border-radius: 0.5rem;
-  position: relative;
+  position: fixed;
   background-color: $background-primary;
   display: flex;
   flex-direction: column;
@@ -71,7 +72,7 @@
   @include tablet-up {
     width: 100%;
     max-width: none;
-    height: 600px;
+    height: calc(100vh - 253px - 1rem - 2rem);
   }
 }
 
@@ -80,7 +81,7 @@
   flex: 1;
   position: relative;
 
-  border-radius: 1rem 1rem 0 0;
+  border-radius: 0.5rem 0.5rem 0 0;
   box-shadow: var(--box-shadow) 2px 2px;
   border: 1px solid var(--border-primary);
 
