@@ -42,8 +42,16 @@
               Alles zeigen
               <span _ngcontent-ng-c3358268225="" class="material-icons">keyboard_return</span>
             </button>
+            <button
+              *ngIf="!focusedGroup && isLicensePlateSelected"
+              class="show-all-button"
+              (click)="onBackClick()"
+            >
+              Zurück
+              <span class="material-icons">keyboard_return</span>
+            </button>
             <app-view-toggle
-              *ngIf="!focusedGroup"
+              *ngIf="!focusedGroup && !isLicensePlateSelected"
               [currentView]="(viewMode$ | async) || 'alphabetical'"
               (viewChange)="onViewChange($event)"
               class="view-toggle"

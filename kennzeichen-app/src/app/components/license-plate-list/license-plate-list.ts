@@ -23,9 +23,11 @@ export class LicensePlateList implements AfterViewInit, AfterViewChecked, OnDest
   @Input() isMapButtonVisible: boolean = false;
   @Input() targetScrollPosition: number = -1;
   @Input() focusedGroup: string = '';
+  @Input() isLicensePlateSelected: boolean = false;
   @Output() itemClicked = new EventEmitter<LicensePlate>();
   @Output() viewChange = new EventEmitter<'alphabetical' | 'grouped'>();
   @Output() groupHeadingClicked = new EventEmitter<LicensePlateGroup>();
+  @Output() backClicked = new EventEmitter<void>();
 
   private licensePlateService = inject(LicensePlateService);
   private localStorageService = inject(LocalStorageService);
@@ -69,6 +71,10 @@ export class LicensePlateList implements AfterViewInit, AfterViewChecked, OnDest
 
   onGroupHeadingClick(group: LicensePlateGroup): void {
     this.groupHeadingClicked.emit(group);
+  }
+
+  onBackClick(): void {
+    this.backClicked.emit();
   }
 
   trackByCode(index: number, licensePlate: LicensePlate): string {

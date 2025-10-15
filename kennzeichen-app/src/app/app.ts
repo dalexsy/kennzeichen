@@ -47,6 +47,10 @@ export class App implements OnInit {
     return this.mapComponent?.shouldShowMapButton || false;
   }
 
+  get isLicensePlateSelected(): boolean {
+    return this.selectedCode !== '';
+  }
+
   constructor(
     public licensePlateService: LicensePlateService,
     private localStorageService: LocalStorageService
@@ -153,6 +157,26 @@ export class App implements OnInit {
 
   onViewChange(view: 'alphabetical' | 'grouped'): void {
     this.licensePlateService.setViewMode(view);
+  }
+
+  onBackClick(): void {
+    // Deselecting - restore previous state completely
+    this.targetScrollPosition = this.savedScrollPosition;
+    this.selectedCode = '';
+    this.currentSearchTerm = this.savedSearchTerm;
+    
+    // IMPORTANT: Restore both search term AND state filter
+    this.licensePlateService.setSearchTerm(this.savedSearchTerm);
+    this.licensePlateService.setStateFilter(this.savedStateFilter);
+    
+    // If returning to a filtered state, restore focusedGroup
+    // If returning to full list, clear focusedGroup
+    this.focusedGroup = this.savedStateFilter;
+
+    // Reset target scroll position after view has updated
+    setTimeout(() => {
+      this.targetScrollPosition = -1;
+    }, 100);
   }
 
   onGroupHeadingClicked(group: LicensePlateGroup): void {

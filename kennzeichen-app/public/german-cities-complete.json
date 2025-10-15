@@ -4276,5 +4276,119 @@
     "lat": 51.0491637,
     "lng": 12.1349991,
     "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "Zerbst",
+    "lat": 51.9636,
+    "lng": 12.0847,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "Baden-Württembergischer Landtag",
+    "lat": 48.7758,
+    "lng": 9.1829,
+    "state": "Baden-Württemberg"
+  },
+  {
+    "name": "Aussee",
+    "lat": 50.5167,
+    "lng": 12.0333,
+    "state": "Bayern"
+  },
+  {
+    "name": "Hof an der Saale (Hochfranken)",
+    "lat": 50.3219,
+    "lng": 11.9178,
+    "state": "Bayern"
+  },
+  {
+    "name": "Naila-Hohenberg",
+    "lat": 50.3239,
+    "lng": 11.7122,
+    "state": "Bayern"
+  },
+  {
+    "name": "BrandenBurgische Landesregierung",
+    "lat": 52.3906,
+    "lng": 13.0644,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "Deutsch-Polnisch",
+    "lat": 52.5406,
+    "lng": 14.5506,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "Driesen",
+    "lat": 52.7500,
+    "lng": 15.8167,
+    "state": "Brandenburg"
+  },
+  {
+    "name": "Eltville, Bad Schwalbach",
+    "lat": 50.0333,
+    "lng": 8.1167,
+    "state": "Hessen"
+  },
+  {
+    "name": "Mecklenburg-Vorpommerscher Landtag",
+    "lat": 53.6288,
+    "lng": 11.4147,
+    "state": "Mecklenburg-Vorpommern"
+  },
+  {
+    "name": "Landkreis Anhalt-ZErbst",
+    "lat": 51.9636,
+    "lng": 12.0847,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "Hallein",
+    "lat": 51.8667,
+    "lng": 11.7333,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "OhreKreis",
+    "lat": 52.2667,
+    "lng": 11.4167,
+    "state": "Sachsen-Anhalt"
+  },
+  {
+    "name": "Niederschlesische OberLausitz",
+    "lat": 51.1500,
+    "lng": 14.9833,
+    "state": "Sachsen"
+  },
+  {
+    "name": "Torgau, Delitzsch, Oschatz",
+    "lat": 51.5600,
+    "lng": 13.0056,
+    "state": "Sachsen"
+  },
+  {
+    "name": "SAarländischer Landtag",
+    "lat": 49.2333,
+    "lng": 7.0000,
+    "state": "Saarland"
+  },
+  {
+    "name": "Rheinland-Pfälzischer Landtag",
+    "lat": 49.9929,
+    "lng": 8.2473,
+    "state": "Rheinland-Pfalz"
+  },
+  {
+    "name": "Kempen, Krefeld",
+    "lat": 51.3644,
+    "lng": 6.4186,
+    "state": "Nordrhein-Westfalen"
+  },
+  {
+    "name": "Braunschweig-Land",
+    "lat": 52.2689,
+    "lng": 10.5268,
+    "state": "Niedersachsen"
   }
 ]

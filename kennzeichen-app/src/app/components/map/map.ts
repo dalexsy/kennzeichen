@@ -290,6 +290,8 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
       const coordinates = this.geocodingService.getCoordinatesSync(city.name, city.state);
       if (coordinates && this.map) {
         this.addMarker(coordinates, city.plate);
+      } else {
+        console.log(`Missing coordinates for:\n  {\n    "name": "${city.name || ''}",\n    "lat": ,\n    "lng": ,\n    "state": "${city.state || ''}"\n  }`);
       }
     });
   }
@@ -304,6 +306,8 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
       this.addMarker(coordinates, plate);
       this.map.panTo([coordinates.lat, coordinates.lng]);
       this.hasMarkers = true;
+    } else {
+      console.log(`Missing coordinates for:\n  {\n    "name": "${plate.derived_from || ''}",\n    "lat": ,\n    "lng": ,\n    "state": "${plate.federal_state || ''}"\n  }`);
     }
   }
 

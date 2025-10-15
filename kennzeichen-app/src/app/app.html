@@ -38,9 +38,11 @@
         [isMapButtonVisible]="isMapButtonVisible"
         [targetScrollPosition]="targetScrollPosition"
         [focusedGroup]="focusedGroup"
+        [isLicensePlateSelected]="isLicensePlateSelected"
         (itemClicked)="onLicensePlateClicked($event)"
         (viewChange)="onViewChange($event)"
         (groupHeadingClicked)="onGroupHeadingClicked($event)"
+        (backClicked)="onBackClick()"
         class="list"
       ></app-license-plate-list>
     </div>
