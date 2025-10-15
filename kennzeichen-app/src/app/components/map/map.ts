@@ -182,6 +182,8 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
       if (!changes['licensePlates'].firstChange) {
         if (shouldShowMarkers) {
           this.refreshMap();
+          // After refreshing markers, fit the map to show all markers
+          this.fitMapToMarkers();
         } else {
           this.clearMarkers();
         }
@@ -213,6 +215,14 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
           this.highlightSelectedMarker();
         }
       }
+    }
+    
+    // Handle state filter changes - fit map to markers when state changes
+    if (changes['stateFilter'] && this.map && !changes['stateFilter'].firstChange) {
+      // Small delay to ensure markers are updated
+      setTimeout(() => {
+        this.fitMapToMarkers();
+      }, 50);
     }
   }
 
@@ -434,5 +444,28 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     this.currentTileLayer.addTo(this.map);
+  }
+
+  /**
+   * Fits the map view to show all current markers.
+   * If there's only one marker, centers on it with appropriate zoom.
+   * If there are multiple markers, fits bounds to show all of them.
+   */
+  private fitMapToMarkers() {
+    if (!this.map || this.markers.size === 0) return;
+
+    if (this.markers.size === 1) {
+      // Single marker - center on it with a good zoom level for city-states
+      const marker = Array.from(this.markers.values())[0];
+      const latLng = marker.getLatLng();
+      this.map.setView(latLng, 10); // Zoom level 10 is good for seeing a city and surroundings
+    } else {
+      // Multiple markers - fit bounds to show all
+      const group = L.featureGroup(Array.from(this.markers.values()));
+      this.map.fitBounds(group.getBounds(), {
+        padding: [50, 50], // Add padding so markers aren't at the edge
+        maxZoom: 12 // Don't zoom in too close even if markers are clustered
+      });
+    }
   }
 }
