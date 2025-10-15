@@ -91,6 +91,27 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
     return index !== undefined ? `state-${index}` : '';
   }
 
+  /**
+   * Centralized method to determine if a state should be highlighted.
+   * Returns the state name that should be highlighted, or empty string if none.
+   */
+  private getHighlightedState(): string {
+    // Priority 1: If stateFilter is set (user clicked a state tile), highlight that state
+    if (this.stateFilter) {
+      return this.stateFilter;
+    }
+
+    // Priority 2: If a single marker is selected, highlight its state
+    if (this.selectedCode) {
+      const selectedPlate = this.licensePlates.find(p => p.code === this.selectedCode);
+      if (selectedPlate && selectedPlate.federal_state) {
+        return selectedPlate.federal_state;
+      }
+    }
+
+    return '';
+  }
+
   onStateTileClick(state: StateInfo): void {
     if (this.stateFilter === state.name) {
       this.stateFilterChange.emit('');
@@ -100,11 +121,13 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   isStateActive(state: StateInfo): boolean {
-    return this.stateFilter === state.name;
+    const highlightedState = this.getHighlightedState();
+    return highlightedState === state.name;
   }
 
   isStateDimmed(state: StateInfo): boolean {
-    return this.stateFilter !== '' && this.stateFilter !== state.name;
+    const highlightedState = this.getHighlightedState();
+    return highlightedState !== '' && highlightedState !== state.name;
   }
 
   toggleMap() {
