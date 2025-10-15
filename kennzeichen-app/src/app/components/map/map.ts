@@ -3,13 +3,13 @@ import { CommonModule } from '@angular/common';
 import * as L from 'leaflet';
 import { GeocodingService, CityCoordinates } from '../../services/geocoding';
 import { LicensePlate } from '../../models/license-plate.interface';
+import { MapStateService, StateInfo } from '../../services/map-state.service';
+import { MapMarkerService } from '../../services/map-marker.service';
 
-export interface StateInfo {
-  name: string;
-  code: string;
-  index: number;
-}
-
+/**
+ * Main map component that displays license plates on a Leaflet map.
+ * Handles marker display, state filtering, and user interactions.
+ */
 @Component({
   selector: 'app-map',
   imports: [CommonModule],
@@ -33,8 +33,10 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
 
   isMapVisible = false;
   hasMarkers = false;
-  private stateIndexMap: Map<string, number> = new Map();
-  states: StateInfo[] = [];
+
+  get states(): StateInfo[] {
+    return this.mapStateService.states;
+  }
 
   get shouldShowMapButton(): boolean {
     if (this.hasMarkers || this.isMapVisible) {
@@ -52,44 +54,15 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
     return false;
   }
 
-  constructor(private geocodingService: GeocodingService) {
-    this.initializeStateIndices();
-  }
+  constructor(
+    private geocodingService: GeocodingService,
+    private mapStateService: MapStateService,
+    private mapMarkerService: MapMarkerService
+  ) {}
 
-  private initializeStateIndices(): void {
-    const germanStatesData = [
-      { name: 'Baden-Württemberg', code: 'BW' },
-      { name: 'Bayern', code: 'BY' },
-      { name: 'Berlin', code: 'BE' },
-      { name: 'Brandenburg', code: 'BB' },
-      { name: 'Bremen', code: 'HB' },
-      { name: 'Hamburg', code: 'HH' },
-      { name: 'Hessen', code: 'HE' },
-      { name: 'Mecklenburg-Vorpommern', code: 'MV' },
-      { name: 'Niedersachsen', code: 'NI' },
-      { name: 'Nordrhein-Westfalen', code: 'NW' },
-      { name: 'Rheinland-Pfalz', code: 'RP' },
-      { name: 'Saarland', code: 'SL' },
-      { name: 'Sachsen', code: 'SN' },
-      { name: 'Sachsen-Anhalt', code: 'ST' },
-      { name: 'Schleswig-Holstein', code: 'SH' },
-      { name: 'Thüringen', code: 'TH' }
-    ];
-
-    germanStatesData.forEach((state, index) => {
-      this.stateIndexMap.set(state.name, index);
-      this.states.push({
-        name: state.name,
-        code: state.code,
-        index: index
-      });
-    });
-  }
-
-  private getStateClass(state: string): string {
-    const index = this.stateIndexMap.get(state);
-    return index !== undefined ? `state-${index}` : '';
-  }
+  // ============================================
+  // State Highlighting Logic
+  // ============================================
 
   /**
    * Centralized method to determine if a state should be highlighted.
@@ -130,6 +103,10 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
     return highlightedState !== '' && highlightedState !== state.name;
   }
 
+  // ============================================
+  // Map Visibility and User Interactions
+  // ============================================
+
   toggleMap() {
     this.isMapVisible = !this.isMapVisible;
     if (this.isMapVisible && this.map) {
@@ -167,61 +144,38 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
     event.stopPropagation();
   }
 
+  // ============================================
+  // Lifecycle Hooks
+  // ============================================
+
   ngOnInit() {
     this.initializeMap();
     this.setupThemeListener();
-    // Don't load all markers on init - wait for user to filter
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['licensePlates'] && this.map) {
-      // Only show markers if user has filtered (less than all plates)
-      // or if there are 200 or fewer results
       const shouldShowMarkers = this.licensePlates.length > 0 && this.licensePlates.length <= 200;
 
       if (!changes['licensePlates'].firstChange) {
         if (shouldShowMarkers) {
           this.refreshMap();
-          // After refreshing markers, fit the map to show all markers
-          this.fitMapToMarkers();
+          this.mapMarkerService.fitMapToMarkers(this.map, this.markers);
         } else {
           this.clearMarkers();
         }
       }
     }
-    if (changes['selectedCode'] && this.map && !changes['selectedCode'].firstChange) {
-      if (this.selectedCode) {
-        // Check if we're showing filtered markers (many) or single marker mode
-        const hasFilteredMarkers = this.licensePlates.length <= 200;
 
-        if (hasFilteredMarkers && this.markers.size > 1) {
-          // Already showing filtered markers - just highlight
-          this.highlightSelectedMarker();
-        } else {
-          // Show single marker for selected plate
-          this.clearMarkers();
-          const selectedPlate = this.licensePlates.find(p => p.code === this.selectedCode);
-          if (selectedPlate) {
-            this.loadSingleMarker(selectedPlate);
-          }
-        }
-      } else {
-        // Deselected - clear single marker or unhighlight
-        const hasFilteredMarkers = this.licensePlates.length <= 200;
-        if (!hasFilteredMarkers || this.markers.size <= 1) {
-          this.clearMarkers();
-        } else {
-          // Just unhighlight all markers
-          this.highlightSelectedMarker();
-        }
-      }
+    if (changes['selectedCode'] && this.map && !changes['selectedCode'].firstChange) {
+      this.handleSelectedCodeChange();
     }
-    
-    // Handle state filter changes - fit map to markers when state changes
+
     if (changes['stateFilter'] && this.map && !changes['stateFilter'].firstChange) {
-      // Small delay to ensure markers are updated
       setTimeout(() => {
-        this.fitMapToMarkers();
+        if (this.map) {
+          this.mapMarkerService.fitMapToMarkers(this.map, this.markers);
+        }
       }, 50);
     }
   }
@@ -235,181 +189,24 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
+  // ============================================
+  // Map Initialization
+  // ============================================
+
   private initializeMap() {
-    // Initialize map centered on Germany
     this.map = L.map(this.mapContainer.nativeElement, {
       preferCanvas: false,
       attributionControl: false,
       zoomControl: true
     }).setView([51.1657, 10.4515], 6);
 
-    // Add appropriate tile layer based on theme
     this.updateTileLayer();
 
-    // Fix for default markers not showing
-    this.fixLeafletIcons();
-
-    // Force invalidate size after initialization and on window resize
     setTimeout(() => {
       if (this.map) {
         this.map.invalidateSize();
       }
     }, 100);
-  }
-
-  private fixLeafletIcons() {
-    // Using custom DivIcon markers instead of default icons
-  }
-
-  private loadLicensePlateLocations() {
-    if (!this.licensePlates.length || !this.map) return;
-
-    // Extract unique cities from license plates
-    const cities = this.licensePlates
-      .filter(plate => plate.derived_from && plate.derived_from !== 'willkürlich gewählt')
-      .map(plate => ({
-        name: plate.derived_from,
-        state: plate.federal_state,
-        plate: plate
-      }))
-      .filter((city, index, array) =>
-        array.findIndex(c => c.name === city.name && c.state === city.state) === index
-      );
-
-    // All cities are cached - add markers synchronously for better performance
-    cities.forEach(city => {
-      const coordinates = this.geocodingService.getCoordinatesSync(city.name, city.state);
-      if (coordinates && this.map) {
-        this.addMarker(coordinates, city.plate);
-      }
-    });
-  }
-
-  private loadSingleMarker(plate: LicensePlate) {
-    if (!plate.derived_from || plate.derived_from === 'willkürlich gewählt' || !this.map) {
-      return;
-    }
-
-    const coordinates = this.geocodingService.getCoordinatesSync(plate.derived_from, plate.federal_state);
-    if (coordinates && this.map) {
-      this.addMarker(coordinates, plate);
-      // Center map on the marker without zooming
-      this.map.panTo([coordinates.lat, coordinates.lng]);
-      this.hasMarkers = true;
-    }
-  }
-
-  private addMarker(coordinates: CityCoordinates, licensePlate: LicensePlate) {
-    if (!this.map) return;
-
-    // Create custom icon for selected state
-    const isSelected = this.selectedCode === licensePlate.code;
-    const stateClass = this.getStateClass(licensePlate.federal_state);
-    const icon = this.createMarkerIcon(isSelected, licensePlate.code, stateClass);
-
-    const marker = L.marker([coordinates.lat, coordinates.lng], { icon })
-      .addTo(this.map)
-      .bindPopup(`
-        <div class="marker-popup">
-          <a href="#" class="popup-code">${licensePlate.code}</a>
-          <div class="popup-city">${licensePlate.city_district}</div>
-          <div class="popup-state">${licensePlate.federal_state}</div>
-        </div>
-      `);
-
-    // Add click handler for popup code link
-    marker.on('popupopen', () => {
-      const popup = marker.getPopup();
-      if (popup) {
-        const popupElement = popup.getElement();
-        const codeLink = popupElement?.querySelector('.popup-code') as HTMLAnchorElement;
-        if (codeLink) {
-          codeLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            this.codeSelected.emit(licensePlate);
-            this.isMapVisible = false;
-          });
-        }
-      }
-    });
-
-    // Open popup if this is the selected license plate
-    if (isSelected) {
-      marker.openPopup();
-      this.selectedMarker = marker;
-      // Center map on selected marker without zooming
-      this.map.panTo([coordinates.lat, coordinates.lng]);
-    }
-
-    this.markers.set(licensePlate.code, marker);
-  }
-
-  public clearMarkers() {
-    this.markers.forEach(marker => {
-      if (this.map) {
-        this.map.removeLayer(marker);
-      }
-    });
-    this.markers.clear();
-    this.selectedMarker = null;
-    this.hasMarkers = false;
-  }
-
-  public refreshMap() {
-    this.clearMarkers();
-    this.loadLicensePlateLocations();
-    this.hasMarkers = this.markers.size > 0;
-  }
-
-  private createMarkerIcon(isSelected: boolean, code: string, stateClass: string): L.DivIcon {
-    const remInPixels = 16; // 1rem = 16px
-    const markerSizeRem = 2.5;
-    const size = markerSizeRem * remInPixels; // 2.5rem = 40px
-    const tailOffsetRem = 1.25; // Extra offset for the teardrop tail
-    const tailOffset = tailOffsetRem * remInPixels;
-
-    const selectedClass = isSelected ? 'selected' : '';
-    const pinClass = `marker-pin ${stateClass} ${selectedClass}`.trim();
-    const html = `
-      <div class="${pinClass}">
-        <span class="marker-code">${code}</span>
-      </div>
-    `;
-
-    return L.divIcon({
-      className: 'custom-marker-wrapper',
-      html: html,
-      iconSize: [size, size],
-      iconAnchor: [size / 2, size + tailOffset],
-      popupAnchor: [0, -size - tailOffset]
-    });
-  }
-
-  private highlightSelectedMarker() {
-    // Reset all markers to normal
-    this.markers.forEach((marker, code) => {
-      const isSelected = code === this.selectedCode;
-      const plate = this.licensePlates.find(p => p.code === code);
-      const stateClass = plate ? this.getStateClass(plate.federal_state) : '';
-      const icon = this.createMarkerIcon(isSelected, code, stateClass);
-      marker.setIcon(icon);
-
-      if (isSelected) {
-        marker.openPopup();
-        this.selectedMarker = marker;
-        // Center map on selected marker without zooming
-        if (this.map) {
-          const latLng = marker.getLatLng();
-          this.map.panTo(latLng);
-        }
-      } else {
-        marker.closePopup();
-      }
-    });
-
-    if (!this.selectedCode) {
-      this.selectedMarker = null;
-    }
   }
 
   private setupThemeListener() {
@@ -420,15 +217,12 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
   private updateTileLayer() {
     if (!this.map) return;
 
-    // Remove existing tile layer
     if (this.currentTileLayer) {
       this.map.removeLayer(this.currentTileLayer);
     }
 
-    // Check if dark mode is active
     const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-    // Add appropriate tile layer
     if (isDarkMode) {
       this.currentTileLayer = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {
         minZoom: 0,
@@ -446,26 +240,133 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
     this.currentTileLayer.addTo(this.map);
   }
 
-  /**
-   * Fits the map view to show all current markers.
-   * If there's only one marker, centers on it with appropriate zoom.
-   * If there are multiple markers, fits bounds to show all of them.
-   */
-  private fitMapToMarkers() {
-    if (!this.map || this.markers.size === 0) return;
+  // ============================================
+  // Marker Management
+  // ============================================
 
-    if (this.markers.size === 1) {
-      // Single marker - center on it with a good zoom level for city-states
-      const marker = Array.from(this.markers.values())[0];
-      const latLng = marker.getLatLng();
-      this.map.setView(latLng, 10); // Zoom level 10 is good for seeing a city and surroundings
+  private handleSelectedCodeChange() {
+    if (this.selectedCode) {
+      const hasFilteredMarkers = this.licensePlates.length <= 200;
+
+      if (hasFilteredMarkers && this.markers.size > 1) {
+        this.highlightSelectedMarker();
+      } else {
+        this.clearMarkers();
+        const selectedPlate = this.licensePlates.find(p => p.code === this.selectedCode);
+        if (selectedPlate) {
+          this.loadSingleMarker(selectedPlate);
+        }
+      }
     } else {
-      // Multiple markers - fit bounds to show all
-      const group = L.featureGroup(Array.from(this.markers.values()));
-      this.map.fitBounds(group.getBounds(), {
-        padding: [50, 50], // Add padding so markers aren't at the edge
-        maxZoom: 12 // Don't zoom in too close even if markers are clustered
-      });
+      const hasFilteredMarkers = this.licensePlates.length <= 200;
+      if (!hasFilteredMarkers || this.markers.size <= 1) {
+        this.clearMarkers();
+      } else {
+        this.highlightSelectedMarker();
+      }
     }
+  }
+
+  private loadLicensePlateLocations() {
+    if (!this.licensePlates.length || !this.map) return;
+
+    // Extract unique cities from license plates
+    const cities = this.licensePlates
+      .filter(plate => plate.derived_from && plate.derived_from !== 'willkürlich gewählt')
+      .map(plate => ({
+        name: plate.derived_from,
+        state: plate.federal_state,
+        plate: plate
+      }))
+      .filter((city, index, array) =>
+        array.findIndex(c => c.name === city.name && c.state === city.state) === index
+      );
+
+    cities.forEach(city => {
+      const coordinates = this.geocodingService.getCoordinatesSync(city.name, city.state);
+      if (coordinates && this.map) {
+        this.addMarker(coordinates, city.plate);
+      }
+    });
+  }
+
+  private loadSingleMarker(plate: LicensePlate) {
+    if (!plate.derived_from || plate.derived_from === 'willkürlich gewählt' || !this.map) {
+      return;
+    }
+
+    const coordinates = this.geocodingService.getCoordinatesSync(plate.derived_from, plate.federal_state);
+    if (coordinates && this.map) {
+      this.addMarker(coordinates, plate);
+      this.map.panTo([coordinates.lat, coordinates.lng]);
+      this.hasMarkers = true;
+    }
+  }
+
+  private addMarker(coordinates: CityCoordinates, licensePlate: LicensePlate) {
+    if (!this.map) return;
+
+    const isSelected = this.selectedCode === licensePlate.code;
+    const marker = this.mapMarkerService.createMarker(
+      coordinates,
+      licensePlate,
+      isSelected,
+      (plate: LicensePlate) => {
+        this.codeSelected.emit(plate);
+        this.isMapVisible = false;
+      }
+    );
+
+    marker.addTo(this.map);
+
+    if (isSelected) {
+      marker.openPopup();
+      this.selectedMarker = marker;
+      this.map.panTo([coordinates.lat, coordinates.lng]);
+    }
+
+    this.markers.set(licensePlate.code, marker);
+  }
+
+  private highlightSelectedMarker() {
+    this.markers.forEach((marker, code) => {
+      const isSelected = code === this.selectedCode;
+      const plate = this.licensePlates.find(p => p.code === code);
+      const stateClass = plate ? this.mapStateService.getStateClass(plate.federal_state) : '';
+      
+      this.mapMarkerService.updateMarkerIcon(marker, code, isSelected, stateClass);
+
+      if (isSelected) {
+        marker.openPopup();
+        this.selectedMarker = marker;
+        if (this.map) {
+          const latLng = marker.getLatLng();
+          this.map.panTo(latLng);
+        }
+      } else {
+        marker.closePopup();
+      }
+    });
+
+    if (!this.selectedCode) {
+      this.selectedMarker = null;
+    }
+  }
+
+  public clearMarkers() {
+    this.markers.forEach(marker => {
+      if (this.map) {
+        this.map.removeLayer(marker);
+      }
+    });
+    this.markers.clear();
+    this.selectedMarker = null;
+    this.hasMarkers = false;
+  }
+
+  public refreshMap() {
+    this.clearMarkers();
+    this.loadLicensePlateLocations();
+    this.hasMarkers = this.markers.size > 0;
   }
 }
