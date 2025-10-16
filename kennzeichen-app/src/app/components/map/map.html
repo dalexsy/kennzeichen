@@ -1,28 +1,30 @@
-<button
-  *ngIf="shouldShowMapButton"
-  class="map-toggle"
-  (click)="toggleMap()"
-  [attr.aria-label]="isMapVisible ? 'Hide map' : 'Show map'"
->
-  <span class="material-icons">{{ isMapVisible ? 'close' : 'map' }}</span>
-  <span class="toggle-text">{{ isMapVisible ? 'Schließen' : 'Karte' }}</span>
-</button>
+@if (shouldShowMapButton) {
+  <button
+    class="map-toggle"
+    (click)="toggleMap()"
+    [attr.aria-label]="isMapVisible ? 'Hide map' : 'Show map'"
+  >
+    <span class="material-icons">{{ isMapVisible ? 'close' : 'map' }}</span>
+    <span class="toggle-text">{{ isMapVisible ? 'Schließen' : 'Karte' }}</span>
+  </button>
+}
 
 <div class="map-overlay" [class.visible]="isMapVisible" (click)="onOverlayClick($event)">
   <div class="map-container" (click)="onMapClick($event)">
     <div #mapContainer class="map" id="map" style="height: 100%; width: 100%"></div>
     <div class="state-filter-tiles">
-      <button
-        *ngFor="let state of states"
-        [class]="'state-tile state-' + state.index"
-        [class.active]="isStateActive(state)"
-        [class.dimmed]="isStateDimmed(state)"
-        (click)="onStateTileClick(state)"
-        [attr.aria-label]="state.name"
-        [title]="state.name"
-      >
-        {{ state.code }}
-      </button>
+      @for (state of states; track state.index) {
+        <button
+          [class]="'state-tile state-' + state.index"
+          [class.active]="isStateActive(state)"
+          [class.dimmed]="isStateDimmed(state)"
+          (click)="onStateTileClick(state)"
+          [attr.aria-label]="state.name"
+          [title]="state.name"
+        >
+          {{ state.code }}
+        </button>
+      }
     </div>
   </div>
 </div>

@@ -1,9 +1,11 @@
 <div class="region-badge" [class]="size">
-  <img
-    *ngIf="coatOfArmsPath"
-    [src]="coatOfArmsPath"
-    [alt]="federalState + ' coat of arms'"
-    class="coat-of-arms"
-  />
-  <div *ngIf="!coatOfArmsPath" class="placeholder"></div>
+  @if (coatOfArmsPath) {
+    <img
+      [src]="coatOfArmsPath"
+      [alt]="federalState + ' coat of arms'"
+      class="coat-of-arms"
+    />
+  } @else {
+    <div class="placeholder"></div>
+  }
 </div>

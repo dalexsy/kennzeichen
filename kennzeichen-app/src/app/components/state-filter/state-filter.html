@@ -6,19 +6,22 @@
       (change)="onStateChange($event)"
     >
       <option value="">All States</option>
-      <option *ngFor="let state of germanStates" [value]="state">
-        {{ state }}
-      </option>
+      @for (state of germanStates; track state) {
+        <option [value]="state">
+          {{ state }}
+        </option>
+      }
     </select>
 
-    <button
-      *ngIf="selectedState"
-      type="button"
-      class="clear"
-      (click)="clearFilter()"
-      aria-label="Clear state filter"
-    >
-      ✕
-    </button>
+    @if (selectedState) {
+      <button
+        type="button"
+        class="clear"
+        (click)="clearFilter()"
+        aria-label="Clear state filter"
+      >
+        ✕
+      </button>
+    }
   </div>
 </div>

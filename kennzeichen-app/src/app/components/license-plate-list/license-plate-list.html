@@ -1,98 +1,117 @@
 <div class="license-plate-list" [class.has-nav-buttons]="showNavButtons">
-  <div *ngIf="isLoading" class="loading">
-    <div class="spinner"></div>
-    <p>Kennzeichendaten werden geladen...</p>
-  </div>
-
-  <div
-    *ngIf="!isLoading && (groupedLicensePlates$ | async) as groupedList"
-    class="list-container"
-    #listContainer
-  >
-    <div *ngIf="getTotalCount(groupedList) === 0" class="empty">
-      <p class="empty-text">
-        {{
-          searchTerm
-            ? 'No license plates found for "' + searchTerm + '"'
-            : 'No license plates available'
-        }}
-      </p>
-      <p class="empty-hint" *ngIf="searchTerm">
-        Try entering fewer letters or check your spelling.
-      </p>
+  @if (isLoading) {
+    <div class="loading">
+      <div class="spinner"></div>
+      <p>Kennzeichendaten werden geladen...</p>
     </div>
+  }
 
-    <div *ngIf="getTotalCount(groupedList) > 0" class="results">
-      <div class="groups">
-        <div *ngFor="let group of groupedList; let i = index; trackBy: trackByState" class="group">
+  @if (!isLoading && (groupedLicensePlates$ | async); as groupedList) {
+    <div
+      class="list-container"
+      #listContainer
+    >
+      @if (getTotalCount(groupedList) === 0) {
+        <div class="empty">
+          <p class="empty-text">
+            {{
+              searchTerm
+                ? 'Keine Kennzeichen gefunden für "' + searchTerm + '"'
+                : 'Keine Kennzeichen verfügbar'
+            }}
+          </p>
+          @if (searchTerm) {
+            <p class="empty-hint">
+              Versuche weniger Buchstaben einzugeben oder überprüfe die Schreibweise.
+            </p>
+          }
+        </div>
+      }
+
+      @if (getTotalCount(groupedList) > 0) {
+        <div class="results">
+          <div class="groups">
+            @for (group of groupedList; track trackByState($index, group)) {
+              <div class="group">
           <h3 class="group-heading" [class.focused]="isGroupFocused(group.state)">
             <div class="heading-content" (click)="onGroupHeadingClick(group)">
-              <span
-                class="state-color-tile"
-                [class]="getStateColorClass(group.state)"
-                *ngIf="(viewMode$ | async) === 'grouped'"
-              ></span>
+              @if ((viewMode$ | async) === 'grouped') {
+                <span
+                  class="state-color-tile"
+                  [class]="getStateColorClass(group.state)"
+                ></span>
+              }
               <span class="heading-text">{{ group.state }} ({{ group.licensePlates.length }})</span>
             </div>
-            <button
-              *ngIf="focusedGroup"
-              class="show-all-button"
-              (click)="onGroupHeadingClick(group)"
-            >
-              Alles zeigen
-              <span _ngcontent-ng-c3358268225="" class="material-icons">keyboard_return</span>
-            </button>
-            <button
-              *ngIf="!focusedGroup && isLicensePlateSelected"
-              class="show-all-button"
-              (click)="onBackClick()"
-            >
-              Zurück
-              <span class="material-icons">keyboard_return</span>
-            </button>
-            <app-view-toggle
-              *ngIf="!focusedGroup && !isLicensePlateSelected"
-              [currentView]="(viewMode$ | async) || 'alphabetical'"
-              (viewChange)="onViewChange($event)"
-              class="view-toggle"
-            ></app-view-toggle>
+            @if (focusedGroup) {
+              <button
+                class="show-all-button"
+                (click)="onGroupHeadingClick(group)"
+              >
+                Alles zeigen
+                <span _ngcontent-ng-c3358268225="" class="material-icons">keyboard_return</span>
+              </button>
+            }
+            @if (!focusedGroup && isLicensePlateSelected) {
+              <button
+                class="show-all-button"
+                (click)="onBackClick()"
+              >
+                Zurück
+                <span class="material-icons">keyboard_return</span>
+              </button>
+            }
+            @if (!focusedGroup && !isLicensePlateSelected) {
+              <app-view-toggle
+                [currentView]="(viewMode$ | async) || 'alphabetical'"
+                (viewChange)="onViewChange($event)"
+                class="view-toggle"
+              ></app-view-toggle>
+            }
           </h3>
           <div class="group-items">
-            <app-license-plate-item
-              *ngFor="let licensePlate of group.licensePlates; trackBy: trackByCode"
-              [licensePlate]="licensePlate"
-              [isSeen]="(seenCodes$ | async)?.has(licensePlate.code) || false"
-              [isSelected]="licensePlate.code === selectedCode"
-              [searchTerm]="searchTerm"
-              [seenDate]="getSeenDate(licensePlate.code)"
-              (itemClicked)="onItemClicked($event)"
-            ></app-license-plate-item>
+            @for (licensePlate of group.licensePlates; track trackByCode($index, licensePlate)) {
+              <app-license-plate-item
+                [licensePlate]="licensePlate"
+                [isSeen]="(seenCodes$ | async)?.has(licensePlate.code) || false"
+                [isSelected]="licensePlate.code === selectedCode"
+                [searchTerm]="searchTerm"
+                [seenDate]="getSeenDate(licensePlate.code)"
+                (itemClicked)="onItemClicked($event)"
+              ></app-license-plate-item>
+            }
+          </div>
+              </div>
+            }
           </div>
         </div>
-      </div>
+      }
     </div>
-  </div>
+  }
 
-  <div
-    *ngIf="showNavButtons && getTotalCount((groupedLicensePlates$ | async) || []) > 0"
-    class="section-nav"
-    [class.map-button-visible]="isMapButtonVisible"
-  >
-    <button
-      *ngIf="canScrollPrevious()"
-      class="nav-button prev"
-      (click)="scrollToPreviousSection()"
-      aria-label="Previous section"
+  @if (showNavButtons && getTotalCount((groupedLicensePlates$ | async) || []) > 0) {
+    <div
+      class="section-nav"
+      [class.map-button-visible]="isMapButtonVisible"
     >
-      <span class="material-icons">keyboard_arrow_up</span>
-    </button>
-    <button
-      *ngIf="canScrollNext()"
-      class="nav-button next"
-      (click)="scrollToNextSection()"
-      aria-label="Next section"
-    >
-      <span class="material-icons">keyboard_arrow_down</span>
-    </button>
-  </div>
+      @if (canScrollPrevious()) {
+        <button
+          class="nav-button prev"
+          (click)="scrollToPreviousSection()"
+          aria-label="Previous section"
+        >
+          <span class="material-icons">keyboard_arrow_up</span>
+        </button>
+      }
+      @if (canScrollNext()) {
+        <button
+          class="nav-button next"
+          (click)="scrollToNextSection()"
+          aria-label="Next section"
+        >
+          <span class="material-icons">keyboard_arrow_down</span>
+        </button>
+      }
+    </div>
+  }
 </div>

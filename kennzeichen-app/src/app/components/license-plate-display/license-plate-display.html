@@ -20,7 +20,9 @@
 
     <div class="main">
       <div class="code">
-        <span *ngFor="let char of animatedChars; let i = index" [class.entered]="i < enteredText.length" [class.placeholder]="i >= enteredText.length">{{ char }}</span>
+        @for (char of animatedChars; track $index) {
+          <span [class.entered]="$index < enteredText.length" [class.placeholder]="$index >= enteredText.length">{{ char }}</span>
+        }
       </div>
 
       <div class="separator">
@@ -29,7 +31,9 @@
       </div>
 
       <div class="numbers">
-        <span *ngFor="let digit of animatedNumbers" [class.placeholder]="!hasActualNumbers">{{ digit }}</span>
+        @for (digit of animatedNumbers; track $index) {
+          <span [class.placeholder]="!hasActualNumbers">{{ digit }}</span>
+        }
       </div>
     </div>
   </div>
