@@ -21,8 +21,11 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
   @Input() licensePlates: LicensePlate[] = [];
   @Input() selectedCode: string = '';
   @Input() stateFilter: string = '';
+  @Input() seenFilterActive: boolean = false;
+  @Input() seenCount: number = 0;
   @Output() codeSelected = new EventEmitter<LicensePlate>();
   @Output() stateFilterChange = new EventEmitter<string>();
+  @Output() seenFilterToggle = new EventEmitter<void>();
 
   private map: L.Map | null = null;
   private markers: Map<string, L.Marker> = new Map();
@@ -52,6 +55,18 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     return false;
+  }
+
+  get shouldShowSeenButton(): boolean {
+    return this.seenCount > 0;
+  }
+
+  onSeenFilterToggle(): void {
+    this.seenFilterToggle.emit();
+    // On mobile (< 768px), open the map when activating the seen filter
+    if (window.innerWidth < 768 && !this.seenFilterActive && !this.isMapVisible) {
+      this.toggleMap();
+    }
   }
 
   constructor(

@@ -32,6 +32,56 @@
   }
 }
 
+.seen-toggle {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  background-color: $accent-tertiary;
+  color: white;
+  border: none;
+  border-radius: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  font-family: $body-font;
+  cursor: pointer;
+  z-index: 100;
+  box-shadow: $box-shadow 2px 2px;
+
+  @include tablet-up {
+    position: absolute;
+    top: 1.5rem;
+    right: 0.5rem;
+    bottom: auto;
+    left: auto;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    z-index: 1000;
+  }
+
+  .material-icons {
+    font-size: 1rem;
+  }
+
+  .toggle-text {
+    font-weight: 500;
+  }
+
+  .count-badge {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 1rem;
+    padding: 0.125rem 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+
+    @include tablet-up {
+      font-size: 0.75rem;
+    }
+  }
+}
+
 .map-overlay {
   display: none;
   position: fixed;
@@ -73,7 +123,7 @@
     width: 100%;
     max-width: 500px;
     height: calc(100vh - 253px - 1rem - 2rem);
-    position: static;
+    position: relative;
   }
 }
 
@@ -87,7 +137,7 @@
   border: 1px solid var(--border-primary);
 
   @include tablet-up {
-    border-radius: 1rem;
+    border-radius: 0.5rem;
   }
 }
 

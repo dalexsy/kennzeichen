@@ -9,6 +9,20 @@
   </button>
 }
 
+@if (shouldShowSeenButton) {
+  <button
+    class="seen-toggle"
+    (click)="onSeenFilterToggle()"
+    [attr.aria-label]="seenFilterActive ? 'Alle anzeigen' : 'Gesehene anzeigen'"
+  >
+    @if (seenFilterActive) {
+      <span class="material-icons">visibility_off</span>
+    }
+    <span class="toggle-text">Gesehene</span>
+    <span class="count-badge">{{ seenCount }}</span>
+  </button>
+}
+
 <div class="map-overlay" [class.visible]="isMapVisible" (click)="onOverlayClick($event)">
   <div class="map-container" (click)="onMapClick($event)">
     <div #mapContainer class="map" id="map" style="height: 100%; width: 100%"></div>

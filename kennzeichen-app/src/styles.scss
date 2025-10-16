@@ -23,9 +23,11 @@ body {
   color: $text-primary;
   background-color: $background-primary;
   overflow-x: hidden;
+  overflow-y: scroll;
   margin: 0;
   padding: 0;
   font-weight: 450;
+  min-height: 100vh;
 }
 
 // Reset
@@ -160,6 +162,17 @@ app-root {
 .leaflet-container {
   font-family: $body-font !important;
   background: $background-primary !important;
+}
+
+.leaflet-control-zoom {
+  border: none !important;
+  filter: drop-shadow(2px 2px var(--box-shadow));
+
+  &-in,
+  &-out {
+    color: var(--text-primary) !important;
+    font-family: 'Rubik';
+  }
 }
 
 .leaflet-popup-close-button {

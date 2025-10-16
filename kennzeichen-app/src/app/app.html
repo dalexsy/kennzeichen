@@ -24,8 +24,11 @@
         [licensePlates]="(filteredLicensePlates$ | async) || []"
         [selectedCode]="selectedCode"
         [stateFilter]="licensePlateService.getCurrentStateFilter()"
+        [seenFilterActive]="isSeenFilterActive"
+        [seenCount]="getSeenCount()"
         (codeSelected)="onLicensePlateClicked($event)"
         (stateFilterChange)="onStateChange($event)"
+        (seenFilterToggle)="onSeenFilterToggle()"
         class="map-section"
       ></app-map>
 

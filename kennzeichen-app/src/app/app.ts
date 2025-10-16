@@ -239,4 +239,37 @@ export class App implements OnInit {
   getSeenCount(): number {
     return this.localStorageService.getSeenCount();
   }
+
+  onSeenFilterToggle(): void {
+    const currentFilter = this.licensePlateService.getCurrentSeenFilter();
+
+    if (currentFilter) {
+      // Turning off - restore previous state
+      this.targetScrollPosition = this.savedScrollPosition;
+      this.currentSearchTerm = this.savedSearchTerm;
+      this.focusedGroup = this.savedStateFilter;
+      this.licensePlateService.setSeenFilter(false);
+      this.licensePlateService.setSearchTerm(this.savedSearchTerm);
+      this.licensePlateService.setStateFilter(this.savedStateFilter);
+
+      setTimeout(() => {
+        this.targetScrollPosition = -1;
+      }, 100);
+    } else {
+      // Turning on - save current state and clear other filters
+      this.savedScrollPosition = window.scrollY || document.documentElement.scrollTop;
+      this.savedSearchTerm = this.currentSearchTerm;
+      this.savedStateFilter = this.licensePlateService.getCurrentStateFilter();
+      this.currentSearchTerm = '';
+      this.focusedGroup = '';
+      this.selectedCode = '';
+      this.licensePlateService.setSeenFilter(true);
+      this.licensePlateService.setSearchTerm('');
+      this.licensePlateService.setStateFilter('');
+    }
+  }
+
+  get isSeenFilterActive(): boolean {
+    return this.licensePlateService.getCurrentSeenFilter();
+  }
 }

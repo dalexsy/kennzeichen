@@ -17,6 +17,7 @@ export class LicensePlateService {
   private licensePlatesSubject = new BehaviorSubject<LicensePlate[]>([]);
   private searchTermSubject = new BehaviorSubject<string>('');
   private stateFilterSubject = new BehaviorSubject<string>('');
+  private seenFilterSubject = new BehaviorSubject<boolean>(false);
   private viewModeSubject = new BehaviorSubject<'alphabetical' | 'grouped'>(
     this.localStorageService.getViewMode() || 'alphabetical'
   );
@@ -24,18 +25,26 @@ export class LicensePlateService {
   public licensePlates$ = this.licensePlatesSubject.asObservable();
   public searchTerm$ = this.searchTermSubject.asObservable().pipe(distinctUntilChanged());
   public stateFilter$ = this.stateFilterSubject.asObservable().pipe(distinctUntilChanged());
+  public seenFilter$ = this.seenFilterSubject.asObservable().pipe(distinctUntilChanged());
   public viewMode$ = this.viewModeSubject.asObservable().pipe(distinctUntilChanged());
 
-  // Filtered license plates based on search term and state filter
+  // Filtered license plates based on search term, state filter, and seen filter
   public filteredLicensePlates$ = combineLatest([
     this.licensePlates$,
     this.searchTerm$,
-    this.stateFilter$
+    this.stateFilter$,
+    this.seenFilter$,
+    this.localStorageService.seenLicensePlates$
   ]).pipe(
-    map(([licensePlates, searchTerm, stateFilter]) => {
+    map(([licensePlates, searchTerm, stateFilter, seenFilter, seenCodes]) => {
       let filtered = licensePlates;
 
-      // Apply state filter first
+      // Apply seen filter first
+      if (seenFilter) {
+        filtered = filtered.filter(plate => seenCodes.has(plate.code));
+      }
+
+      // Apply state filter
       if (stateFilter.trim()) {
         filtered = filtered.filter(plate => plate.federal_state === stateFilter);
       }
@@ -204,9 +213,17 @@ export class LicensePlateService {
     this.stateFilterSubject.next(state);
   }
 
+  setSeenFilter(showOnlySeen: boolean): void {
+    this.seenFilterSubject.next(showOnlySeen);
+  }
+
   setViewMode(mode: 'alphabetical' | 'grouped'): void {
     this.viewModeSubject.next(mode);
     this.localStorageService.saveViewMode(mode);
+  }
+
+  getCurrentSeenFilter(): boolean {
+    return this.seenFilterSubject.value;
   }
 
   getLicensePlateByCode(code: string): LicensePlate | undefined {
