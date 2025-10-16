@@ -47,8 +47,7 @@
       margin-top: 1rem;
 
       @include tablet-up {
-        flex: 1;
-        max-width: 500px;
+        flex: 0 0 500px;
         position: sticky;
         top: calc(253px + 1rem);
         align-self: flex-start;

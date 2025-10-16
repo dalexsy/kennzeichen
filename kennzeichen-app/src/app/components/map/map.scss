@@ -71,8 +71,9 @@
 
   @include tablet-up {
     width: 100%;
-    max-width: none;
+    max-width: 500px;
     height: calc(100vh - 253px - 1rem - 2rem);
+    position: static;
   }
 }
 
