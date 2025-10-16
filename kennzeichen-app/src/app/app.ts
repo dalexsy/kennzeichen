@@ -1,15 +1,17 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable, BehaviorSubject } from 'rxjs';
 
 import { LicensePlate } from './models/license-plate.interface';
 import { LicensePlateService, LicensePlateGroup } from './services/license-plate';
 import { LocalStorageService } from './services/local-storage';
+import { MapStateService } from './services/map-state.service';
 
 import { LicensePlateDisplay } from './components/license-plate-display/license-plate-display';
 import { SearchInput } from './components/search-input/search-input';
 import { LicensePlateList } from './components/license-plate-list/license-plate-list';
 import { MapComponent } from './components/map/map';
+import { TableOfContentsComponent } from './components/table-of-contents/table-of-contents';
 
 @Component({
   selector: 'app-root',
@@ -18,12 +20,13 @@ import { MapComponent } from './components/map/map';
     LicensePlateDisplay,
     SearchInput,
     LicensePlateList,
-    MapComponent
+    MapComponent,
+    TableOfContentsComponent
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App implements OnInit {
+export class App implements OnInit, OnDestroy {
   @ViewChild(MapComponent) mapComponent?: MapComponent;
 
   title = 'German License Plate Lookup';
@@ -39,9 +42,11 @@ export class App implements OnInit {
   isLoading = true;
   targetScrollPosition = -1;
   focusedGroup = '';
+  activeSection = '';
   private savedScrollPosition = 0;
   private savedSearchTerm = '';
   private savedStateFilter = '';
+  private isScrollingProgrammatically = false;
 
   get isMapButtonVisible(): boolean {
     return this.mapComponent?.shouldShowMapButton || false;
@@ -53,7 +58,8 @@ export class App implements OnInit {
 
   constructor(
     public licensePlateService: LicensePlateService,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private mapStateService: MapStateService
   ) {
     this.filteredLicensePlates$ = this.licensePlateService.filteredLicensePlates$;
     this.groupedLicensePlates$ = this.licensePlateService.groupedLicensePlates$;
@@ -64,7 +70,78 @@ export class App implements OnInit {
     // Simulate loading state - in reality, this would be based on the service loading state
     setTimeout(() => {
       this.isLoading = false;
+      this.setupScrollObserver();
     }, 1000);
+
+    // Re-observe when grouped list changes
+    this.groupedLicensePlates$.subscribe((groups) => {
+      // Immediately set the accent color to the first group's state color
+      if (groups && groups.length > 0) {
+        const firstStateName = groups[0].state;
+        this.activeSection = firstStateName;
+        this.updateAccentColor(firstStateName);
+      }
+
+      setTimeout(() => {
+        if (this.observer) {
+          this.observer.disconnect();
+          const headings = document.querySelectorAll('.group-heading');
+          headings.forEach(heading => this.observer?.observe(heading));
+        }
+      }, 100);
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.observer) {
+      this.observer.disconnect();
+    }
+  }
+
+  private observer?: IntersectionObserver;
+
+  private setupScrollObserver(): void {
+    const options = {
+      root: null,
+      rootMargin: '-20% 0px -70% 0px',
+      threshold: 0
+    };
+
+    this.observer = new IntersectionObserver((entries) => {
+      // Don't update active section during programmatic scrolls
+      if (this.isScrollingProgrammatically) return;
+
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const headingText = entry.target.querySelector('.heading-text')?.textContent?.trim();
+          if (headingText) {
+            // Extract just the state name (before the count)
+            const stateName = headingText.split('(')[0].trim();
+            this.activeSection = stateName;
+            this.updateAccentColor(stateName);
+          }
+        }
+      });
+    }, options);
+
+    // Observe all group headings
+    setTimeout(() => {
+      const headings = document.querySelectorAll('.group-heading');
+      headings.forEach(heading => this.observer?.observe(heading));
+    }, 100);
+  }
+
+  private updateAccentColor(stateName: string): void {
+    // Get the state color directly from the MapStateService
+    const color = this.mapStateService.getStateColor(stateName);
+    if (color) {
+      // Set the accent-tertiary color to match the state
+      document.documentElement.style.setProperty('--accent-tertiary', color);
+    } else {
+      // Reset to default color when not viewing states (e.g., alphabetical view)
+      // Remove the inline style to let CSS variables handle light/dark mode
+      document.documentElement.style.removeProperty('--accent-tertiary');
+    }
   }
 
   onSearchChange(searchTerm: string): void {
@@ -237,7 +314,16 @@ export class App implements OnInit {
   }
 
   getSeenCount(): number {
-    return this.localStorageService.getSeenCount();
+    // Count how many of the currently filtered plates have been seen
+    let count = 0;
+    const seenCodesArray = this.localStorageService.getSeenCodes();
+    const seenCodes = new Set(seenCodesArray);
+
+    this.filteredLicensePlates$.subscribe(plates => {
+      count = plates.filter(plate => seenCodes.has(plate.code)).length;
+    }).unsubscribe();
+
+    return count;
   }
 
   onSeenFilterToggle(): void {
@@ -256,20 +342,63 @@ export class App implements OnInit {
         this.targetScrollPosition = -1;
       }, 100);
     } else {
-      // Turning on - save current state and clear other filters
+      // Turning on - save current state and clear search term only (preserve state filter)
       this.savedScrollPosition = window.scrollY || document.documentElement.scrollTop;
       this.savedSearchTerm = this.currentSearchTerm;
       this.savedStateFilter = this.licensePlateService.getCurrentStateFilter();
       this.currentSearchTerm = '';
-      this.focusedGroup = '';
       this.selectedCode = '';
       this.licensePlateService.setSeenFilter(true);
       this.licensePlateService.setSearchTerm('');
-      this.licensePlateService.setStateFilter('');
+      // Keep the state filter active - don't clear it
     }
   }
 
   get isSeenFilterActive(): boolean {
     return this.licensePlateService.getCurrentSeenFilter();
+  }
+
+  onTocSectionClick(section: string): void {
+    // Set flag to prevent IntersectionObserver from updating during scroll
+    this.isScrollingProgrammatically = true;
+
+    // Immediately update the active section and color
+    this.activeSection = section;
+    this.updateAccentColor(section);
+
+    // Find the group container element and scroll to it
+    const groups = document.querySelectorAll('.group');
+    let found = false;
+
+    for (const group of Array.from(groups)) {
+      const headingText = group.querySelector('.heading-text')?.textContent?.trim();
+      if (headingText?.startsWith(section)) {
+        // Get the header height to offset scroll position
+        const header = document.querySelector('.sticky-header');
+        const headerHeight = header ? header.clientHeight : 0;
+
+        // Get the absolute position of the group container in the document
+        const rect = group.getBoundingClientRect();
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const absoluteTop = rect.top + scrollTop;
+
+        // Calculate target scroll position accounting for header and padding
+        const offsetPosition = absoluteTop - headerHeight;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+
+        found = true;
+        break;
+      }
+    }
+
+    // Always re-enable IntersectionObserver after scroll animation completes
+    // Do this regardless of whether we found the heading
+    setTimeout(() => {
+      this.isScrollingProgrammatically = false;
+    }, 600); // Match typical smooth scroll duration
   }
 }

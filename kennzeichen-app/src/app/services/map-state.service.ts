@@ -58,4 +58,31 @@ export class MapStateService {
   getStateIndex(stateName: string): number | undefined {
     return this.stateIndexMap.get(stateName);
   }
+
+  getStateColor(stateName: string): string | undefined {
+    const index = this.stateIndexMap.get(stateName);
+    if (index === undefined) return undefined;
+
+    // These colors match the state-colors mixin in _state-colors.scss
+    const colors = [
+      '#a14c2e', // state-0: Baden-Württemberg
+      '#b35c37', // state-1: Bayern
+      '#c56f3a', // state-2: Berlin
+      '#d6833d', // state-3: Brandenburg
+      '#e79a40', // state-4: Bremen
+      '#e9b643', // state-5: Hamburg
+      '#c9b747', // state-6: Hessen
+      '#a1a74c', // state-7: Mecklenburg-Vorpommern
+      '#7e9454', // state-8: Niedersachsen
+      '#5f805a', // state-9: Nordrhein-Westfalen
+      '#4e6f62', // state-10: Rheinland-Pfalz
+      '#4a616c', // state-11: Saarland
+      '#565a77', // state-12: Sachsen
+      '#64567e', // state-13: Sachsen-Anhalt
+      '#72567c', // state-14: Schleswig-Holstein
+      '#7f5578'  // state-15: Thüringen
+    ];
+
+    return colors[index];
+  }
 }

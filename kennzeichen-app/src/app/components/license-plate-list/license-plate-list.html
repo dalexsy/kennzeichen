@@ -114,4 +114,13 @@
       }
     </div>
   }
+
+  <button
+    class="back-to-top"
+    [class.visible]="showBackToTop"
+    (click)="scrollToTopButton()"
+    aria-label="Back to top"
+  >
+    <span class="material-icons">keyboard_arrow_up</span>
+  </button>
 </div>

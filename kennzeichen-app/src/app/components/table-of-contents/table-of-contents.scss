@@ -1,0 +1,89 @@
+@use '../../../styles/main' as *;
+
+.table-of-contents {
+  display: none;
+
+  @include desktop-up {
+    display: block;
+    position: fixed;
+    right: 14rem;
+    top: calc(253px + 2rem);
+    width: 12rem;
+    max-height: calc(100vh - 253px - 1rem);
+    overflow-y: auto;
+  }
+}
+
+.toc-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  // Detect alphabetical mode: if there are 20+ items (alphabet has 26 letters vs 16 states)
+  &:has(.toc-item:nth-child(20)) {
+    @include desktop-up {
+      column-count: 2;
+      column-gap: 0.25rem;
+      display: block;
+    }
+  }
+}
+
+.toc-item {
+  display: block;
+  break-inside: avoid;
+}
+
+.toc-link {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: none;
+  border: none;
+  border-radius: 0.65rem;
+  font-family: $body-font;
+  font-size: 0.875rem;
+  color: $text-primary;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: $background-primary;
+  }
+
+  &[data-active='true'] {
+    color: white;
+    font-weight: 600;
+    background-color: $accent-tertiary;
+
+    @include state-colors;
+
+    .section-count {
+      background-color: rgba(255, 255, 255, 0.3);
+      color: white;
+    }
+  }
+}
+
+.section-name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.section-count {
+  flex-shrink: 0;
+  background-color: $background-primary;
+  border-radius: 0.75rem;
+  padding: 0.125rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: $text-secondary;
+  mix-blend-mode: luminosity;
+}

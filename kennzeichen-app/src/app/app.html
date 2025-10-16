@@ -48,6 +48,12 @@
         (backClicked)="onBackClick()"
         class="list"
       ></app-license-plate-list>
+
+      <app-table-of-contents
+        [groups]="(groupedLicensePlates$ | async) || []"
+        [activeSection]="activeSection"
+        (sectionClicked)="onTocSectionClick($event)"
+      ></app-table-of-contents>
     </div>
   </main>
 </div>

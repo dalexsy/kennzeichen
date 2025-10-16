@@ -1,0 +1,18 @@
+<nav class="table-of-contents">
+  <ul class="toc-list">
+    @for (group of groups; track group.state) {
+    <li class="toc-item">
+      <button
+        class="toc-link"
+        [class.active]="isActive(group.state)"
+        [class]="'toc-link ' + getStateClass(group.state)"
+        [attr.data-active]="isActive(group.state)"
+        (click)="onSectionClick(group.state)"
+      >
+        <span class="section-name">{{ group.state }}</span>
+        <span class="section-count">{{ group.licensePlates.length }}</span>
+      </button>
+    </li>
+    }
+  </ul>
+</nav>

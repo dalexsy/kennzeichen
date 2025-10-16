@@ -35,10 +35,14 @@ export class LicensePlateList implements AfterViewInit, AfterViewChecked, OnDest
   viewMode$ = this.licensePlateService.viewMode$;
 
   showNavButtons = false;
+  showBackToTop = false;
   totalSections = 0;
   private lastSectionCount = 0;
   private isScrolling = false;
-  private scrollListener = () => this.cdr.detectChanges();
+  private scrollListener = () => {
+    this.updateBackToTopVisibility();
+    this.cdr.detectChanges();
+  };
   private lastClickTime = 0;
   private clickTimeout: any = null;
 
@@ -104,6 +108,7 @@ export class LicensePlateList implements AfterViewInit, AfterViewChecked, OnDest
 
   ngAfterViewInit(): void {
     this.updateNavButtonVisibility();
+    this.updateBackToTopVisibility();
     window.addEventListener('scroll', this.scrollListener);
   }
 
@@ -142,6 +147,19 @@ export class LicensePlateList implements AfterViewInit, AfterViewChecked, OnDest
       this.showNavButtons = this.totalSections > 1;
       this.cdr.detectChanges();
     }
+  }
+
+  updateBackToTopVisibility(): void {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    // Show button after scrolling down 500px
+    this.showBackToTop = scrollTop > 500;
+  }
+
+  scrollToTopButton(): void {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   }
 
   private getCurrentSectionIndex(): number {

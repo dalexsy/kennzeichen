@@ -12,6 +12,8 @@
 @if (shouldShowSeenButton) {
   <button
     class="seen-toggle"
+    [class.disabled]="seenCount === 0"
+    [disabled]="seenCount === 0"
     (click)="onSeenFilterToggle()"
     [attr.aria-label]="seenFilterActive ? 'Alle anzeigen' : 'Gesehene anzeigen'"
   >

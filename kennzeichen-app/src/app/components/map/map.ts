@@ -58,7 +58,8 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   get shouldShowSeenButton(): boolean {
-    return this.seenCount > 0;
+    // Always show the button to make the feature discoverable
+    return true;
   }
 
   onSeenFilterToggle(): void {
@@ -134,6 +135,8 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
       setTimeout(() => {
         if (this.map) {
           this.map.invalidateSize();
+          // Fit map to show all markers
+          this.mapMarkerService.fitMapToMarkers(this.map, this.markers);
           // Close and reopen any open popups to fix positioning
           this.markers.forEach(marker => {
             if (marker.isPopupOpen()) {
