@@ -133,17 +133,6 @@
     }
   }
 
-  &.has-nav-buttons {
-    .group-heading {
-      @include tablet-up {
-        padding-right: 3.5rem;
-      }
-
-      @include desktop-up {
-        padding-right: 0;
-      }
-    }
-  }
 
   .group-items {
     display: grid;
@@ -153,27 +142,7 @@
   }
 
   .section-nav {
-    position: fixed;
-    bottom: 1rem;
-    right: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    z-index: 10;
-    transition: bottom 0.2s;
-
-    &.map-button-visible {
-      bottom: 5.5rem;
-    }
-
-    @include tablet-up {
-      top: 16.5rem;
-      bottom: auto;
-    }
-
-    @include desktop-up {
-      display: none;
-    }
+    display: none;
   }
 
   .back-to-top {

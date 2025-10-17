@@ -61,10 +61,6 @@
     z-index: 1000;
   }
 
-  &.disabled {
-    filter: grayscale(0.9) brightness(1);
-    cursor: not-allowed;
-  }
 
   .material-icons {
     font-size: 1rem;
@@ -146,13 +142,55 @@
   }
 }
 
+.filter-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem;
+}
+
+.region-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @include tablet-up {
+    display: none;
+  }
+
+  .region-name {
+    font-weight: 500;
+    position: relative;
+    padding: 0.25rem 1rem;
+    text-align: center;
+    color: $text-primary;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: $accent-secondary;
+      clip-path: polygon(
+        0.5rem 50%,
+        0rem 0%,
+        calc(100% - 0rem) 0%,
+        calc(100% - 0.5rem) 50%,
+        calc(100% - 0rem) 100%,
+        0rem 100%
+      );
+      z-index: -1;
+    }
+  }
+}
+
 .state-filter-tiles {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   gap: 0.5rem;
-  padding: 0.75rem;
   justify-content: center;
-  // filter: sepia(0.3) brightness(1.4);
 
   @include tablet-up {
     margin: 0 auto;

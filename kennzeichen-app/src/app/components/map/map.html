@@ -1,35 +1,35 @@
 @if (shouldShowMapButton) {
-  <button
-    class="map-toggle"
-    (click)="toggleMap()"
-    [attr.aria-label]="isMapVisible ? 'Hide map' : 'Show map'"
-  >
-    <span class="material-icons">{{ isMapVisible ? 'close' : 'map' }}</span>
-    <span class="toggle-text">{{ isMapVisible ? 'Schließen' : 'Karte' }}</span>
-  </button>
-}
-
-@if (shouldShowSeenButton) {
-  <button
-    class="seen-toggle"
-    [class.disabled]="seenCount === 0"
-    [disabled]="seenCount === 0"
-    (click)="onSeenFilterToggle()"
-    [attr.aria-label]="seenFilterActive ? 'Alle anzeigen' : 'Gesehene anzeigen'"
-  >
-    @if (seenFilterActive) {
-      <span class="material-icons">visibility_off</span>
-    }
-    <span class="toggle-text">Gesehene</span>
-    <span class="count-badge">{{ seenCount }}</span>
-  </button>
+<button
+  class="map-toggle"
+  (click)="toggleMap()"
+  [attr.aria-label]="isMapVisible ? 'Hide map' : 'Show map'"
+>
+  <span class="material-icons">{{ isMapVisible ? 'close' : 'map' }}</span>
+  <span class="toggle-text">{{ isMapVisible ? 'Schließen' : 'Karte' }}</span>
+</button>
+} @if (shouldShowSeenButton) {
+<button
+  class="seen-toggle"
+  (click)="onSeenFilterToggle()"
+  [attr.aria-label]="seenFilterActive ? 'Alle anzeigen' : 'Gesehene anzeigen'"
+>
+  @if (seenFilterActive) {
+  <span class="material-icons">visibility</span>
+  }
+  <span class="toggle-text">Gesehen</span>
+  <span class="count-badge">{{ seenCount }}</span>
+</button>
 }
 
 <div class="map-overlay" [class.visible]="isMapVisible" (click)="onOverlayClick($event)">
   <div class="map-container" (click)="onMapClick($event)">
     <div #mapContainer class="map" id="map" style="height: 100%; width: 100%"></div>
-    <div class="state-filter-tiles">
-      @for (state of states; track state.index) {
+    <div class="filter-section">
+      <div class="region-info">
+        <div class="region-name">{{ activeFilterText }}</div>
+      </div>
+      <div class="state-filter-tiles">
+        @for (state of states; track state.index) {
         <button
           [class]="'state-tile state-' + state.index"
           [class.active]="isStateActive(state)"
@@ -40,7 +40,8 @@
         >
           {{ state.code }}
         </button>
-      }
+        }
+      </div>
     </div>
   </div>
 </div>

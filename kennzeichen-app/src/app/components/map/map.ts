@@ -26,6 +26,7 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
   @Output() codeSelected = new EventEmitter<LicensePlate>();
   @Output() stateFilterChange = new EventEmitter<string>();
   @Output() seenFilterToggle = new EventEmitter<void>();
+  @Output() clearAllFilters = new EventEmitter<void>();
 
   private map: L.Map | null = null;
   private markers: Map<string, L.Marker> = new Map();
@@ -42,11 +43,17 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   get shouldShowMapButton(): boolean {
+    // On mobile, always show the map button for filtering access
+    if (window.innerWidth < 768) {
+      return true;
+    }
+
+    // On desktop/tablet, show if map is visible or has markers
     if (this.hasMarkers || this.isMapVisible) {
       return true;
     }
 
-    // Only show map button if we have plates with valid locations
+    // Show map button if we have plates with valid locations
     if (this.licensePlates.length > 0 && this.licensePlates.length <= 200) {
       const hasValidLocations = this.licensePlates.some(
         plate => plate.derived_from && plate.derived_from !== 'willkürlich gewählt'
@@ -60,6 +67,22 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
   get shouldShowSeenButton(): boolean {
     // Always show the button to make the feature discoverable
     return true;
+  }
+
+  get activeFilterText(): string {
+    const parts: string[] = [];
+    if (this.seenFilterActive) {
+      parts.push('Gesehen');
+    }
+    if (this.stateFilter) {
+      parts.push(this.stateFilter);
+    } else {
+      parts.push('Alle Staaten');
+    }
+
+
+
+    return parts.join(' in ');
   }
 
   onSeenFilterToggle(): void {
@@ -155,6 +178,14 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
   onOverlayClick(event: MouseEvent) {
     // Close when clicking the backdrop
     this.isMapVisible = false;
+
+    // On mobile, if closing map with no results and filters active, clear all filters
+    if (window.innerWidth < 768 && this.licensePlates.length === 0) {
+      const hasActiveFilters = this.stateFilter || this.seenFilterActive || this.selectedCode;
+      if (hasActiveFilters) {
+        this.clearAllFilters.emit();
+      }
+    }
   }
 
   onMapClick(event: MouseEvent) {

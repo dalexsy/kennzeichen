@@ -401,4 +401,14 @@ export class App implements OnInit, OnDestroy {
       this.isScrollingProgrammatically = false;
     }, 600); // Match typical smooth scroll duration
   }
+
+  onClearAllFilters(): void {
+    // Clear all active filters and return to full list
+    this.selectedCode = '';
+    this.currentSearchTerm = '';
+    this.focusedGroup = '';
+    this.licensePlateService.setSearchTerm('');
+    this.licensePlateService.setStateFilter('');
+    this.licensePlateService.setSeenFilter(false);
+  }
 }
