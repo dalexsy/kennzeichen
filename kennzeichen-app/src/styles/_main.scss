@@ -33,9 +33,9 @@
   --selected-city: #8a4001;
 }
 
+// Dark theme for system preference
 @media (prefers-color-scheme: dark) {
-  :root {
-    // Dark theme
+  :root:not([data-theme]) {
     --text-primary: #e0d5c7;
     --text-primary-outline: #665443cc;
     --text-secondary: #b5a294;
@@ -58,6 +58,56 @@
     --box-shadow: rgb(255 211 170 / 15%);
     --selected-city: #e78532;
   }
+}
+
+// Explicit light theme
+:root[data-theme="light"] {
+  --text-primary: #604328;
+  --text-primary-outline: #665443cc;
+  --text-secondary: #8f7e6e;
+  --background-primary: #fffae4;
+  --background-secondary: white;
+  --border-primary: #bdbdbd;
+  --border-secondary: #e0e0e0;
+  --accent-primary: #f7a45f;
+  --accent-primary-light: #f9b679;
+  --accent-primary-selected: #fba258;
+  --accent-primary-selected-light: #ffab5f;
+  --accent-secondary: #ffe8ac;
+  --accent-secondary-hover: #facf76;
+  --accent-tertiary: #18c09e;
+  --seen-badge: #4caf50;
+  --seen-text-overlay: rgba(102, 84, 67, 0.7);
+  --seen-text-overlay-strong: rgba(102, 84, 67, 0.85);
+  --region-badge-bg: #b0a49952;
+  --map-overlay-bg: rgba(0, 0, 0, 0.5);
+  --box-shadow: rgba(102, 84, 67, 0.2);
+  --selected-city: #8a4001;
+}
+
+// Explicit dark theme
+:root[data-theme="dark"] {
+  --text-primary: #e0d5c7;
+  --text-primary-outline: #665443cc;
+  --text-secondary: #b5a294;
+  --background-primary: #2a2419;
+  --background-secondary: #3d3529;
+  --border-primary: #5a4f43;
+  --border-secondary: #4a3f33;
+  --accent-primary: #f7a45f;
+  --accent-primary-light: #d18a4d;
+  --accent-primary-selected: #6a3100;
+  --accent-primary-selected-light: #6e3601;
+  --accent-secondary: #745538;
+  --accent-secondary-hover: #140e01;
+  --accent-tertiary: #0d9d80;
+  --seen-badge: #4caf50;
+  --seen-text-overlay: #b0a499;
+  --seen-text-overlay-strong: #e0d5c2;
+  --region-badge-bg: #b0a49952;
+  --map-overlay-bg: rgba(0, 0, 0, 0.5);
+  --box-shadow: rgb(255 211 170 / 15%);
+  --selected-city: #e78532;
 }
 
 // SCSS variables using CSS custom properties
@@ -89,3 +139,16 @@ $font-family-license-plate: 'EuroPlate', monospace;
 
 // Font weights
 $font-weight-bolder: 500;
+
+// Z-index layers (from lowest to highest)
+$z-behind: -1;
+$z-base: 0;
+$z-above-base: 1;
+$z-sticky-header: 10;
+$z-header: 20;
+$z-floating-buttons: 80;
+$z-map-overlay: 90;
+$z-map-container: 100;
+$z-dropdown: 1000;
+$z-modal-overlay: 1100;
+$z-modal: 1200;

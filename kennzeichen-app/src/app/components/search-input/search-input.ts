@@ -4,6 +4,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { LocalStorageService } from '../../services/local-storage';
+import { LocalizationService } from '../../services/localization.service';
 
 @Component({
   selector: 'app-search-input',
@@ -28,6 +29,8 @@ export class SearchInput implements ControlValueAccessor {
   disabled: boolean = false;
 
   localStorageService = inject(LocalStorageService);
+  localizationService = inject(LocalizationService);
+  translations$ = this.localizationService.translations$;
 
   @Input() set externalValue(val: string) {
     if (val !== this.value) {
@@ -72,33 +75,27 @@ export class SearchInput implements ControlValueAccessor {
   }
 
   getSeenButtonLabel(): string {
+    const t = this.localizationService.getTranslations();
     if (!this.value) {
-      return 'Mark as seen';
+      return t.mark_as_seen;
     }
 
     const code = this.value.toUpperCase();
     const seenDate = this.localStorageService.getSeenDate(code);
 
-    if (!seenDate) {
-      return 'Mark as seen';
-    }
-
-    return 'Mark as unseen';
+    return seenDate ? t.mark_as_seen : t.mark_as_seen;
   }
 
   getSeenButtonText(): string {
+    const t = this.localizationService.getTranslations();
     if (!this.value) {
-      return 'Gesehen?';
+      return t.seen_question;
     }
 
     const code = this.value.toUpperCase();
     const seenDate = this.localStorageService.getSeenDate(code);
 
-    if (!seenDate) {
-      return 'Gesehen?';
-    }
-
-    return 'Schon gesehen';
+    return seenDate ? t.already_seen : t.seen_question;
   }
 
   // ControlValueAccessor implementation

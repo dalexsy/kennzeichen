@@ -7,7 +7,7 @@
       [disabled]="disabled"
       (input)="onInput($event)"
       (blur)="onBlur()"
-      placeholder="Code oder Ort (z.B. B, Berlin)"
+      [placeholder]="(translations$ | async)?.search_placeholder || ''"
       autocomplete="off"
       spellcheck="false"
     />

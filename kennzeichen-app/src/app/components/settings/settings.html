@@ -1,0 +1,62 @@
+@if (isMenuOpen) {
+  <div class="settings-overlay" (click)="closeMenu()"></div>
+}
+
+<div class="settings">
+  <button class="settings-button" (click)="toggleMenu()" [attr.aria-label]="(translations$ | async)?.language || 'Settings'">
+    <span class="material-icons">settings</span>
+  </button>
+
+  @if (isMenuOpen) {
+    <div class="settings-menu" (click)="$event.stopPropagation()">
+        <div class="menu-header">
+          <h3>{{ (translations$ | async)?.settings }}</h3>
+          <button class="close-button" (click)="closeMenu()">
+            <span class="material-icons">close</span>
+          </button>
+        </div>
+
+        <div class="menu-content">
+          <button class="menu-item" (click)="toggleLanguage()">
+            <span class="material-icons">translate</span>
+            <div class="item-content">
+              <span class="item-label">{{ (translations$ | async)?.language }}</span>
+              <span class="item-value">{{ getCurrentLanguageLabel() }}</span>
+            </div>
+          </button>
+
+          <button class="menu-item" (click)="cycleTheme()">
+            <span class="material-icons">palette</span>
+            <div class="item-content">
+              <span class="item-label">{{ (translations$ | async)?.theme }}</span>
+              <span class="item-value">{{ getCurrentThemeLabel() }}</span>
+            </div>
+          </button>
+
+          <div class="divider"></div>
+
+          <button class="menu-item" (click)="onExport()">
+            <span class="material-icons">download</span>
+            <span class="item-text">{{ (translations$ | async)?.export_seen }}</span>
+          </button>
+
+          <button class="menu-item" (click)="onImport()">
+            <span class="material-icons">upload</span>
+            <span class="item-text">{{ (translations$ | async)?.import_seen }}</span>
+          </button>
+
+          @if (importMessage) {
+            <div class="import-message">{{ importMessage }}</div>
+          }
+        </div>
+    </div>
+  }
+</div>
+
+<input
+  #fileInput
+  type="file"
+  accept="application/json"
+  (change)="onFileSelected($event)"
+  style="display: none"
+/>

@@ -1,7 +1,8 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LicensePlate } from '../../models/license-plate.interface';
 import { RegionBadge } from '../region-badge/region-badge';
+import { LocalizationService } from '../../services/localization.service';
 
 @Component({
   selector: 'app-license-plate-item',
@@ -16,6 +17,8 @@ export class LicensePlateItem {
   @Input() searchTerm: string = '';
   @Input() seenDate: string | null = null;
   @Output() itemClicked = new EventEmitter<LicensePlate>();
+
+  public localizationService = inject(LocalizationService);
 
   onClick(): void {
     this.itemClicked.emit(this.licensePlate);

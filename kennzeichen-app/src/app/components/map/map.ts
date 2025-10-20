@@ -5,6 +5,7 @@ import { GeocodingService, CityCoordinates } from '../../services/geocoding';
 import { LicensePlate } from '../../models/license-plate.interface';
 import { MapStateService, StateInfo } from '../../services/map-state.service';
 import { MapMarkerService } from '../../services/map-marker.service';
+import { LocalizationService } from '../../services/localization.service';
 
 /**
  * Main map component that displays license plates on a Leaflet map.
@@ -23,6 +24,7 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
   @Input() stateFilter: string = '';
   @Input() seenFilterActive: boolean = false;
   @Input() seenCount: number = 0;
+  @Input() availableStates: Set<string> = new Set();
   @Output() codeSelected = new EventEmitter<LicensePlate>();
   @Output() stateFilterChange = new EventEmitter<string>();
   @Output() seenFilterToggle = new EventEmitter<void>();
@@ -70,14 +72,17 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   get activeFilterText(): string {
+    const t = this.localizationService.getTranslations();
     const parts: string[] = [];
     if (this.seenFilterActive) {
-      parts.push('Gesehen');
+      parts.push(t.seen);
     }
     if (this.stateFilter) {
-      parts.push(this.stateFilter);
+      parts.push(this.localizationService.translateStateName(this.stateFilter));
     } else {
-      parts.push('Alle Staaten');
+      // Use dative form when preceded by "Gesehen in" in German
+      // In English both forms are the same
+      parts.push(this.seenFilterActive ? t.all_states_dative : t.all_states);
     }
 
 
@@ -93,10 +98,15 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
+  get translations$() {
+    return this.localizationService.translations$;
+  }
+
   constructor(
     private geocodingService: GeocodingService,
     private mapStateService: MapStateService,
-    private mapMarkerService: MapMarkerService
+    private mapMarkerService: MapMarkerService,
+    public localizationService: LocalizationService
   ) {}
 
   // ============================================
@@ -139,7 +149,13 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
 
   isStateDimmed(state: StateInfo): boolean {
     const highlightedState = this.getHighlightedState();
-    return highlightedState !== '' && highlightedState !== state.name;
+    const isHighlightedButNotThis = highlightedState !== '' && highlightedState !== state.name;
+    const isNotAvailable = this.availableStates.size > 0 && !this.availableStates.has(state.name);
+    return isHighlightedButNotThis || isNotAvailable;
+  }
+
+  isStateAvailable(state: StateInfo): boolean {
+    return this.availableStates.size === 0 || this.availableStates.has(state.name);
   }
 
   // ============================================
@@ -261,6 +277,23 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
   private setupThemeListener() {
     this.darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     this.darkModeMediaQuery.addEventListener('change', this.handleThemeChange);
+
+    // Also watch for data-theme attribute changes
+    const observer = new MutationObserver(() => {
+      this.updateTileLayer();
+    });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme']
+    });
+  }
+
+  private isDarkMode(): boolean {
+    const theme = document.documentElement.getAttribute('data-theme');
+    if (theme === 'dark') return true;
+    if (theme === 'light') return false;
+    // If no explicit theme (system), check OS preference
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
   }
 
   private updateTileLayer() {
@@ -270,7 +303,7 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
       this.map.removeLayer(this.currentTileLayer);
     }
 
-    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const isDarkMode = this.isDarkMode();
 
     if (isDarkMode) {
       this.currentTileLayer = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {

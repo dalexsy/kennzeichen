@@ -1,5 +1,6 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { LocalizationService } from '../../services/localization.service';
 
 @Component({
   selector: 'app-view-toggle',
@@ -10,6 +11,9 @@ import { CommonModule } from '@angular/common';
 export class ViewToggle {
   @Input() currentView: 'alphabetical' | 'grouped' = 'alphabetical';
   @Output() viewChange = new EventEmitter<'alphabetical' | 'grouped'>();
+
+  localizationService = inject(LocalizationService);
+  translations$ = this.localizationService.translations$;
 
   toggleView(): void {
     const newView = this.currentView === 'alphabetical' ? 'grouped' : 'alphabetical';

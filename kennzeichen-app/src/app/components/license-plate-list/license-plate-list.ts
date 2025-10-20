@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { LicensePlate } from '../../models/license-plate.interface';
 import { LicensePlateGroup, LicensePlateService } from '../../services/license-plate';
 import { LocalStorageService } from '../../services/local-storage';
+import { LocalizationService } from '../../services/localization.service';
 import { LicensePlateItem } from '../license-plate-item/license-plate-item';
 import { ViewToggle } from '../view-toggle/view-toggle';
 
@@ -28,11 +29,14 @@ export class LicensePlateList implements AfterViewInit, AfterViewChecked, OnDest
   @Output() viewChange = new EventEmitter<'alphabetical' | 'grouped'>();
   @Output() groupHeadingClicked = new EventEmitter<LicensePlateGroup>();
   @Output() backClicked = new EventEmitter<void>();
+  @Output() clearFiltersClicked = new EventEmitter<void>();
 
   private licensePlateService = inject(LicensePlateService);
   private localStorageService = inject(LocalStorageService);
+  public localizationService = inject(LocalizationService);
   private cdr = inject(ChangeDetectorRef);
   viewMode$ = this.licensePlateService.viewMode$;
+  translations$ = this.localizationService.translations$;
 
   showNavButtons = false;
   showBackToTop = false;
@@ -79,6 +83,10 @@ export class LicensePlateList implements AfterViewInit, AfterViewChecked, OnDest
 
   onBackClick(): void {
     this.backClicked.emit();
+  }
+
+  onClearFiltersClick(): void {
+    this.clearFiltersClicked.emit();
   }
 
   trackByCode(index: number, licensePlate: LicensePlate): string {

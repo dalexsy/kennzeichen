@@ -34,6 +34,8 @@
     justify-content: center;
     text-align: center;
     color: $text-secondary;
+    width: 100%;
+    gap: 1rem;
   }
 
   .empty-text {
@@ -41,6 +43,26 @@
 
   .empty-hint {
     color: $text-secondary;
+  }
+
+  .reset-filters-button {
+    background-color: $accent-tertiary;
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    font-family: $body-font;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    padding: 0.75rem 1.5rem;
+
+    &:hover {
+      filter: brightness(1.1);
+    }
+
+    &:active {
+      filter: brightness(1.2);
+    }
   }
 
   .results {
@@ -66,7 +88,7 @@
     position: sticky;
     top: 253px;
     background-color: $background-primary;
-    z-index: 10;
+    z-index: $z-sticky-header;
     display: flex;
     justify-content: space-between;
     align-items: center;

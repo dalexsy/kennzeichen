@@ -18,7 +18,7 @@
       <app-region-badge [federalState]="licensePlate.federal_state" size="medium"></app-region-badge>
       <div class="region-info">
         <div class="city">{{ licensePlate.city_district }}</div>
-        <div class="state">{{ licensePlate.federal_state }}</div>
+        <div class="state">{{ localizationService.translateStateName(licensePlate.federal_state) }}</div>
       </div>
     </div>
 

@@ -171,4 +171,72 @@ export class LocalStorageService {
       return null;
     }
   }
+
+  // Export seen data as JSON file
+  exportSeenData(): void {
+    try {
+      const seenData = this.getSeenDetails();
+      const dataStr = JSON.stringify(seenData, null, 2);
+      const dataBlob = new Blob([dataStr], { type: 'application/json' });
+      const url = URL.createObjectURL(dataBlob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `kennzeichen-gesehen-${new Date().toISOString().split('T')[0]}.json`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Error exporting seen data:', error);
+      throw error;
+    }
+  }
+
+  // Import seen data from JSON file
+  importSeenData(fileContent: string): { success: boolean; imported: number; skipped: number; error?: string } {
+    try {
+      const importedData: SeenLicensePlate[] = JSON.parse(fileContent);
+
+      // Validate the data structure
+      if (!Array.isArray(importedData)) {
+        return { success: false, imported: 0, skipped: 0, error: 'Invalid data format: expected an array' };
+      }
+
+      const existingData = this.getSeenDetails();
+      const existingCodes = new Set(existingData.map(item => item.code));
+
+      let imported = 0;
+      let skipped = 0;
+
+      importedData.forEach(item => {
+        if (!item.code || !item.seenAt) {
+          skipped++;
+          return;
+        }
+
+        if (!existingCodes.has(item.code)) {
+          existingData.push(item);
+          imported++;
+        } else {
+          skipped++;
+        }
+      });
+
+      if (imported > 0) {
+        this.saveSeenLicensePlates(existingData);
+        const seenCodes = new Set(existingData.map(item => item.code));
+        this.seenLicensePlatesSubject.next(seenCodes);
+      }
+
+      return { success: true, imported, skipped };
+    } catch (error) {
+      console.error('Error importing seen data:', error);
+      return {
+        success: false,
+        imported: 0,
+        skipped: 0,
+        error: error instanceof Error ? error.message : 'Unknown error'
+      };
+    }
+  }
 }

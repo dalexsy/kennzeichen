@@ -12,6 +12,7 @@ import { SearchInput } from './components/search-input/search-input';
 import { LicensePlateList } from './components/license-plate-list/license-plate-list';
 import { MapComponent } from './components/map/map';
 import { TableOfContentsComponent } from './components/table-of-contents/table-of-contents';
+import { SettingsComponent } from './components/settings/settings';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +22,8 @@ import { TableOfContentsComponent } from './components/table-of-contents/table-o
     SearchInput,
     LicensePlateList,
     MapComponent,
-    TableOfContentsComponent
+    TableOfContentsComponent,
+    SettingsComponent
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss'
@@ -43,6 +45,7 @@ export class App implements OnInit, OnDestroy {
   targetScrollPosition = -1;
   focusedGroup = '';
   activeSection = '';
+  availableStates: Set<string> = new Set();
   private savedScrollPosition = 0;
   private savedSearchTerm = '';
   private savedStateFilter = '';
@@ -64,6 +67,17 @@ export class App implements OnInit, OnDestroy {
     this.filteredLicensePlates$ = this.licensePlateService.filteredLicensePlates$;
     this.groupedLicensePlates$ = this.licensePlateService.groupedLicensePlates$;
     this.seenCodes$ = this.localStorageService.seenLicensePlates$;
+
+    // Subscribe to filtered plates to update available states
+    this.filteredLicensePlates$.subscribe(plates => {
+      const states = new Set<string>();
+      plates.forEach(plate => {
+        if (plate.federal_state) {
+          states.add(plate.federal_state);
+        }
+      });
+      this.availableStates = states;
+    });
   }
 
   ngOnInit(): void {

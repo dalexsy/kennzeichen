@@ -2,7 +2,7 @@
   @if (isLoading) {
     <div class="loading">
       <div class="spinner"></div>
-      <p>Kennzeichendaten werden geladen...</p>
+      <p>{{ (translations$ | async)?.loading_plates }}</p>
     </div>
   }
 
@@ -16,15 +16,18 @@
           <p class="empty-text">
             {{
               searchTerm
-                ? 'Keine Kennzeichen gefunden für "' + searchTerm + '"'
-                : 'Keine Kennzeichen verfügbar'
+                ? (translations$ | async)?.no_plates_found + ' "' + searchTerm + '"'
+                : (translations$ | async)?.no_plates_available
             }}
           </p>
           @if (searchTerm) {
             <p class="empty-hint">
-              Versuche weniger Buchstaben einzugeben oder überprüfe die Schreibweise.
+              {{ (translations$ | async)?.search_hint }}
             </p>
           }
+          <button class="reset-filters-button" (click)="onClearFiltersClick()">
+            {{ (translations$ | async)?.reset_filters }}
+          </button>
         </div>
       }
 
@@ -41,14 +44,14 @@
                   [class]="getStateColorClass(group.state)"
                 ></span>
               }
-              <span class="heading-text">{{ group.state }} ({{ group.licensePlates.length }})</span>
+              <span class="heading-text">{{ localizationService.translateStateName(group.state) }} ({{ group.licensePlates.length }})</span>
             </div>
             @if (focusedGroup) {
               <button
                 class="show-all-button"
                 (click)="onGroupHeadingClick(group)"
               >
-                Alles zeigen
+                {{ (translations$ | async)?.show_all }}
                 <span _ngcontent-ng-c3358268225="" class="material-icons">keyboard_return</span>
               </button>
             }
@@ -57,7 +60,7 @@
                 class="show-all-button"
                 (click)="onBackClick()"
               >
-                Zurück
+                {{ (translations$ | async)?.back }}
                 <span class="material-icons">keyboard_return</span>
               </button>
             }

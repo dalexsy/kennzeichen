@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LicensePlateGroup } from '../../services/license-plate';
 import { MapStateService } from '../../services/map-state.service';
+import { LocalizationService } from '../../services/localization.service';
 
 @Component({
   selector: 'app-table-of-contents',
@@ -14,7 +15,10 @@ export class TableOfContentsComponent {
   @Input() activeSection: string = '';
   @Output() sectionClicked = new EventEmitter<string>();
 
-  constructor(private mapStateService: MapStateService) {}
+  constructor(
+    private mapStateService: MapStateService,
+    public localizationService: LocalizationService
+  ) {}
 
   onSectionClick(section: string): void {
     this.sectionClicked.emit(section);

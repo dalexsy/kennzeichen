@@ -9,7 +9,7 @@
         [attr.data-active]="isActive(group.state)"
         (click)="onSectionClick(group.state)"
       >
-        <span class="section-name">{{ group.state }}</span>
+        <span class="section-name">{{ localizationService.translateStateName(group.state) }}</span>
         <span class="section-count">{{ group.licensePlates.length }}</span>
       </button>
     </li>

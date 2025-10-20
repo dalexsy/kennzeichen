@@ -14,6 +14,7 @@
           (seenClick)="onSeenClick($event)"
           class="search"
         ></app-search-input>
+        <app-settings class="settings"></app-settings>
       </div>
     </div>
   </div>
@@ -26,6 +27,7 @@
         [stateFilter]="licensePlateService.getCurrentStateFilter()"
         [seenFilterActive]="isSeenFilterActive"
         [seenCount]="getSeenCount()"
+        [availableStates]="availableStates"
         (codeSelected)="onLicensePlateClicked($event)"
         (stateFilterChange)="onStateChange($event)"
         (seenFilterToggle)="onSeenFilterToggle()"
@@ -47,6 +49,7 @@
         (viewChange)="onViewChange($event)"
         (groupHeadingClicked)="onGroupHeadingClicked($event)"
         (backClicked)="onBackClick()"
+        (clearFiltersClicked)="onClearAllFilters()"
         class="list"
       ></app-license-plate-list>
 

@@ -1,5 +1,5 @@
 <button
   (click)="toggleView()"
   class="view-toggle">
-  {{ currentView === 'alphabetical' ? 'Nach Region sortieren' : 'Alphabetisch sortieren' }}
+  {{ currentView === 'alphabetical' ? (translations$ | async)?.grouped_view : (translations$ | async)?.alphabetical_view }}
 </button>

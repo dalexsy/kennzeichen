@@ -186,7 +186,7 @@
         calc(100% - 0rem) 100%,
         0rem 100%
       );
-      z-index: -1;
+      z-index: $z-behind;
     }
   }
 
