@@ -9,7 +9,7 @@
     left: 0;
     right: 0;
     background-color: $accent-secondary-hover;
-    z-index: $z-modal;
+    z-index: $z-header;
     padding-bottom: 1rem;
 
     @include tablet-up {

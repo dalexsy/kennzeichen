@@ -1,7 +1,3 @@
-@if (isMenuOpen) {
-  <div class="settings-overlay" (click)="closeMenu()"></div>
-}
-
 <div class="settings">
   <button class="settings-button" (click)="toggleMenu()" [attr.aria-label]="(translations$ | async)?.language || 'Settings'">
     <span class="material-icons">settings</span>
@@ -52,6 +48,10 @@
     </div>
   }
 </div>
+
+@if (isMenuOpen) {
+  <div class="settings-overlay" (click)="closeMenu()"></div>
+}
 
 <input
   #fileInput
