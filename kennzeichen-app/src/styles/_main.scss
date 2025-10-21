@@ -61,7 +61,7 @@
 }
 
 // Explicit light theme
-:root[data-theme="light"] {
+:root[data-theme='light'] {
   --text-primary: #604328;
   --text-primary-outline: #665443cc;
   --text-secondary: #8f7e6e;
@@ -86,7 +86,7 @@
 }
 
 // Explicit dark theme
-:root[data-theme="dark"] {
+:root[data-theme='dark'] {
   --text-primary: #e0d5c7;
   --text-primary-outline: #665443cc;
   --text-secondary: #b5a294;
@@ -151,4 +151,4 @@ $z-map-overlay: 90;
 $z-map-container: 100;
 $z-dropdown: 1000;
 $z-modal-overlay: 1100;
-$z-modal: 1200;
+$z-modal: 70;

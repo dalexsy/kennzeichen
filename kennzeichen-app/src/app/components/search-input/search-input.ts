@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { LocalStorageService } from '../../services/local-storage';
 import { LocalizationService } from '../../services/localization.service';
+import { LicensePlate } from '../../models/license-plate.interface';
 
 @Component({
   selector: 'app-search-input',
@@ -26,6 +27,7 @@ export class SearchInput implements ControlValueAccessor {
 
   @Input() value: string = '';
   @Input() seenCodes$!: Observable<Set<string>>;
+  @Input() filteredPlates: LicensePlate[] = [];
   disabled: boolean = false;
 
   localStorageService = inject(LocalStorageService);
@@ -96,6 +98,15 @@ export class SearchInput implements ControlValueAccessor {
     const seenDate = this.localStorageService.getSeenDate(code);
 
     return seenDate ? t.already_seen : t.seen_question;
+  }
+
+  hasExactMatch(): boolean {
+    if (!this.value || !this.filteredPlates) {
+      return false;
+    }
+
+    const upperValue = this.value.toUpperCase();
+    return this.filteredPlates.some(plate => plate.code.toUpperCase() === upperValue);
   }
 
   // ControlValueAccessor implementation

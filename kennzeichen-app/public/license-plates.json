@@ -138,13 +138,6 @@
       "area_code": "0385"
     },
     {
-      "code": "AÖ",
-      "city_district": "Kreis Altötting",
-      "derived_from": "Altötting",
-      "federal_state": "Bayern",
-      "area_code": "08671"
-    },
-    {
       "code": "AP",
       "city_district": "Kreis Apolda",
       "derived_from": "Apolda",
@@ -234,6 +227,13 @@
       "derived_from": "Landkreis Anhalt-ZErbst",
       "federal_state": "Sachsen-Anhalt",
       "area_code": "0391"
+    },
+    {
+      "code": "AÖ",
+      "city_district": "Kreis Altötting",
+      "derived_from": "Altötting",
+      "federal_state": "Bayern",
+      "area_code": "08671"
     },
     {
       "code": "B",
@@ -475,13 +475,6 @@
       "area_code": "0234"
     },
     {
-      "code": "BÖ",
-      "city_district": "Landkreis Börde",
-      "derived_from": "Börde",
-      "federal_state": "Sachsen-Anhalt",
-      "area_code": "0391"
-    },
-    {
       "code": "BOG",
       "city_district": "Landkreis Straubing-Bogen",
       "derived_from": "BOGen",
@@ -612,39 +605,11 @@
       "area_code": "0511"
     },
     {
-      "code": "BÜD",
-      "city_district": "Landkreis Büdingen",
-      "derived_from": "Büdingen",
-      "federal_state": "Hessen",
-      "area_code": "0611"
-    },
-    {
       "code": "BUL",
       "city_district": "Landkreis Amberg-Sulzbach",
       "derived_from": "BUrgLengenfeld",
       "federal_state": "Bayern",
       "area_code": "09621"
-    },
-    {
-      "code": "BÜR",
-      "city_district": "Kreis Büren",
-      "derived_from": "Büren",
-      "federal_state": "Nordrhein-Westfalen",
-      "area_code": "0211"
-    },
-    {
-      "code": "BÜS",
-      "city_district": "Kreis Büsingen",
-      "derived_from": "Büsingen",
-      "federal_state": "Baden-Württemberg",
-      "area_code": "0711"
-    },
-    {
-      "code": "BÜZ",
-      "city_district": "Landkreis Bützow",
-      "derived_from": "Bützow",
-      "federal_state": "Mecklenburg-Vorpommern",
-      "area_code": "0385"
     },
     {
       "code": "BW",
@@ -680,6 +645,41 @@
       "derived_from": "Bautzen",
       "federal_state": "Sachsen",
       "area_code": "03591"
+    },
+    {
+      "code": "BÖ",
+      "city_district": "Landkreis Börde",
+      "derived_from": "Börde",
+      "federal_state": "Sachsen-Anhalt",
+      "area_code": "0391"
+    },
+    {
+      "code": "BÜD",
+      "city_district": "Landkreis Büdingen",
+      "derived_from": "Büdingen",
+      "federal_state": "Hessen",
+      "area_code": "0611"
+    },
+    {
+      "code": "BÜR",
+      "city_district": "Kreis Büren",
+      "derived_from": "Büren",
+      "federal_state": "Nordrhein-Westfalen",
+      "area_code": "0211"
+    },
+    {
+      "code": "BÜS",
+      "city_district": "Kreis Büsingen",
+      "derived_from": "Büsingen",
+      "federal_state": "Baden-Württemberg",
+      "area_code": "0711"
+    },
+    {
+      "code": "BÜZ",
+      "city_district": "Landkreis Bützow",
+      "derived_from": "Bützow",
+      "federal_state": "Mecklenburg-Vorpommern",
+      "area_code": "0385"
     },
     {
       "code": "C",
@@ -949,13 +949,6 @@
       "area_code": "0231"
     },
     {
-      "code": "DÖ",
-      "city_district": "Landkreis Dömitz",
-      "derived_from": "Dömitz",
-      "federal_state": "Mecklenburg-Vorpommern",
-      "area_code": "0385"
-    },
-    {
       "code": "DON",
       "city_district": "Landkreis Donau-Ries",
       "derived_from": "Donauwörth",
@@ -1007,13 +1000,6 @@
       "area_code": "0551"
     },
     {
-      "code": "DÜW",
-      "city_district": "Landkreis Bad Dürkheim",
-      "derived_from": "Dürkheim",
-      "federal_state": "Rheinland-Pfalz",
-      "area_code": "06131"
-    },
-    {
       "code": "DW",
       "city_district": "Landkreis Dippoldiswalde",
       "derived_from": "Dippoldiswalde",
@@ -1026,6 +1012,20 @@
       "derived_from": "Delitzsch",
       "federal_state": "Sachsen",
       "area_code": "0351"
+    },
+    {
+      "code": "DÖ",
+      "city_district": "Landkreis Dömitz",
+      "derived_from": "Dömitz",
+      "federal_state": "Mecklenburg-Vorpommern",
+      "area_code": "0385"
+    },
+    {
+      "code": "DÜW",
+      "city_district": "Landkreis Bad Dürkheim",
+      "derived_from": "Dürkheim",
+      "federal_state": "Rheinland-Pfalz",
+      "area_code": "06131"
     },
     {
       "code": "E",
@@ -1430,6 +1430,20 @@
       "area_code": "0351"
     },
     {
+      "code": "FW",
+      "city_district": "Landkreis Fürstenwalde",
+      "derived_from": "Fürstenwalde",
+      "federal_state": "Brandenburg",
+      "area_code": "0331"
+    },
+    {
+      "code": "FZ",
+      "city_district": "Landkreis Fritzlar-Homberg",
+      "derived_from": "Fritzlar",
+      "federal_state": "Hessen",
+      "area_code": "0611"
+    },
+    {
       "code": "FÜ",
       "city_district": "Stadt Fürth",
       "derived_from": "Fürth",
@@ -1444,20 +1458,6 @@
       "derived_from": "Füssen",
       "federal_state": "Bayern",
       "area_code": "089"
-    },
-    {
-      "code": "FW",
-      "city_district": "Landkreis Fürstenwalde",
-      "derived_from": "Fürstenwalde",
-      "federal_state": "Brandenburg",
-      "area_code": "0331"
-    },
-    {
-      "code": "FZ",
-      "city_district": "Landkreis Fritzlar-Homberg",
-      "derived_from": "Fritzlar",
-      "federal_state": "Hessen",
-      "area_code": "0611"
     },
     {
       "code": "G",
@@ -1718,13 +1718,6 @@
       "area_code": "03621"
     },
     {
-      "code": "GÜ",
-      "city_district": "Landkreis Güstrow",
-      "derived_from": "Güstrow",
-      "federal_state": "Mecklenburg-Vorpommern",
-      "area_code": "0385"
-    },
-    {
       "code": "GUB",
       "city_district": "Landkreis Guben",
       "derived_from": "Guben",
@@ -1772,6 +1765,19 @@
       "derived_from": "Günzburg",
       "federal_state": "Bayern",
       "area_code": "08221"
+    },
+    {
+      "code": "GÖ",
+      "city_district": "Landkreis GöttingenStadtGöttingenübriger Landkreis",
+      "derived_from": "GÖttingen",
+      "federal_state": "Niedersachsen"
+    },
+    {
+      "code": "GÜ",
+      "city_district": "Landkreis Güstrow",
+      "derived_from": "Güstrow",
+      "federal_state": "Mecklenburg-Vorpommern",
+      "area_code": "0385"
     },
     {
       "code": "H",
@@ -2077,13 +2083,6 @@
       "area_code": "0741"
     },
     {
-      "code": "HÖS",
-      "city_district": "Landkreis Haßberge",
-      "derived_from": "Höchstadt an der Aisch",
-      "federal_state": "Bayern",
-      "area_code": "089"
-    },
-    {
       "code": "HOT",
       "city_district": "Landkreis Zwickau",
       "derived_from": "Hohenstein-Ernstthal",
@@ -2140,13 +2139,6 @@
       "area_code": "0611"
     },
     {
-      "code": "HÜN",
-      "city_district": "Main-Kinzig-Kreis",
-      "derived_from": "Hünfeld",
-      "federal_state": "Hessen",
-      "area_code": "0611"
-    },
-    {
       "code": "HV",
       "city_district": "Landkreis Stendal",
       "derived_from": "HaVelberg",
@@ -2194,6 +2186,20 @@
       "derived_from": "Herzberg/Harz",
       "federal_state": "Sachsen-Anhalt",
       "area_code": "0391"
+    },
+    {
+      "code": "HÖS",
+      "city_district": "Landkreis Haßberge",
+      "derived_from": "Höchstadt an der Aisch",
+      "federal_state": "Bayern",
+      "area_code": "089"
+    },
+    {
+      "code": "HÜN",
+      "city_district": "Main-Kinzig-Kreis",
+      "derived_from": "Hünfeld",
+      "federal_state": "Hessen",
+      "area_code": "0611"
     },
     {
       "code": "IGB",
@@ -2268,6 +2274,12 @@
       "derived_from": "Jerichower Land",
       "federal_state": "Sachsen-Anhalt",
       "area_code": "0391"
+    },
+    {
+      "code": "JÜL",
+      "city_district": "Kreis Düren",
+      "derived_from": "JÜLich",
+      "federal_state": "Nordrhein-Westfalen"
     },
     {
       "code": "K",
@@ -2475,6 +2487,30 @@
       "derived_from": "KYFfhäuser",
       "federal_state": "Thüringen",
       "area_code": "0361"
+    },
+    {
+      "code": "KÖN",
+      "city_district": "Landkreis Rhön-Grabfeld",
+      "derived_from": "KÖNigshofen",
+      "federal_state": "Bayern"
+    },
+    {
+      "code": "KÖT",
+      "city_district": "Landkreis Anhalt-Bitterfeld",
+      "derived_from": "KÖThen",
+      "federal_state": "Sachsen-Anhalt"
+    },
+    {
+      "code": "KÖZ",
+      "city_district": "Landkreis Cham",
+      "derived_from": "KÖtZting",
+      "federal_state": "Bayern"
+    },
+    {
+      "code": "KÜN",
+      "city_district": "Hohenlohekreis",
+      "derived_from": "KÜNzelsau",
+      "federal_state": "Baden-Württemberg"
     },
     {
       "code": "L",
@@ -2729,6 +2765,24 @@
       "derived_from": "LudWigsLust",
       "federal_state": "Mecklenburg-Vorpommern",
       "area_code": "03874"
+    },
+    {
+      "code": "LÖ",
+      "city_district": "Landkreis Lörrach",
+      "derived_from": "LÖrrach",
+      "federal_state": "Baden-Württemberg"
+    },
+    {
+      "code": "LÖB",
+      "city_district": "Landkreis Görlitz",
+      "derived_from": "LÖBau",
+      "federal_state": "Sachsen"
+    },
+    {
+      "code": "LÜN",
+      "city_district": "Kreis Unna",
+      "derived_from": "LÜNen",
+      "federal_state": "Nordrhein-Westfalen"
     },
     {
       "code": "M",
@@ -3083,6 +3137,30 @@
       "area_code": "0681"
     },
     {
+      "code": "MÜ",
+      "city_district": "Landkreis Mühldorf am Inn",
+      "derived_from": "MÜhldorf",
+      "federal_state": "Bayern"
+    },
+    {
+      "code": "MÜB",
+      "city_district": "Landkreis Bayreuth",
+      "derived_from": "MÜnchBerg",
+      "federal_state": "Bayern"
+    },
+    {
+      "code": "MÜL",
+      "city_district": "Landkreis Breisgau-Hochschwarzwald",
+      "derived_from": "MÜLlheim",
+      "federal_state": "Baden-Württemberg"
+    },
+    {
+      "code": "MÜR",
+      "city_district": "Landkreis Mecklenburgische Seenplatteohne die StadtNeubrandenburg",
+      "derived_from": "MÜRitz",
+      "federal_state": "Mecklenburg-Vorpommern"
+    },
+    {
       "code": "N",
       "city_district": "Stadt Nürnberg",
       "derived_from": "Nürnberg",
@@ -3342,6 +3420,12 @@
       "derived_from": "NeustrelitZ",
       "federal_state": "Mecklenburg-Vorpommern",
       "area_code": "0385"
+    },
+    {
+      "code": "NÖ",
+      "city_district": "Landkreis Donau-Ries",
+      "derived_from": "NÖrdlingen",
+      "federal_state": "Bayern"
     },
     {
       "code": "OA",
@@ -3610,6 +3694,12 @@
       "area_code": "0351"
     },
     {
+      "code": "PLÖ",
+      "city_district": "Kreis Plön",
+      "derived_from": "PLÖn",
+      "federal_state": "Schleswig-Holstein"
+    },
+    {
       "code": "PM",
       "city_district": "Landkreis Potsdam-Mittelmark",
       "derived_from": "Potsdam, Mittelmark",
@@ -3629,6 +3719,12 @@
       "derived_from": "PRignitz",
       "federal_state": "Brandenburg",
       "area_code": "0331"
+    },
+    {
+      "code": "PRÜ",
+      "city_district": "Eifelkreis Bitburg-Prüm",
+      "derived_from": "PRÜm",
+      "federal_state": "Rheinland-Pfalz"
     },
     {
       "code": "PS",
@@ -3904,6 +4000,18 @@
       "derived_from": "RatZeburg",
       "federal_state": "Schleswig-Holstein",
       "area_code": "0431"
+    },
+    {
+      "code": "RÜD",
+      "city_district": "Rheingau-Taunus-Kreis",
+      "derived_from": "RÜDesheim",
+      "federal_state": "Hessen"
+    },
+    {
+      "code": "RÜG",
+      "city_district": "Landkreis Vorpommern-Rügenohne die StadtStralsund",
+      "derived_from": "RÜGen",
+      "federal_state": "Mecklenburg-Vorpommern"
     },
     {
       "code": "S",
@@ -4188,11 +4296,23 @@
       "area_code": "0361"
     },
     {
+      "code": "SLÜ",
+      "city_district": "Main-Kinzig-Kreisohne die StadtHanau",
+      "derived_from": "SchLÜchtern",
+      "federal_state": "Hessen"
+    },
+    {
       "code": "SM",
       "city_district": "Landkreis Schmalkalden-Meiningen",
       "derived_from": "SchMalkalden",
       "federal_state": "Thüringen",
       "area_code": "03683"
+    },
+    {
+      "code": "SMÜ",
+      "city_district": "Landkreis Augsburg",
+      "derived_from": "SchwabMÜnchen",
+      "federal_state": "Bayern"
     },
     {
       "code": "SN",
@@ -4377,6 +4497,24 @@
       "area_code": "0351"
     },
     {
+      "code": "SÄK",
+      "city_district": "Landkreis Waldshut",
+      "derived_from": "SÄcKingen",
+      "federal_state": "Baden-Württemberg"
+    },
+    {
+      "code": "SÖM",
+      "city_district": "Landkreis Sömmerda",
+      "derived_from": "SÖMmerda",
+      "federal_state": "Thüringen"
+    },
+    {
+      "code": "SÜW",
+      "city_district": "Landkreis Südliche Weinstraße",
+      "derived_from": "SÜdlicheWeinstraße",
+      "federal_state": "Rheinland-Pfalz"
+    },
+    {
       "code": "TBB",
       "city_district": "Main-Tauber-Kreis",
       "derived_from": "TauBerBischofsheim",
@@ -4480,6 +4618,18 @@
       "derived_from": "TUTtlingen",
       "federal_state": "Baden-Württemberg",
       "area_code": "07461"
+    },
+    {
+      "code": "TÖL",
+      "city_district": "Landkreis Bad Tölz-Wolfratshausen",
+      "derived_from": "TÖLz",
+      "federal_state": "Bayern"
+    },
+    {
+      "code": "TÜ",
+      "city_district": "Landkreis Tübingen",
+      "derived_from": "TÜbingen",
+      "federal_state": "Baden-Württemberg"
     },
     {
       "code": "UE",
@@ -4986,6 +5136,18 @@
       "area_code": "0391"
     },
     {
+      "code": "WÜ",
+      "city_district": "StadtWürzburg",
+      "derived_from": "WÜrzburg",
+      "federal_state": "Bayern"
+    },
+    {
+      "code": "WÜM",
+      "city_district": "Landkreis Cham",
+      "derived_from": "WaldMÜnchen(mit einem Buchstabendreher)",
+      "federal_state": "Bayern"
+    },
+    {
       "code": "X",
       "city_district": "Internationale Hauptquartiere",
       "derived_from": "willkürlich gewählt",
@@ -5061,6 +5223,18 @@
       "derived_from": "ZeitZ",
       "federal_state": "Sachsen-Anhalt",
       "area_code": "0391"
+    },
+    {
+      "code": "ÖHR",
+      "city_district": "Hohenlohekreis",
+      "derived_from": "ÖHRingen",
+      "federal_state": "Baden-Württemberg"
+    },
+    {
+      "code": "ÜB",
+      "city_district": "Bodenseekreis",
+      "derived_from": "ÜBerlingen",
+      "federal_state": "Baden-Württemberg"
     }
   ]
 }

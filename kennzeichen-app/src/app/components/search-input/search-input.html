@@ -12,7 +12,7 @@
       spellcheck="false"
     />
 
-    @if (value) {
+    @if (value && hasExactMatch()) {
       <button
         type="button"
         class="seen"

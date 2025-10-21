@@ -80,7 +80,7 @@ const translations: Record<Language, Translations> = {
     reset_filters: 'Filter zurücksetzen',
     clear_all_filters: 'Alle Filter löschen',
     show_all: 'Alles zeigen',
-    back: 'Zurück',
+    back: 'Schließen',
 
     // Map
     toggle_map: 'Karte anzeigen/verbergen',

@@ -14,14 +14,19 @@
   border-radius: 4px;
   box-shadow: rgba(102, 84, 67, 0.2) 2px 2px;
   font-family: $font-family-license-plate;
-  margin: 0;
   height: 5rem;
   gap: 0.25rem;
   overflow: hidden;
   padding-right: 0.5rem;
   position: relative;
   font-size: 4rem;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
+  max-width: 100%;
+
+  @include tablet-up {
+    font-size: 4rem;
+    letter-spacing: 2px;
+  }
 
   .eu-section {
     background: #4067c9;
