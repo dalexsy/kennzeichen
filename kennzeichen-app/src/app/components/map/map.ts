@@ -1,4 +1,15 @@
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, ElementRef, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  Input,
+  Output,
+  EventEmitter,
+  ElementRef,
+  ViewChild,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import * as L from 'leaflet';
 import { GeocodingService, CityCoordinates } from '../../services/geocoding';
@@ -15,7 +26,7 @@ import { LocalizationService } from '../../services/localization.service';
   selector: 'app-map',
   imports: [CommonModule],
   templateUrl: './map.html',
-  styleUrl: './map.scss'
+  styleUrl: './map.scss',
 })
 export class MapComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild('mapContainer', { static: true }) mapContainer!: ElementRef;
@@ -59,7 +70,7 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
     // Show map button if we have plates with valid locations
     if (this.licensePlates.length > 0 && this.licensePlates.length <= 200) {
       const hasValidLocations = this.licensePlates.some(
-        plate => plate.derived_from && plate.derived_from !== 'willkürlich gewählt'
+        (plate) => plate.derived_from && plate.derived_from !== 'willkürlich gewählt'
       );
       return hasValidLocations;
     }
@@ -85,8 +96,6 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
       // In English both forms are the same
       parts.push(this.seenFilterActive ? t.all_states_dative : t.all_states);
     }
-
-
 
     return parts.join(' in ');
   }
@@ -126,7 +135,7 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
 
     // Priority 2: If a single marker is selected, highlight its state
     if (this.selectedCode) {
-      const selectedPlate = this.licensePlates.find(p => p.code === this.selectedCode);
+      const selectedPlate = this.licensePlates.find((p) => p.code === this.selectedCode);
       if (selectedPlate && selectedPlate.federal_state) {
         return selectedPlate.federal_state;
       }
@@ -167,7 +176,11 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
     this.isMapVisible = !this.isMapVisible;
     if (this.isMapVisible && this.map) {
       // Load markers if not already loaded
-      if (this.markers.size === 0 && this.licensePlates.length > 0 && this.licensePlates.length <= 200) {
+      if (
+        this.markers.size === 0 &&
+        this.licensePlates.length > 0 &&
+        this.licensePlates.length <= 200
+      ) {
         this.refreshMap();
       }
 
@@ -178,7 +191,7 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
           // Fit map to show all markers
           this.mapMarkerService.fitMapToMarkers(this.map, this.markers);
           // Close and reopen any open popups to fix positioning
-          this.markers.forEach(marker => {
+          this.markers.forEach((marker) => {
             if (marker.isPopupOpen()) {
               const popup = marker.getPopup();
               marker.closePopup();
@@ -263,7 +276,7 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
     this.map = L.map(this.mapContainer.nativeElement, {
       preferCanvas: false,
       attributionControl: false,
-      zoomControl: true
+      zoomControl: true,
     }).setView([51.1657, 10.4515], 6);
 
     this.updateTileLayer();
@@ -285,7 +298,7 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
     });
     observer.observe(document.documentElement, {
       attributes: true,
-      attributeFilter: ['data-theme']
+      attributeFilter: ['data-theme'],
     });
   }
 
@@ -307,17 +320,25 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
     const isDarkMode = this.isDarkMode();
 
     if (isDarkMode) {
-      this.currentTileLayer = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {
-        minZoom: 0,
-        maxZoom: 20,
-        attribution: '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      });
+      this.currentTileLayer = L.tileLayer(
+        'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png',
+        {
+          minZoom: 0,
+          maxZoom: 20,
+          attribution:
+            '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        }
+      );
     } else {
-      this.currentTileLayer = L.tileLayer('https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png', {
-        minZoom: 0,
-        maxZoom: 20,
-        attribution: '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      });
+      this.currentTileLayer = L.tileLayer(
+        'https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png',
+        {
+          minZoom: 0,
+          maxZoom: 20,
+          attribution:
+            '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        }
+      );
     }
 
     this.currentTileLayer.addTo(this.map);
@@ -335,7 +356,7 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
         this.highlightSelectedMarker();
       } else {
         this.clearMarkers();
-        const selectedPlate = this.licensePlates.find(p => p.code === this.selectedCode);
+        const selectedPlate = this.licensePlates.find((p) => p.code === this.selectedCode);
         if (selectedPlate) {
           this.loadSingleMarker(selectedPlate);
         }
@@ -359,22 +380,27 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
 
     // Extract unique cities from license plates
     const cities = this.licensePlates
-      .filter(plate => plate.derived_from && plate.derived_from !== 'willkürlich gewählt')
-      .map(plate => ({
+      .filter((plate) => plate.derived_from && plate.derived_from !== 'willkürlich gewählt')
+      .map((plate) => ({
         name: plate.derived_from,
         state: plate.federal_state,
-        plate: plate
+        plate: plate,
       }))
-      .filter((city, index, array) =>
-        array.findIndex(c => c.name === city.name && c.state === city.state) === index
+      .filter(
+        (city, index, array) =>
+          array.findIndex((c) => c.name === city.name && c.state === city.state) === index
       );
 
-    cities.forEach(city => {
+    cities.forEach((city) => {
       const coordinates = this.geocodingService.getCoordinatesSync(city.name, city.state);
       if (coordinates && this.map) {
         this.addMarker(coordinates, city.plate);
       } else {
-        console.log(`Missing coordinates for:\n  {\n    "name": "${city.name || ''}",\n    "lat": ,\n    "lng": ,\n    "state": "${city.state || ''}"\n  }`);
+        console.log(
+          `Missing coordinates for:\n  {\n    "name": "${
+            city.name || ''
+          }",\n    "lat": ,\n    "lng": ,\n    "state": "${city.state || ''}"\n  }`
+        );
       }
     });
   }
@@ -384,13 +410,20 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
       return;
     }
 
-    const coordinates = this.geocodingService.getCoordinatesSync(plate.derived_from, plate.federal_state);
+    const coordinates = this.geocodingService.getCoordinatesSync(
+      plate.derived_from,
+      plate.federal_state
+    );
     if (coordinates && this.map) {
       this.addMarker(coordinates, plate);
       this.map.panTo([coordinates.lat, coordinates.lng]);
       this.hasMarkers = true;
     } else {
-      console.log(`Missing coordinates for:\n  {\n    "name": "${plate.derived_from || ''}",\n    "lat": ,\n    "lng": ,\n    "state": "${plate.federal_state || ''}"\n  }`);
+      console.log(
+        `Missing coordinates for:\n  {\n    "name": "${
+          plate.derived_from || ''
+        }",\n    "lat": ,\n    "lng": ,\n    "state": "${plate.federal_state || ''}"\n  }`
+      );
     }
   }
 
@@ -422,9 +455,9 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
   private highlightSelectedMarker() {
     this.markers.forEach((marker, code) => {
       const isSelected = code === this.selectedCode;
-      const plate = this.licensePlates.find(p => p.code === code);
+      const plate = this.licensePlates.find((p) => p.code === code);
       const stateClass = plate ? this.mapStateService.getStateClass(plate.federal_state) : '';
-      
+
       this.mapMarkerService.updateMarkerIcon(marker, code, isSelected, stateClass);
 
       if (isSelected) {
@@ -445,7 +478,7 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   public clearMarkers() {
-    this.markers.forEach(marker => {
+    this.markers.forEach((marker) => {
       if (this.map) {
         this.map.removeLayer(marker);
       }

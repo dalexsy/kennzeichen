@@ -1,41 +1,42 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Kennzeichen Deutschland</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="German license plate explorer and tracker">
-  <meta name="theme-color" content="#f7a45f">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="manifest" href="manifest.json">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  
-  <!-- Apple Touch Icons -->
-  <link rel="apple-touch-icon" sizes="180x180" href="favicons/ios/180.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="favicons/ios/152.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="favicons/ios/120.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="favicons/ios/76.png">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="Kennzeichen">
-</head>
-<body>
-  <app-root></app-root>
-  
-  <script>
-    // Register service worker for PWA functionality (only in production)
-    if ('serviceWorker' in navigator && window.location.hostname !== 'localhost') {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-          .then(registration => {
-            console.log('Service Worker registered successfully:', registration.scope);
-          })
-          .catch(error => {
-            console.log('Service Worker registration failed:', error);
-          });
-      });
-    }
-  </script>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <title>Kennzeichen Deutschland</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="German license plate explorer and tracker" />
+    <meta name="theme-color" content="#f7a45f" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="manifest" href="manifest.json" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="favicons/ios/180.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="favicons/ios/152.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="favicons/ios/120.png" />
+    <link rel="apple-touch-icon" sizes="76x76" href="favicons/ios/76.png" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Kennzeichen" />
+  </head>
+  <body>
+    <app-root></app-root>
+
+    <script>
+      // Register service worker for PWA functionality (only in production)
+      if ('serviceWorker' in navigator && window.location.hostname !== 'localhost') {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker
+            .register('/sw.js')
+            .then((registration) => {
+              console.log('Service Worker registered successfully:', registration.scope);
+            })
+            .catch((error) => {
+              console.log('Service Worker registration failed:', error);
+            });
+        });
+      }
+    </script>
+  </body>
 </html>

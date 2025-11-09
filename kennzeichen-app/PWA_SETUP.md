@@ -14,6 +14,7 @@ Create the following icon files and place them in `kennzeichen-app/public/`:
 ### Creating Icons
 
 For maskable icons, ensure your logo/design is centered within a safe zone:
+
 - Keep important content within the center 80% of the image
 - Use a solid background color (the theme color: #f7a45f or background: #fffae4)
 - The outer 10% on all sides may be cropped on some devices
@@ -21,6 +22,7 @@ For maskable icons, ensure your logo/design is centered within a safe zone:
 ### Tools
 
 You can use these tools to generate PWA icons:
+
 - [PWA Asset Generator](https://github.com/elegantapp/pwa-asset-generator)
 - [Maskable.app](https://maskable.app/) - Test maskable icons
 - [RealFaviconGenerator](https://realfavicongenerator.net/)
@@ -46,6 +48,7 @@ Then rename the generated files to match the required names above.
 ## GitHub Pages Deployment
 
 For GitHub Pages, make sure to:
+
 1. Build with the correct base href: `ng build --base-href=/your-repo-name/`
 2. Add a 404.html that redirects to index.html for client-side routing
 3. The service worker and manifest will work automatically
@@ -53,6 +56,7 @@ For GitHub Pages, make sure to:
 ## Service Worker
 
 The service worker (`sw.js`) is configured to:
+
 - Cache static assets on install
 - Serve cached content when offline
 - Update the cache with new content when online

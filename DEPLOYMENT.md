@@ -24,6 +24,7 @@ This project is **automatically deployed to GitHub Pages** using GitHub Actions.
 ### Manual Deployment
 
 You can also trigger deployment manually:
+
 1. Go to: https://github.com/dalexsy/kennzeichen/actions
 2. Click "Deploy to GitHub Pages" workflow
 3. Click "Run workflow" button
@@ -51,17 +52,18 @@ Output goes to `kennzeichen-app/dist/license-plate-app/browser/`
 
 ## Key Differences from Your Other Project
 
-| Feature | This Project (Kennzeichen) | Other Project |
-|---------|---------------------------|---------------|
-| Backend | ❌ None (static) | ✅ Firebase |
-| Hosting | GitHub Pages | Surge.sh |
-| Push Notifications | ❌ No | ✅ Yes |
-| Auto Deploy | GitHub Actions | Manual? |
-| PWA | ✅ Yes (newly added) | ✅ Yes |
+| Feature            | This Project (Kennzeichen) | Other Project |
+| ------------------ | -------------------------- | ------------- |
+| Backend            | ❌ None (static)           | ✅ Firebase   |
+| Hosting            | GitHub Pages               | Surge.sh      |
+| Push Notifications | ❌ No                      | ✅ Yes        |
+| Auto Deploy        | GitHub Actions             | Manual?       |
+| PWA                | ✅ Yes (newly added)       | ✅ Yes        |
 
 ## GitHub Pages Settings
 
 To verify/modify GitHub Pages settings:
+
 1. Go to: https://github.com/dalexsy/kennzeichen/settings/pages
 2. Should show:
    - Source: GitHub Actions
@@ -71,11 +73,13 @@ To verify/modify GitHub Pages settings:
 ## Troubleshooting
 
 **Site not updating after push?**
+
 1. Check Actions tab: https://github.com/dalexsy/kennzeichen/actions
 2. Look for failed workflows (red X)
 3. Click into the workflow to see error logs
 
 **Build failing?**
+
 - Check that Node version matches (currently Node 20)
 - Verify package-lock.json is committed
 - Test build locally first
@@ -92,6 +96,7 @@ To change base URL or build settings, edit that file.
 ## PWA Deployment Notes
 
 With the new PWA setup:
+
 - Service worker (`sw.js`) will be deployed automatically
 - Manifest (`manifest.json`) is included in build
 - Users can install app on mobile devices

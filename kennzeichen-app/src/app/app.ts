@@ -23,10 +23,10 @@ import { SettingsComponent } from './components/settings/settings';
     LicensePlateList,
     MapComponent,
     TableOfContentsComponent,
-    SettingsComponent
+    SettingsComponent,
   ],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
 })
 export class App implements OnInit, OnDestroy {
   @ViewChild(MapComponent) mapComponent?: MapComponent;
@@ -74,9 +74,9 @@ export class App implements OnInit, OnDestroy {
     this.seenCodes$ = this.localStorageService.seenLicensePlates$;
 
     // Subscribe to filtered plates to update available states
-    this.filteredLicensePlates$.subscribe(plates => {
+    this.filteredLicensePlates$.subscribe((plates) => {
       const states = new Set<string>();
-      plates.forEach(plate => {
+      plates.forEach((plate) => {
         if (plate.federal_state) {
           states.add(plate.federal_state);
         }
@@ -106,7 +106,7 @@ export class App implements OnInit, OnDestroy {
         if (this.observer) {
           this.observer.disconnect();
           const headings = document.querySelectorAll('.group-heading');
-          headings.forEach(heading => this.observer?.observe(heading));
+          headings.forEach((heading) => this.observer?.observe(heading));
         }
       }, 100);
     });
@@ -125,46 +125,55 @@ export class App implements OnInit, OnDestroy {
 
   private setupScrollListener(): void {
     // Listen for any scroll events and block IntersectionObserver updates
-    window.addEventListener('scroll', () => {
-      // Only set flag if we're not in a TOC click
-      // TOC clicks manage their own timing
-      if (!this.tocClickedSection) {
-        this.isScrollingProgrammatically = true;
+    window.addEventListener(
+      'scroll',
+      () => {
+        // Only set flag if we're not in a TOC click
+        // TOC clicks manage their own timing
+        if (!this.tocClickedSection) {
+          this.isScrollingProgrammatically = true;
 
-        // Clear existing timeout
-        if (this.scrollTimeout) {
-          clearTimeout(this.scrollTimeout);
+          // Clear existing timeout
+          if (this.scrollTimeout) {
+            clearTimeout(this.scrollTimeout);
+          }
+
+          // Reset flag after scrolling stops (300ms of no scroll events)
+          this.scrollTimeout = window.setTimeout(() => {
+            this.isScrollingProgrammatically = false;
+          }, 300);
         }
-
-        // Reset flag after scrolling stops (300ms of no scroll events)
-        this.scrollTimeout = window.setTimeout(() => {
-          this.isScrollingProgrammatically = false;
-        }, 300);
-      }
-    }, { passive: true });
+      },
+      { passive: true }
+    );
   }
 
   private setupScrollObserver(): void {
     const options = {
       root: null,
       rootMargin: '-20% 0px -70% 0px',
-      threshold: 0
+      threshold: 0,
     };
 
     this.observer = new IntersectionObserver((entries) => {
       // Don't update active section during programmatic scrolls or TOC clicks
       if (this.isScrollingProgrammatically || this.tocClickedSection) {
-        console.log('Blocked: isScrolling=' + this.isScrollingProgrammatically + ', tocClicked=' + this.tocClickedSection);
+        console.log(
+          'Blocked: isScrolling=' +
+            this.isScrollingProgrammatically +
+            ', tocClicked=' +
+            this.tocClickedSection
+        );
         return;
       }
 
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const headingText = entry.target.querySelector('.heading-text')?.textContent?.trim();
           if (headingText) {
             // Extract just the state name (before the count)
             const stateName = headingText.split('(')[0].trim();
-            
+
             // Run inside Angular zone to ensure change detection
             this.ngZone.run(() => {
               console.log('Observer updating to:', stateName);
@@ -180,7 +189,7 @@ export class App implements OnInit, OnDestroy {
     // Observe all group headings
     setTimeout(() => {
       const headings = document.querySelectorAll('.group-heading');
-      headings.forEach(heading => this.observer?.observe(heading));
+      headings.forEach((heading) => this.observer?.observe(heading));
     }, 100);
   }
 
@@ -199,7 +208,7 @@ export class App implements OnInit, OnDestroy {
 
   onSearchChange(searchTerm: string): void {
     this.currentSearchTerm = searchTerm;
-    this.selectedCode = '';  // Clear selection when typing
+    this.selectedCode = ''; // Clear selection when typing
     this.licensePlateService.setSearchTerm(searchTerm);
   }
 
@@ -246,11 +255,11 @@ export class App implements OnInit, OnDestroy {
       this.targetScrollPosition = this.savedScrollPosition;
       this.selectedCode = '';
       this.currentSearchTerm = this.savedSearchTerm;
-      
+
       // IMPORTANT: Restore both search term AND state filter
       this.licensePlateService.setSearchTerm(this.savedSearchTerm);
       this.licensePlateService.setStateFilter(this.savedStateFilter);
-      
+
       // If returning to a filtered state, restore focusedGroup
       // If returning to full list, clear focusedGroup
       this.focusedGroup = this.savedStateFilter;
@@ -274,12 +283,12 @@ export class App implements OnInit, OnDestroy {
 
       this.selectedCode = licensePlate.code;
       this.currentSearchTerm = licensePlate.code;
-      
+
       // When clicking a plate, use exact match by wrapping in special delimiter
       // This tells the service to match exactly, not as a prefix
       this.licensePlateService.setStateFilter('');
       this.licensePlateService.setSearchTerm('==' + licensePlate.code);
-      
+
       // Clear focusedGroup when selecting a specific plate
       this.focusedGroup = '';
     }
@@ -294,11 +303,11 @@ export class App implements OnInit, OnDestroy {
     this.targetScrollPosition = this.savedScrollPosition;
     this.selectedCode = '';
     this.currentSearchTerm = this.savedSearchTerm;
-    
+
     // IMPORTANT: Restore both search term AND state filter
     this.licensePlateService.setSearchTerm(this.savedSearchTerm);
     this.licensePlateService.setStateFilter(this.savedStateFilter);
-    
+
     // If returning to a filtered state, restore focusedGroup
     // If returning to full list, clear focusedGroup
     this.focusedGroup = this.savedStateFilter;
@@ -372,9 +381,11 @@ export class App implements OnInit, OnDestroy {
     const seenCodesArray = this.localStorageService.getSeenCodes();
     const seenCodes = new Set(seenCodesArray);
 
-    this.filteredLicensePlates$.subscribe(plates => {
-      count = plates.filter(plate => seenCodes.has(plate.code)).length;
-    }).unsubscribe();
+    this.filteredLicensePlates$
+      .subscribe((plates) => {
+        count = plates.filter((plate) => seenCodes.has(plate.code)).length;
+      })
+      .unsubscribe();
 
     return count;
   }
@@ -413,12 +424,17 @@ export class App implements OnInit, OnDestroy {
 
   onTocSectionClick(section: string): void {
     console.log('TOC clicked:', section);
-    
+
     // Lock the section so IntersectionObserver can't change it
     this.tocClickedSection = section;
     this.isScrollingProgrammatically = true;
 
-    console.log('Flags set - tocClickedSection:', this.tocClickedSection, 'isScrolling:', this.isScrollingProgrammatically);
+    console.log(
+      'Flags set - tocClickedSection:',
+      this.tocClickedSection,
+      'isScrolling:',
+      this.isScrollingProgrammatically
+    );
 
     // Immediately update the active section and color
     this.activeSection = section;
@@ -445,7 +461,7 @@ export class App implements OnInit, OnDestroy {
 
         window.scrollTo({
           top: offsetPosition,
-          behavior: 'smooth'
+          behavior: 'smooth',
         });
 
         found = true;

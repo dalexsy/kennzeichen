@@ -8,7 +8,7 @@ import { ThemeService, Theme } from '../../services/theme.service';
   selector: 'app-settings',
   imports: [CommonModule],
   templateUrl: './settings.html',
-  styleUrl: './settings.scss'
+  styleUrl: './settings.scss',
 })
 export class SettingsComponent {
   @ViewChild('fileInput') fileInput?: ElementRef<HTMLInputElement>;
@@ -69,7 +69,9 @@ export class SettingsComponent {
           this.importMessage = '';
         }, 5000);
       } else {
-        this.importMessage = `${this.localizationService.translate('import_error')}: ${result.error}`;
+        this.importMessage = `${this.localizationService.translate('import_error')}: ${
+          result.error
+        }`;
         setTimeout(() => {
           this.importMessage = '';
         }, 5000);

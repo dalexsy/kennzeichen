@@ -30,7 +30,9 @@
   [attr.aria-label]="isMapVisible ? 'Hide map' : 'Show map'"
 >
   <span class="material-icons">{{ isMapVisible ? 'close' : 'map' }}</span>
-  <span class="toggle-text">{{ isMapVisible ? ((translations$ | async)?.back || 'Close') : 'Map' }}</span>
+  <span class="toggle-text">{{
+    isMapVisible ? (translations$ | async)?.back || 'Close' : 'Map'
+  }}</span>
 </button>
 } @if (shouldShowSeenButton && !isSettingsOpen) {
 <button

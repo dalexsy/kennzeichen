@@ -10,22 +10,24 @@ const STATIC_ASSETS = [
   '/polyfills.js',
   '/german-cities-complete.json',
   '/license-plates.json',
-  '/manifest.json'
+  '/manifest.json',
 ];
 
 // Install event - cache static assets
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
+    caches
+      .open(CACHE_NAME)
       .then((cache) => {
         console.log('Opened cache');
         // Try to cache static assets, but don't fail if some are missing
-        return cache.addAll(STATIC_ASSETS.map(url => new Request(url, { cache: 'reload' })))
+        return cache
+          .addAll(STATIC_ASSETS.map((url) => new Request(url, { cache: 'reload' })))
           .catch((err) => {
             console.log('Some assets failed to cache:', err);
             // Cache individual files that exist
             return Promise.all(
-              STATIC_ASSETS.map(url => 
+              STATIC_ASSETS.map((url) =>
                 cache.add(url).catch(() => console.log('Failed to cache:', url))
               )
             );
@@ -38,16 +40,19 @@ self.addEventListener('install', (event) => {
 // Activate event - clean up old caches
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (cacheName !== CACHE_NAME && cacheName !== RUNTIME_CACHE) {
-            console.log('Deleting old cache:', cacheName);
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    }).then(() => self.clients.claim())
+    caches
+      .keys()
+      .then((cacheNames) => {
+        return Promise.all(
+          cacheNames.map((cacheName) => {
+            if (cacheName !== CACHE_NAME && cacheName !== RUNTIME_CACHE) {
+              console.log('Deleting old cache:', cacheName);
+              return caches.delete(cacheName);
+            }
+          })
+        );
+      })
+      .then(() => self.clients.claim())
   );
 });
 
@@ -59,7 +64,8 @@ self.addEventListener('fetch', (event) => {
   }
 
   event.respondWith(
-    caches.match(event.request)
+    caches
+      .match(event.request)
       .then((response) => {
         if (response) {
           return response;
@@ -74,10 +80,9 @@ self.addEventListener('fetch', (event) => {
           // Clone the response
           const responseToCache = response.clone();
 
-          caches.open(RUNTIME_CACHE)
-            .then((cache) => {
-              cache.put(event.request, responseToCache);
-            });
+          caches.open(RUNTIME_CACHE).then((cache) => {
+            cache.put(event.request, responseToCache);
+          });
 
           return response;
         });
