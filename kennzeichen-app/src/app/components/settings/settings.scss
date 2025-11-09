@@ -38,6 +38,7 @@
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
   z-index: $z-modal-overlay;
+  pointer-events: auto;
 
   @media (min-width: 768px) {
     display: none;

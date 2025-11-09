@@ -25,6 +25,7 @@ export class MapComponent implements OnInit, OnDestroy, OnChanges {
   @Input() seenFilterActive: boolean = false;
   @Input() seenCount: number = 0;
   @Input() availableStates: Set<string> = new Set();
+  @Input() isSettingsOpen: boolean = false;
   @Output() codeSelected = new EventEmitter<LicensePlate>();
   @Output() stateFilterChange = new EventEmitter<string>();
   @Output() seenFilterToggle = new EventEmitter<void>();

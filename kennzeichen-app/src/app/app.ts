@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, NgZone, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable, BehaviorSubject } from 'rxjs';
 
@@ -46,10 +46,13 @@ export class App implements OnInit, OnDestroy {
   focusedGroup = '';
   activeSection = '';
   availableStates: Set<string> = new Set();
+  isSettingsOpen = false;
   private savedScrollPosition = 0;
   private savedSearchTerm = '';
   private savedStateFilter = '';
   private isScrollingProgrammatically = false;
+  private scrollTimeout?: number;
+  private tocClickedSection: string = '';
 
   get isMapButtonVisible(): boolean {
     return this.mapComponent?.shouldShowMapButton || false;
@@ -62,7 +65,9 @@ export class App implements OnInit, OnDestroy {
   constructor(
     public licensePlateService: LicensePlateService,
     private localStorageService: LocalStorageService,
-    private mapStateService: MapStateService
+    private mapStateService: MapStateService,
+    private ngZone: NgZone,
+    private cdr: ChangeDetectorRef
   ) {
     this.filteredLicensePlates$ = this.licensePlateService.filteredLicensePlates$;
     this.groupedLicensePlates$ = this.licensePlateService.groupedLicensePlates$;
@@ -85,6 +90,7 @@ export class App implements OnInit, OnDestroy {
     setTimeout(() => {
       this.isLoading = false;
       this.setupScrollObserver();
+      this.setupScrollListener();
     }, 1000);
 
     // Re-observe when grouped list changes
@@ -110,9 +116,33 @@ export class App implements OnInit, OnDestroy {
     if (this.observer) {
       this.observer.disconnect();
     }
+    if (this.scrollTimeout) {
+      clearTimeout(this.scrollTimeout);
+    }
   }
 
   private observer?: IntersectionObserver;
+
+  private setupScrollListener(): void {
+    // Listen for any scroll events and block IntersectionObserver updates
+    window.addEventListener('scroll', () => {
+      // Only set flag if we're not in a TOC click
+      // TOC clicks manage their own timing
+      if (!this.tocClickedSection) {
+        this.isScrollingProgrammatically = true;
+
+        // Clear existing timeout
+        if (this.scrollTimeout) {
+          clearTimeout(this.scrollTimeout);
+        }
+
+        // Reset flag after scrolling stops (300ms of no scroll events)
+        this.scrollTimeout = window.setTimeout(() => {
+          this.isScrollingProgrammatically = false;
+        }, 300);
+      }
+    }, { passive: true });
+  }
 
   private setupScrollObserver(): void {
     const options = {
@@ -122,8 +152,11 @@ export class App implements OnInit, OnDestroy {
     };
 
     this.observer = new IntersectionObserver((entries) => {
-      // Don't update active section during programmatic scrolls
-      if (this.isScrollingProgrammatically) return;
+      // Don't update active section during programmatic scrolls or TOC clicks
+      if (this.isScrollingProgrammatically || this.tocClickedSection) {
+        console.log('Blocked: isScrolling=' + this.isScrollingProgrammatically + ', tocClicked=' + this.tocClickedSection);
+        return;
+      }
 
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -131,8 +164,14 @@ export class App implements OnInit, OnDestroy {
           if (headingText) {
             // Extract just the state name (before the count)
             const stateName = headingText.split('(')[0].trim();
-            this.activeSection = stateName;
-            this.updateAccentColor(stateName);
+            
+            // Run inside Angular zone to ensure change detection
+            this.ngZone.run(() => {
+              console.log('Observer updating to:', stateName);
+              this.activeSection = stateName;
+              this.updateAccentColor(stateName);
+              this.cdr.detectChanges();
+            });
           }
         }
       });
@@ -373,8 +412,13 @@ export class App implements OnInit, OnDestroy {
   }
 
   onTocSectionClick(section: string): void {
-    // Set flag to prevent IntersectionObserver from updating during scroll
+    console.log('TOC clicked:', section);
+    
+    // Lock the section so IntersectionObserver can't change it
+    this.tocClickedSection = section;
     this.isScrollingProgrammatically = true;
+
+    console.log('Flags set - tocClickedSection:', this.tocClickedSection, 'isScrolling:', this.isScrollingProgrammatically);
 
     // Immediately update the active section and color
     this.activeSection = section;
@@ -409,11 +453,12 @@ export class App implements OnInit, OnDestroy {
       }
     }
 
-    // Always re-enable IntersectionObserver after scroll animation completes
-    // Do this regardless of whether we found the heading
+    // Keep the section locked for 1.5 seconds to allow smooth scroll to complete
     setTimeout(() => {
+      console.log('Unlocking after 1.5s');
+      this.tocClickedSection = '';
       this.isScrollingProgrammatically = false;
-    }, 600); // Match typical smooth scroll duration
+    }, 1500);
   }
 
   onClearAllFilters(): void {
@@ -424,5 +469,9 @@ export class App implements OnInit, OnDestroy {
     this.licensePlateService.setSearchTerm('');
     this.licensePlateService.setStateFilter('');
     this.licensePlateService.setSeenFilter(false);
+  }
+
+  onSettingsMenuChange(isOpen: boolean): void {
+    this.isSettingsOpen = isOpen;
   }
 }

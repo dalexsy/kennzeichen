@@ -27,6 +27,16 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "manifest.json",
+                "input": "public",
+                "output": "/"
+              },
+              {
+                "glob": "sw.js",
+                "input": "public",
+                "output": "/"
               }
             ],
             "styles": [

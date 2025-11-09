@@ -1,4 +1,4 @@
-import { Component, inject, ElementRef, ViewChild } from '@angular/core';
+import { Component, inject, ElementRef, ViewChild, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LocalStorageService } from '../../services/local-storage';
 import { LocalizationService, Language } from '../../services/localization.service';
@@ -12,6 +12,7 @@ import { ThemeService, Theme } from '../../services/theme.service';
 })
 export class SettingsComponent {
   @ViewChild('fileInput') fileInput?: ElementRef<HTMLInputElement>;
+  @Output() menuOpenChange = new EventEmitter<boolean>();
 
   localStorageService = inject(LocalStorageService);
   localizationService = inject(LocalizationService);
@@ -26,10 +27,12 @@ export class SettingsComponent {
 
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
+    this.menuOpenChange.emit(this.isMenuOpen);
   }
 
   closeMenu(): void {
     this.isMenuOpen = false;
+    this.menuOpenChange.emit(false);
   }
 
   onExport(): void {

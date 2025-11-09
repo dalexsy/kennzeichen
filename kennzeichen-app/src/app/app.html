@@ -15,7 +15,7 @@
           (seenClick)="onSeenClick($event)"
           class="search"
         ></app-search-input>
-        <app-settings class="settings"></app-settings>
+        <app-settings class="settings" (menuOpenChange)="onSettingsMenuChange($event)"></app-settings>
       </div>
     </div>
   </div>
@@ -29,6 +29,7 @@
         [seenFilterActive]="isSeenFilterActive"
         [seenCount]="getSeenCount()"
         [availableStates]="availableStates"
+        [isSettingsOpen]="isSettingsOpen"
         (codeSelected)="onLicensePlateClicked($event)"
         (stateFilterChange)="onStateChange($event)"
         (seenFilterToggle)="onSeenFilterToggle()"
