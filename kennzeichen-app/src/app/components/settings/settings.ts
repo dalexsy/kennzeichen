@@ -1,29 +1,48 @@
 import { Component, inject, ElementRef, ViewChild, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { LocalStorageService } from '../../services/local-storage';
 import { LocalizationService, Language } from '../../services/localization.service';
 import { ThemeService, Theme } from '../../services/theme.service';
+import { FirebaseSyncService } from '../../services/firebase-sync.service';
+import { Observable } from 'rxjs';
+import { Button } from '../button/button';
 
 @Component({
   selector: 'app-settings',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule, Button],
   templateUrl: './settings.html',
   styleUrl: './settings.scss',
 })
 export class SettingsComponent {
-  @ViewChild('fileInput') fileInput?: ElementRef<HTMLInputElement>;
   @Output() menuOpenChange = new EventEmitter<boolean>();
 
   localStorageService = inject(LocalStorageService);
   localizationService = inject(LocalizationService);
   themeService = inject(ThemeService);
+  firebaseSyncService = inject(FirebaseSyncService);
 
   translations$ = this.localizationService.translations$;
   language$ = this.localizationService.language$;
   theme$ = this.themeService.theme$;
 
-  importMessage: string = '';
+  showSyncModal = false;
+  userIdInput = '';
   isMenuOpen = false;
+
+  constructor() {
+    // Watch for user ID changes and update the input field
+    this.updateUserIdInput();
+    // Check again after a short delay in case auth is still initializing
+    setTimeout(() => this.updateUserIdInput(), 1000);
+  }
+
+  private updateUserIdInput(): void {
+    const currentId = this.getUserId();
+    if (currentId && !this.userIdInput) {
+      this.userIdInput = currentId;
+    }
+  }
 
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
@@ -35,61 +54,9 @@ export class SettingsComponent {
     this.menuOpenChange.emit(false);
   }
 
-  onExport(): void {
-    try {
-      this.localStorageService.exportSeenData();
-      this.closeMenu();
-    } catch (error) {
-      console.error('Export failed:', error);
-      alert(this.localizationService.translate('error_occurred'));
-    }
-  }
-
-  onImport(): void {
-    this.fileInput?.nativeElement.click();
-  }
-
-  onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    const file = input.files?.[0];
-
-    if (!file) {
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const content = e.target?.result as string;
-      const result = this.localStorageService.importSeenData(content);
-
-      if (result.success) {
-        const t = this.localizationService.getTranslations();
-        this.importMessage = `${t.import_success}: ${t.imported_count} ${result.imported}, ${t.skipped_count} ${result.skipped}`;
-        setTimeout(() => {
-          this.importMessage = '';
-        }, 5000);
-      } else {
-        this.importMessage = `${this.localizationService.translate('import_error')}: ${
-          result.error
-        }`;
-        setTimeout(() => {
-          this.importMessage = '';
-        }, 5000);
-      }
-
-      this.closeMenu();
-    };
-
-    reader.onerror = () => {
-      this.importMessage = this.localizationService.translate('error_occurred');
-      setTimeout(() => {
-        this.importMessage = '';
-      }, 5000);
-    };
-
-    reader.readAsText(file);
-    // Reset input so the same file can be selected again
-    input.value = '';
+  showSyncModalAction(): void {
+    this.updateUserIdInput(); // Refresh the user ID before showing modal
+    this.showSyncModal = true;
   }
 
   toggleLanguage(): void {
@@ -119,5 +86,47 @@ export class SettingsComponent {
       case 'dark':
         return t.theme_dark;
     }
+  }
+
+  getUserId(): string | null {
+    return this.firebaseSyncService.getUserId();
+  }
+
+  copyUserId(): void {
+    const userId = this.firebaseSyncService.getUserId();
+    if (userId) {
+      navigator.clipboard
+        .writeText(userId)
+        .then(() => {
+          console.log('User ID copied to clipboard');
+        })
+        .catch((err) => {
+          console.error('Failed to copy user ID:', err);
+          alert(`User ID: ${userId}`);
+        });
+    }
+  }
+
+  onSubmitUserId(): void {
+    if (!this.userIdInput.trim()) {
+      alert('Please enter a User ID');
+      return;
+    }
+
+    this.firebaseSyncService
+      .importUserId(this.userIdInput.trim())
+      .then((success) => {
+        if (success) {
+          alert('User ID stored for reference');
+          this.showSyncModal = false;
+          this.userIdInput = '';
+        } else {
+          alert('Failed to store User ID');
+        }
+      })
+      .catch((error) => {
+        console.error('Import error:', error);
+        alert('Error storing User ID');
+      });
   }
 }

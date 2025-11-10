@@ -1,0 +1,114 @@
+@use '../../../styles/main' as *;
+
+.button {
+  border: none;
+  font-family: $body-font;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &.primary {
+    background-color: $accent-primary;
+    color: white;
+    border-radius: 0.25rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    box-shadow: 2px 2px $box-shadow;
+
+    &:hover:not(:disabled) {
+      filter: brightness(1.1);
+    }
+
+    &:active:not(:disabled) {
+      filter: brightness(1.2);
+    }
+  }
+
+  &.secondary {
+    background: $background-secondary;
+    color: $text-primary;
+    border-radius: 0.25rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    box-shadow: 2px 2px $box-shadow;
+
+    &:hover:not(:disabled) {
+      filter: brightness(1.1);
+    }
+
+    &:active:not(:disabled) {
+      filter: brightness(1.2);
+    }
+  }
+
+  &.icon {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background-color: $accent-tertiary;
+    color: white;
+    box-shadow: 2px 2px $box-shadow;
+
+    &:hover:not(:disabled) {
+      filter: brightness(1.1);
+      transform: scale(1.05);
+    }
+
+    &:active:not(:disabled) {
+      filter: brightness(1.2);
+    }
+  }
+
+  &.icon-small {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.25rem;
+    background: $background-secondary;
+    color: $text-secondary;
+    box-shadow: 2px 2px $box-shadow;
+    padding: 0;
+    gap: 0;
+
+    .material-icons {
+      font-size: 1rem;
+    }
+
+    &:hover:not(:disabled) {
+      filter: brightness(1.1);
+    }
+
+    &:active:not(:disabled) {
+      filter: brightness(1.2);
+    }
+  }
+
+  &.transparent {
+    background: transparent;
+    color: $text-primary;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    border-radius: 0.25rem;
+
+    &:hover:not(:disabled) {
+      background: $background-secondary;
+    }
+
+    &:active:not(:disabled) {
+      transform: scale(0.98);
+    }
+  }
+}

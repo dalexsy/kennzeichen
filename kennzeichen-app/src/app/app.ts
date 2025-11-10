@@ -7,6 +7,7 @@ import { LicensePlateService, LicensePlateGroup } from './services/license-plate
 import { LocalStorageService } from './services/local-storage';
 import { ScrollStateService } from './services/scroll-state.service';
 import { FilterStateService } from './services/filter-state.service';
+import { FirebaseSyncService } from './services/firebase-sync.service';
 
 import { LicensePlateDisplay } from './components/license-plate-display/license-plate-display';
 import { SearchInput } from './components/search-input/search-input';
@@ -65,6 +66,7 @@ export class App implements OnInit, OnDestroy {
     private localStorageService: LocalStorageService,
     private scrollStateService: ScrollStateService,
     private filterStateService: FilterStateService,
+    private firebaseSyncService: FirebaseSyncService,
     private cdr: ChangeDetectorRef
   ) {
     this.filteredLicensePlates$ = this.licensePlateService.filteredLicensePlates$;

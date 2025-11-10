@@ -52,7 +52,7 @@
   background: $background-primary;
   border: 1px solid $border-primary;
   border-radius: 0.5rem;
-  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+  box-shadow: var(--box-shadow) 2px 2px;
   z-index: $z-modal;
   min-width: 15rem;
   max-width: 20rem;
@@ -65,7 +65,7 @@
     right: 0;
     border-radius: 1rem 1rem 0 0;
     max-width: 100%;
-    box-shadow: 0 -0.5rem 1rem rgba(0, 0, 0, 0.15);
+    box-shadow: var(--box-shadow) 2px 2px;
   }
 }
 
@@ -143,14 +143,13 @@
     }
 
     .item-value {
-      font-size: 1rem;
       color: $text-primary;
       font-weight: 500;
     }
   }
 
   &:hover {
-    background: $background-secondary;
+    background: $background-tertiary;
   }
 
   &:active {
@@ -172,4 +171,156 @@
   background: $background-secondary;
   border-radius: 0.25rem;
   margin-top: 0.5rem;
+}
+
+.sync-section {
+  padding: 0.5rem 1rem;
+  background: $background-secondary;
+  border-radius: 0.25rem;
+  margin: 0.5rem 0;
+}
+
+.sync-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  color: $text-primary;
+
+  .material-icons {
+    font-size: 1.25rem;
+  }
+
+  .sync-title {
+    font-weight: 600;
+    font-size: 0.9375rem;
+  }
+}
+
+.sync-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.sync-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+
+  .status-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  &.status-offline .status-dot {
+    background: $text-tertiary;
+    animation: none;
+  }
+
+  &.status-syncing .status-dot {
+    background: #f59e0b;
+  }
+
+  &.status-synced .status-dot {
+    background: #10b981;
+    animation: none;
+  }
+
+  &.status-error .status-dot {
+    background: #ef4444;
+    animation: none;
+  }
+
+  .status-text {
+    color: $text-secondary;
+  }
+}
+
+.sync-time {
+  font-size: 0.75rem;
+  color: $text-tertiary;
+  padding-left: 1rem;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+// Sync Modal Styles
+.sync-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: $map-overlay-bg;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+}
+
+.sync-modal {
+  background: $background-primary;
+  border: 1px solid $border-primary;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.5rem 1rem $box-shadow;
+  z-index: 2010;
+  max-width: 90vw;
+  width: 20rem;
+  padding: 1.5rem;
+
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+    color: $text-primary;
+  }
+
+  p {
+    font-size: 0.875rem;
+    color: $text-secondary;
+    margin: 0 0 1rem 0;
+  }
+}
+
+.user-id-input-group {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+
+  .user-id-input {
+    flex: 1;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid $border-primary;
+    border-radius: 0.25rem;
+    background: $background-secondary;
+    color: $text-primary;
+    font-family: $body-font;
+    font-size: 0.875rem;
+
+    &:focus {
+      outline: none;
+      border-color: $accent-primary;
+      box-shadow: 0 0 0 2px rgba($accent-primary, 0.1);
+    }
+  }
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
 }

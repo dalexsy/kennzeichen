@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 export interface SeenLicensePlate {
   code: string;
@@ -7,14 +7,18 @@ export interface SeenLicensePlate {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LocalStorageService {
   private readonly SEEN_KEY = 'license-plates-seen';
   private readonly VIEW_MODE_KEY = 'view-mode-preference';
   private seenLicensePlatesSubject = new BehaviorSubject<Set<string>>(new Set());
 
+  // Observable that fires when seen data changes (for triggering sync)
+  private dataChanged$ = new Subject<void>();
+
   public seenLicensePlates$ = this.seenLicensePlatesSubject.asObservable();
+  public onDataChanged$ = this.dataChanged$.asObservable();
 
   constructor() {
     this.loadSeenLicensePlates();
@@ -25,7 +29,7 @@ export class LocalStorageService {
       const stored = localStorage.getItem(this.SEEN_KEY);
       if (stored) {
         const seenData: SeenLicensePlate[] = JSON.parse(stored);
-        const seenCodes = new Set(seenData.map(item => item.code));
+        const seenCodes = new Set(seenData.map((item) => item.code));
         this.seenLicensePlatesSubject.next(seenCodes);
       }
     } catch (error) {
@@ -47,13 +51,13 @@ export class LocalStorageService {
       let seenData: SeenLicensePlate[] = stored ? JSON.parse(stored) : [];
 
       // Check if already seen
-      const existingIndex = seenData.findIndex(item => item.code === code);
+      const existingIndex = seenData.findIndex((item) => item.code === code);
 
       if (existingIndex === -1) {
         // Add new entry
         seenData.push({
           code,
-          seenAt: new Date().toISOString()
+          seenAt: new Date().toISOString(),
         });
       } else {
         // Update existing entry
@@ -66,6 +70,9 @@ export class LocalStorageService {
       const currentSeen = this.seenLicensePlatesSubject.value;
       currentSeen.add(code);
       this.seenLicensePlatesSubject.next(new Set(currentSeen));
+
+      // Notify that data changed
+      this.dataChanged$.next();
     } catch (error) {
       console.error('Error marking license plate as seen:', error);
     }
@@ -78,7 +85,7 @@ export class LocalStorageService {
   getSeenDate(code: string): string | null {
     try {
       const seenData = this.getSeenDetails();
-      const found = seenData.find(item => item.code === code);
+      const found = seenData.find((item) => item.code === code);
       return found ? found.seenAt : null;
     } catch (error) {
       console.error('Error getting seen date:', error);
@@ -88,6 +95,28 @@ export class LocalStorageService {
 
   getSeenCodes(): string[] {
     return Array.from(this.seenLicensePlatesSubject.value);
+  }
+
+  setSeenCodes(codes: string[]): void {
+    try {
+      const existingData = this.getSeenDetails();
+      const existingMap = new Map(existingData.map((item) => [item.code, item]));
+
+      // Create new entries for codes that don't exist, preserve existing timestamps
+      const updatedData: SeenLicensePlate[] = codes.map((code) => {
+        return (
+          existingMap.get(code) || {
+            code,
+            seenAt: new Date().toISOString(),
+          }
+        );
+      });
+
+      this.saveSeenLicensePlates(updatedData);
+      this.seenLicensePlatesSubject.next(new Set(codes));
+    } catch (error) {
+      console.error('Error setting seen codes:', error);
+    }
   }
 
   getSeenDetails(): SeenLicensePlate[] {
@@ -127,7 +156,7 @@ export class LocalStorageService {
       let seenData: SeenLicensePlate[] = stored ? JSON.parse(stored) : [];
 
       // Remove the entry
-      seenData = seenData.filter(item => item.code !== code);
+      seenData = seenData.filter((item) => item.code !== code);
 
       this.saveSeenLicensePlates(seenData);
 
@@ -135,6 +164,9 @@ export class LocalStorageService {
       const currentSeen = this.seenLicensePlatesSubject.value;
       currentSeen.delete(code);
       this.seenLicensePlatesSubject.next(new Set(currentSeen));
+
+      // Notify that data changed
+      this.dataChanged$.next();
     } catch (error) {
       console.error('Error removing seen license plates:', error);
     }
@@ -193,22 +225,32 @@ export class LocalStorageService {
   }
 
   // Import seen data from JSON file
-  importSeenData(fileContent: string): { success: boolean; imported: number; skipped: number; error?: string } {
+  importSeenData(fileContent: string): {
+    success: boolean;
+    imported: number;
+    skipped: number;
+    error?: string;
+  } {
     try {
       const importedData: SeenLicensePlate[] = JSON.parse(fileContent);
 
       // Validate the data structure
       if (!Array.isArray(importedData)) {
-        return { success: false, imported: 0, skipped: 0, error: 'Invalid data format: expected an array' };
+        return {
+          success: false,
+          imported: 0,
+          skipped: 0,
+          error: 'Invalid data format: expected an array',
+        };
       }
 
       const existingData = this.getSeenDetails();
-      const existingCodes = new Set(existingData.map(item => item.code));
+      const existingCodes = new Set(existingData.map((item) => item.code));
 
       let imported = 0;
       let skipped = 0;
 
-      importedData.forEach(item => {
+      importedData.forEach((item) => {
         if (!item.code || !item.seenAt) {
           skipped++;
           return;
@@ -224,7 +266,7 @@ export class LocalStorageService {
 
       if (imported > 0) {
         this.saveSeenLicensePlates(existingData);
-        const seenCodes = new Set(existingData.map(item => item.code));
+        const seenCodes = new Set(existingData.map((item) => item.code));
         this.seenLicensePlatesSubject.next(seenCodes);
       }
 
@@ -235,7 +277,7 @@ export class LocalStorageService {
         success: false,
         imported: 0,
         skipped: 0,
-        error: error instanceof Error ? error.message : 'Unknown error'
+        error: error instanceof Error ? error.message : 'Unknown error',
       };
     }
   }

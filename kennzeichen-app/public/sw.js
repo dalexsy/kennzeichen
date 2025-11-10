@@ -1,5 +1,5 @@
-const CACHE_NAME = 'kennzeichen-v1';
-const RUNTIME_CACHE = 'kennzeichen-runtime';
+const CACHE_NAME = 'kennzeichen-v2';
+const RUNTIME_CACHE = 'kennzeichen-runtime-v2';
 
 // Files to cache on install
 const STATIC_ASSETS = [
@@ -61,6 +61,12 @@ self.addEventListener('fetch', (event) => {
   // Skip cross-origin requests
   if (!event.request.url.startsWith(self.location.origin)) {
     return;
+  }
+
+  // Skip caching for development - check for cache-busting headers
+  const cacheControl = event.request.headers.get('Cache-Control');
+  if (cacheControl && (cacheControl.includes('no-cache') || cacheControl.includes('no-store'))) {
+    return fetch(event.request);
   }
 
   event.respondWith(

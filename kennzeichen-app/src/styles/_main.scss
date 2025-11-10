@@ -31,6 +31,8 @@
   --map-overlay-bg: rgba(0, 0, 0, 0.5);
   --box-shadow: rgba(102, 84, 67, 0.2);
   --selected-city: #8a4001;
+  --background-tertiary: #f5eabb;
+  --text-tertiary: #a8907c;
 }
 
 // Dark theme for system preference
@@ -57,6 +59,8 @@
     --map-overlay-bg: rgba(0, 0, 0, 0.5);
     --box-shadow: rgb(255 211 170 / 15%);
     --selected-city: #e78532;
+    --background-tertiary: #352d21;
+    --text-tertiary: #c4b5a4;
   }
 }
 
@@ -83,6 +87,8 @@
   --map-overlay-bg: rgba(0, 0, 0, 0.5);
   --box-shadow: rgba(102, 84, 67, 0.2);
   --selected-city: #8a4001;
+  --background-tertiary: #e8dcc7;
+  --text-tertiary: #a8907c;
 }
 
 // Explicit dark theme
@@ -108,15 +114,19 @@
   --map-overlay-bg: rgba(0, 0, 0, 0.5);
   --box-shadow: rgb(255 211 170 / 15%);
   --selected-city: #e78532;
+  --background-tertiary: #352d21;
+  --text-tertiary: #c4b5a4;
 }
 
 // SCSS variables using CSS custom properties
 $text-primary: var(--text-primary);
 $text-primary-outline: var(--text-primary-outline);
 $text-secondary: var(--text-secondary);
+$text-tertiary: var(--text-tertiary);
 $body-font: 'Rubik', sans-serif;
 $background-primary: var(--background-primary);
 $background-secondary: var(--background-secondary);
+$background-tertiary: var(--background-tertiary);
 $border-primary: var(--border-primary);
 $border-secondary: var(--border-secondary);
 $accent-primary: var(--accent-primary);

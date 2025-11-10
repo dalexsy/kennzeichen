@@ -53,18 +53,35 @@
                   "maximumError": "15kB"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
             },
             "development": {
               "optimization": false,
               "extractLicenses": false,
-              "sourceMap": true
+              "sourceMap": true,
+              "namedChunks": true
             }
           },
           "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+            "port": 4200,
+            "host": "localhost",
+            "headers": {
+              "Cache-Control": "no-cache, no-store, must-revalidate, max-age=0",
+              "Pragma": "no-cache",
+              "Expires": "0",
+              "X-Content-Type-Options": "nosniff"
+            }
+          },
           "configurations": {
             "production": {
               "buildTarget": "license-plate-app:build:production"
