@@ -111,4 +111,21 @@
       transform: scale(0.98);
     }
   }
+
+  &.square {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.25rem;
+    background: $background-secondary;
+    color: $text-primary;
+    box-shadow: 2px 2px $box-shadow;
+
+    &:hover:not(:disabled) {
+      filter: brightness(1.1);
+    }
+
+    &:active:not(:disabled) {
+      filter: brightness(1.2);
+    }
+  }
 }

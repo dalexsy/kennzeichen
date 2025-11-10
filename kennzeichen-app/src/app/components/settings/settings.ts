@@ -7,10 +7,11 @@ import { ThemeService, Theme } from '../../services/theme.service';
 import { FirebaseSyncService } from '../../services/firebase-sync.service';
 import { Observable } from 'rxjs';
 import { Button } from '../button/button';
+import { SyncLicensePlateComponent } from './sync-license-plate';
 
 @Component({
   selector: 'app-settings',
-  imports: [CommonModule, FormsModule, Button],
+  imports: [CommonModule, FormsModule, Button, SyncLicensePlateComponent],
   templateUrl: './settings.html',
   styleUrl: './settings.scss',
 })
@@ -29,19 +30,21 @@ export class SettingsComponent {
   showSyncModal = false;
   userIdInput = '';
   isMenuOpen = false;
+  shortCode$ = this.firebaseSyncService.getShortCode();
 
   constructor() {
-    // Watch for user ID changes and update the input field
-    this.updateUserIdInput();
+    // Watch for short code changes and update the input field
+    this.updateShortCodeInput();
     // Check again after a short delay in case auth is still initializing
-    setTimeout(() => this.updateUserIdInput(), 1000);
+    setTimeout(() => this.updateShortCodeInput(), 1000);
   }
-
-  private updateUserIdInput(): void {
-    const currentId = this.getUserId();
-    if (currentId && !this.userIdInput) {
-      this.userIdInput = currentId;
-    }
+  private updateShortCodeInput(): void {
+    // Subscribe to short code changes
+    this.shortCode$.subscribe((shortCode) => {
+      if (shortCode && !this.userIdInput) {
+        this.userIdInput = shortCode;
+      }
+    });
   }
 
   toggleMenu(): void {
@@ -55,7 +58,7 @@ export class SettingsComponent {
   }
 
   showSyncModalAction(): void {
-    this.updateUserIdInput(); // Refresh the user ID before showing modal
+    this.updateShortCodeInput(); // Refresh the short code before showing modal
     this.showSyncModal = true;
   }
 
@@ -93,23 +96,26 @@ export class SettingsComponent {
   }
 
   copyUserId(): void {
-    const userId = this.firebaseSyncService.getUserId();
-    if (userId) {
-      navigator.clipboard
-        .writeText(userId)
-        .then(() => {
-          console.log('User ID copied to clipboard');
-        })
-        .catch((err) => {
-          console.error('Failed to copy user ID:', err);
-          alert(`User ID: ${userId}`);
-        });
-    }
+    // Get the current short code value
+    const subscription = this.shortCode$.subscribe((shortCode) => {
+      if (shortCode) {
+        navigator.clipboard
+          .writeText(shortCode)
+          .then(() => {
+            console.log('Sync code copied to clipboard');
+          })
+          .catch((err) => {
+            console.error('Failed to copy sync code:', err);
+            alert(`Sync code: ${shortCode}`);
+          });
+      }
+      subscription.unsubscribe();
+    });
   }
 
   onSubmitUserId(): void {
     if (!this.userIdInput.trim()) {
-      alert('Please enter a User ID');
+      alert('Please enter a sync code');
       return;
     }
 
@@ -117,16 +123,16 @@ export class SettingsComponent {
       .importUserId(this.userIdInput.trim())
       .then((success) => {
         if (success) {
-          alert('User ID stored for reference');
+          alert('Sync code stored for reference');
           this.showSyncModal = false;
           this.userIdInput = '';
         } else {
-          alert('Failed to store User ID');
+          alert('Failed to store sync code');
         }
       })
       .catch((error) => {
         console.error('Import error:', error);
-        alert('Error storing User ID');
+        alert('Error storing sync code');
       });
   }
 }

@@ -6,6 +6,7 @@
     "postinstall": "cd kennzeichen-app && npm install",
     "start": "cd kennzeichen-app && npm start",
     "build": "cd kennzeichen-app && npm run build",
-    "test": "cd kennzeichen-app && npm test"
+    "test": "cd kennzeichen-app && npm test",
+    "deploy": "cd kennzeichen-app && npm run deploy"
   }
 }

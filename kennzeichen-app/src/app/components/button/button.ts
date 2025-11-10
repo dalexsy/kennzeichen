@@ -1,6 +1,12 @@
 import { Component, input, output, contentChild, TemplateRef } from '@angular/core';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'icon' | 'icon-small' | 'transparent';
+export type ButtonVariant =
+  | 'primary'
+  | 'secondary'
+  | 'icon'
+  | 'icon-small'
+  | 'transparent'
+  | 'square';
 
 @Component({
   selector: 'app-button',

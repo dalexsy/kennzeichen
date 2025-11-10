@@ -47,27 +47,36 @@
 } @if (showSyncModal) {
 <div class="sync-modal-overlay" (click)="showSyncModal = false">
   <div class="sync-modal" (click)="$event.stopPropagation()">
-    <h3>Cloud Sync</h3>
-    <p>Enter your User ID to sync data</p>
-    <div class="user-id-input-group">
-      <input
-        type="text"
-        [(ngModel)]="userIdInput"
-        placeholder="Enter User ID..."
-        class="user-id-input"
-        #userIdField
-      />
-      <app-button
-        variant="icon-small"
-        (clicked)="copyUserId()"
-        [ariaLabel]="'Copy current User ID'"
-      >
-        <span class="material-icons">content_copy</span>
-      </app-button>
-    </div>
-    <div class="modal-buttons">
-      <app-button variant="transparent" (clicked)="showSyncModal = false">Cancel</app-button>
-      <app-button variant="primary" (clicked)="onSubmitUserId()">Submit</app-button>
+    <div class="modal-content">
+      <h3>Cloud Sync</h3>
+      <p>Share your sync code to sync data across devices</p>
+
+      @if (shortCode$ | async; as shortCode) {
+      <div class="license-plate-section">
+        <app-sync-license-plate [shortCode]="shortCode"></app-sync-license-plate>
+        <app-button variant="square" (clicked)="copyUserId()" [ariaLabel]="'Copy your sync code'">
+          <span class="material-icons">content_copy</span>
+        </app-button>
+      </div>
+      }
+
+      <div class="input-section">
+        <p class="input-label">Have a code?</p>
+        <div class="user-id-input-group">
+          <input
+            type="text"
+            [(ngModel)]="userIdInput"
+            placeholder="Enter sync code..."
+            class="user-id-input"
+            #userIdField
+          />
+        </div>
+      </div>
+
+      <div class="modal-buttons">
+        <app-button variant="transparent" (clicked)="showSyncModal = false">Cancel</app-button>
+        <app-button variant="primary" (clicked)="onSubmitUserId()">Submit</app-button>
+      </div>
     </div>
   </div>
 </div>

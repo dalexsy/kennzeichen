@@ -31,6 +31,7 @@ export class FirebaseSyncService {
 
   private syncStatus$ = new BehaviorSubject<'offline' | 'syncing' | 'synced' | 'error'>('offline');
   private lastSyncTime$ = new BehaviorSubject<Date | null>(null);
+  private shortCode$ = new BehaviorSubject<string | null>(null);
   private isInitialized = false;
   private isSyncing = false;
 
@@ -73,18 +74,20 @@ export class FirebaseSyncService {
       console.log('Firebase app and services initialized');
 
       // Listen for auth state changes
-      onAuthStateChanged(this.auth, (user) => {
+      onAuthStateChanged(this.auth, async (user) => {
         console.log('Auth state changed:', user ? `User: ${user.uid}` : 'No user');
         this.currentUser = user;
         if (user) {
           console.log('User signed in:', user.uid);
           this.isInitialized = true; // Set initialized when user is signed in
+          await this.generateAndSaveShortCode(); // Generate short code for new user
           this.setupRealtimeSync();
           this.syncToCloud();
         } else {
           console.log('User signed out');
           this.isInitialized = false;
           this.syncStatus$.next('offline');
+          this.shortCode$.next(null);
         }
       });
 
@@ -114,6 +117,102 @@ export class FirebaseSyncService {
   }
 
   /**
+   * Get the short code for sharing
+   */
+  getShortCode(): Observable<string | null> {
+    return this.shortCode$.asObservable();
+  }
+
+  /**
+   * Generate a simple 6-character short code in ABC123 format
+   */
+  private generateShortCode(): string {
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const numbers = '0123456789';
+    let result = '';
+    // Generate 3 letters
+    for (let i = 0; i < 3; i++) {
+      result += letters.charAt(Math.floor(Math.random() * letters.length));
+    }
+    // Generate 3 numbers
+    for (let i = 0; i < 3; i++) {
+      result += numbers.charAt(Math.floor(Math.random() * numbers.length));
+    }
+    return result;
+  }
+
+  /**
+   * Save the short code to Firestore
+   */
+  private async saveShortCode(userId: string, shortCode: string): Promise<void> {
+    if (!this.firestore) return;
+    try {
+      await setDoc(doc(this.firestore, 'shortCodes', shortCode), {
+        userId,
+        createdAt: new Date(),
+      });
+    } catch (error) {
+      console.error('Error saving short code:', error);
+    }
+  }
+
+  /**
+   * Load user ID from short code
+   */
+  private async loadUserIdFromShortCode(shortCode: string): Promise<string | null> {
+    if (!this.firestore) return null;
+    try {
+      const docRef = doc(this.firestore, 'shortCodes', shortCode);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        return docSnap.data()['userId'];
+      }
+    } catch (error) {
+      console.error('Error loading short code:', error);
+    }
+    return null;
+  }
+
+  /**
+   * Generate and save a short code for the current user
+   */
+  private async generateAndSaveShortCode(): Promise<void> {
+    if (!this.currentUser) return;
+
+    try {
+      // Check if we already have a short code for this user
+      const existingShortCode = localStorage.getItem('userShortCode');
+      if (existingShortCode) {
+        this.shortCode$.next(existingShortCode);
+        return;
+      }
+
+      // Generate a new short code
+      let shortCode: string;
+      let attempts = 0;
+      do {
+        shortCode = this.generateShortCode();
+        attempts++;
+        // Check if this short code is already taken
+        const existingUserId = await this.loadUserIdFromShortCode(shortCode);
+        if (!existingUserId) break; // Short code is available
+        if (attempts > 10) {
+          console.error('Failed to generate unique short code after 10 attempts');
+          return;
+        }
+      } while (true);
+
+      // Save the short code
+      await this.saveShortCode(this.currentUser.uid, shortCode);
+      localStorage.setItem('userShortCode', shortCode);
+      this.shortCode$.next(shortCode);
+      console.log('Generated short code:', shortCode);
+    } catch (error) {
+      console.error('Error generating short code:', error);
+    }
+  }
+
+  /**
    * Get the user ID for displaying in settings
    */
   getUserId(): string | null {
@@ -124,38 +223,42 @@ export class FirebaseSyncService {
    * Export user ID for cross-device sync
    */
   exportUserId(): string | null {
-    if (!this.currentUser?.uid) return null;
-    return this.currentUser.uid;
+    // Always return current user ID for sharing with other devices
+    return this.currentUser?.uid || null;
   }
 
   /**
    * Import user ID from another device (for cross-device sync)
-   * Note: This is a simplified implementation. For production use,
-   * consider using custom authentication tokens or email auth.
+   * This switches the sync target to the specified user ID or short code
    */
-  async importUserId(userId: string): Promise<boolean> {
+  async importUserId(input: string): Promise<boolean> {
     if (!this.firestore || !this.auth) return false;
 
     try {
-      // Store the target user ID for reference
+      let userId = input;
+
+      // If input is 6 characters, treat it as a short code
+      if (input.length === 6) {
+        console.log('Resolving short code:', input);
+        const resolvedUserId = await this.loadUserIdFromShortCode(input.toUpperCase());
+        if (!resolvedUserId) {
+          console.error('Short code not found:', input);
+          return false;
+        }
+        userId = resolvedUserId;
+        console.log('Resolved to user ID:', userId);
+      }
+
+      // Store the target user ID
       localStorage.setItem('targetUserId', userId);
 
-      // Sign out current user
-      await this.auth.signOut();
+      // If we're already signed in, restart sync with new target
+      if (this.currentUser) {
+        this.setupRealtimeSync();
+        await this.syncToCloud();
+      }
 
-      // Note: Anonymous auth creates new users each time.
-      // This implementation provides a way to reference the target user ID,
-      // but actual cross-device sync requires either:
-      // 1. Custom auth tokens from a backend
-      // 2. Switching to email/password authentication
-      // 3. Using a shared secret system
-
-      console.log('Target user ID stored for cross-device sync reference:', userId);
-      console.log(
-        'Note: Anonymous auth creates new users. Full cross-device sync requires custom implementation.'
-      );
-
-      // For now, just show a message that this is a reference implementation
+      console.log('Target user ID imported for cross-device sync:', userId);
       return true;
     } catch (error) {
       console.error('Failed to import user ID:', error);
@@ -172,8 +275,10 @@ export class FirebaseSyncService {
       return;
     }
 
-    console.log('Setting up realtime sync for user:', this.currentUser.uid);
-    const userDocRef = doc(this.firestore, 'users', this.currentUser.uid);
+    // Use target user ID if set, otherwise use current user ID
+    const syncUserId = localStorage.getItem('targetUserId') || this.currentUser.uid;
+    console.log('Setting up realtime sync for user:', syncUserId);
+    const userDocRef = doc(this.firestore, 'users', syncUserId);
 
     // Unsubscribe from previous listener if exists
     if (this.unsubscribeSnapshot) {
@@ -233,16 +338,20 @@ export class FirebaseSyncService {
       return;
     }
 
-    console.log('Starting sync to cloud for user:', this.currentUser.uid);
+    // Use target user ID if set, otherwise use current user ID
+    const syncUserId = localStorage.getItem('targetUserId') || this.currentUser.uid;
+    console.log('Starting sync to cloud for user:', syncUserId);
+
     try {
       this.isSyncing = true;
       this.syncStatus$.next('syncing');
 
-      const userDocRef = doc(this.firestore, 'users', this.currentUser.uid);
+      // Write to shared document (target user ID if set)
+      const userDocRef = doc(this.firestore, 'users', syncUserId);
       const localCodes = this.localStorageService.getSeenCodes();
       console.log('Local codes to sync:', localCodes.length);
 
-      // Get cloud data first
+      // Get current cloud data
       console.log('Fetching existing cloud data...');
       const docSnapshot = await getDoc(userDocRef);
       let finalCodes = localCodes;
@@ -265,7 +374,7 @@ export class FirebaseSyncService {
         console.log('No existing cloud document');
       }
 
-      // Save merged data to cloud
+      // Save merged data to shared cloud document
       console.log('Saving data to cloud...');
       await setDoc(userDocRef, {
         seenCodes: finalCodes,

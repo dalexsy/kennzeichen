@@ -1,0 +1,41 @@
+<div class="sync-license-plate">
+  <div class="license-plate">
+    <div class="eu-section">
+      <div class="stars">
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+      </div>
+      <div class="country">D</div>
+    </div>
+
+    <div class="main">
+      <div class="code">
+        @for (char of letters; track $index) {
+        <span>{{ char }}</span>
+        }
+      </div>
+
+      <div class="separator">
+        <div class="year-sticker" [attr.data-year]="currentYear">
+          {{ currentYear.toString().slice(-2) }}
+        </div>
+      </div>
+
+      <div class="numbers">
+        @for (digit of numbers; track $index) {
+        <span>{{ digit }}</span>
+        }
+      </div>
+    </div>
+  </div>
+</div>

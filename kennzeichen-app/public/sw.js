@@ -1,5 +1,5 @@
-const CACHE_NAME = 'kennzeichen-v2';
-const RUNTIME_CACHE = 'kennzeichen-runtime-v2';
+const CACHE_NAME = 'kennzeichen-v3';
+const RUNTIME_CACHE = 'kennzeichen-runtime-v3';
 
 // Files to cache on install
 const STATIC_ASSETS = [
@@ -15,23 +15,13 @@ const STATIC_ASSETS = [
 
 // Install event - cache static assets
 self.addEventListener('install', (event) => {
+  console.log('Service worker installing');
   event.waitUntil(
     caches
       .open(CACHE_NAME)
       .then((cache) => {
-        console.log('Opened cache');
-        // Try to cache static assets, but don't fail if some are missing
-        return cache
-          .addAll(STATIC_ASSETS.map((url) => new Request(url, { cache: 'reload' })))
-          .catch((err) => {
-            console.log('Some assets failed to cache:', err);
-            // Cache individual files that exist
-            return Promise.all(
-              STATIC_ASSETS.map((url) =>
-                cache.add(url).catch(() => console.log('Failed to cache:', url))
-              )
-            );
-          });
+        console.log('Caching static assets');
+        return cache.addAll(STATIC_ASSETS);
       })
       .then(() => self.skipWaiting())
   );
@@ -39,6 +29,7 @@ self.addEventListener('install', (event) => {
 
 // Activate event - clean up old caches
 self.addEventListener('activate', (event) => {
+  console.log('Service worker activating');
   event.waitUntil(
     caches
       .keys()
@@ -56,46 +47,45 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch event - serve from cache, fallback to network
+// Fetch event - serve from cache when offline, update cache when online
 self.addEventListener('fetch', (event) => {
-  // Skip cross-origin requests
-  if (!event.request.url.startsWith(self.location.origin)) {
-    return;
-  }
+  // Only handle GET requests
+  if (event.request.method !== 'GET') return;
 
-  // Skip caching for development - check for cache-busting headers
-  const cacheControl = event.request.headers.get('Cache-Control');
-  if (cacheControl && (cacheControl.includes('no-cache') || cacheControl.includes('no-store'))) {
-    return fetch(event.request);
-  }
+  // Skip cross-origin requests
+  if (!event.request.url.startsWith(self.location.origin)) return;
 
   event.respondWith(
-    caches
-      .match(event.request)
-      .then((response) => {
-        if (response) {
-          return response;
-        }
+    caches.match(event.request).then((cachedResponse) => {
+      // Return cached version if available
+      if (cachedResponse) {
+        return cachedResponse;
+      }
 
-        return fetch(event.request).then((response) => {
+      // Otherwise fetch from network
+      return fetch(event.request)
+        .then((response) => {
           // Don't cache non-successful responses
-          if (!response || response.status !== 200 || response.type === 'error') {
+          if (!response || response.status !== 200 || response.type !== 'basic') {
             return response;
           }
 
-          // Clone the response
+          // Clone the response for caching
           const responseToCache = response.clone();
 
+          // Cache runtime requests (like API calls, but we don't have any)
           caches.open(RUNTIME_CACHE).then((cache) => {
             cache.put(event.request, responseToCache);
           });
 
           return response;
+        })
+        .catch(() => {
+          // If offline and no cache, return offline page for navigation requests
+          if (event.request.mode === 'navigate') {
+            return caches.match('/index.html');
+          }
         });
-      })
-      .catch(() => {
-        // Return offline page or fallback if available
-        return caches.match('/index.html');
-      })
+    })
   );
 });
