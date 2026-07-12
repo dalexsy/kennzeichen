@@ -1,0 +1,85 @@
+@use '../../../styles/main' as *;
+
+.sync-section {
+  padding: 0.5rem 1rem;
+  background: $background-secondary;
+  border-radius: 0.25rem;
+  margin: 0.5rem 0;
+}
+
+.sync-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  color: $text-primary;
+
+  .material-icons {
+    font-size: 1.25rem;
+  }
+
+  .sync-title {
+    font-weight: 600;
+    font-size: 0.9375rem;
+  }
+}
+
+.sync-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.sync-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+
+  .status-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  &.status-offline .status-dot {
+    background: $text-tertiary;
+    animation: none;
+  }
+
+  &.status-syncing .status-dot {
+    background: #f59e0b;
+  }
+
+  &.status-synced .status-dot {
+    background: #10b981;
+    animation: none;
+  }
+
+  &.status-error .status-dot {
+    background: #ef4444;
+    animation: none;
+  }
+
+  .status-text {
+    color: $text-secondary;
+  }
+}
+
+.sync-time {
+  font-size: 0.75rem;
+  color: $text-tertiary;
+  padding-left: 1rem;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}

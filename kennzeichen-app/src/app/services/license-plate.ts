@@ -113,6 +113,34 @@ export class LicensePlateService {
   );
 
   // Grouped license plates by state or alphabetically
+  public mapLicensePlates$ = combineLatest([
+    this.filteredLicensePlates$,
+    this.localStorageService.seenLicensePlates$,
+    this.licensePlates$,
+  ]).pipe(
+    map(([filtered, seenCodes, allPlates]) => {
+      if (filtered.length <= 200) return filtered;
+      const seenPlates = allPlates.filter((plate) => seenCodes.has(plate.code));
+      if (seenPlates.length > 0 && seenPlates.length <= 200) return seenPlates;
+      return [];
+    }),
+  );
+
+  public availableStates$ = this.filteredLicensePlates$.pipe(
+    map((plates) => {
+      const states = new Set<string>();
+      plates.forEach((plate) => {
+        if (plate.federal_state) states.add(plate.federal_state);
+      });
+      return states;
+    }),
+  );
+
+  public seenCountInFiltered$ = combineLatest([
+    this.filteredLicensePlates$,
+    this.localStorageService.seenLicensePlates$,
+  ]).pipe(map(([plates, seenCodes]) => plates.filter((p) => seenCodes.has(p.code)).length));
+
   public groupedLicensePlates$ = combineLatest([
     this.filteredLicensePlates$,
     this.viewMode$,

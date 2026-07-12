@@ -7,6 +7,15 @@ import { LocalStorageService } from '../../services/local-storage';
 import { LocalizationService } from '../../services/localization.service';
 import { LicensePlateItem } from '../license-plate-item/license-plate-item';
 import { ViewToggle } from '../view-toggle/view-toggle';
+import {
+  ListScrollHost,
+  updateBackToTopVisibility,
+  scrollToTopButton,
+  scrollToNextSection,
+  scrollToPreviousSection,
+  canScrollNext,
+  canScrollPrevious,
+} from './license-plate-list-scroll';
 
 @Component({
   selector: 'app-license-plate-list',
@@ -14,7 +23,7 @@ import { ViewToggle } from '../view-toggle/view-toggle';
   templateUrl: './license-plate-list.html',
   styleUrl: './license-plate-list.scss'
 })
-export class LicensePlateList implements AfterViewInit, AfterViewChecked, OnDestroy {
+export class LicensePlateList implements AfterViewInit, AfterViewChecked, OnDestroy, ListScrollHost {
   @ViewChild('listContainer') listContainer?: ElementRef;
   @Input() groupedLicensePlates$!: Observable<LicensePlateGroup[]>;
   @Input() seenCodes$!: Observable<Set<string>>;
@@ -42,13 +51,13 @@ export class LicensePlateList implements AfterViewInit, AfterViewChecked, OnDest
   showBackToTop = false;
   totalSections = 0;
   private lastSectionCount = 0;
-  private isScrolling = false;
+  isScrolling = false;
   private scrollListener = () => {
-    this.updateBackToTopVisibility();
+    this.showBackToTop = updateBackToTopVisibility();
     this.cdr.detectChanges();
   };
-  private lastClickTime = 0;
-  private clickTimeout: any = null;
+  lastClickTime = 0;
+  clickTimeout: ReturnType<typeof setTimeout> | null = null;
 
   private stateIndexMap = new Map<string, number>([
     ['Baden-Württemberg', 0],
@@ -116,7 +125,7 @@ export class LicensePlateList implements AfterViewInit, AfterViewChecked, OnDest
 
   ngAfterViewInit(): void {
     this.updateNavButtonVisibility();
-    this.updateBackToTopVisibility();
+    this.showBackToTop = updateBackToTopVisibility();
     window.addEventListener('scroll', this.scrollListener);
   }
 
@@ -137,7 +146,6 @@ export class LicensePlateList implements AfterViewInit, AfterViewChecked, OnDest
         }, 0);
       }
 
-      // Apply target scroll position if set
       if (this.targetScrollPosition >= 0) {
         window.scrollTo({
           top: this.targetScrollPosition,
@@ -157,184 +165,23 @@ export class LicensePlateList implements AfterViewInit, AfterViewChecked, OnDest
     }
   }
 
-  updateBackToTopVisibility(): void {
-    const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    // Show button after scrolling down 500px
-    this.showBackToTop = scrollTop > 500;
-  }
-
   scrollToTopButton(): void {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  }
-
-  private getCurrentSectionIndex(): number {
-    const container = this.listContainer?.nativeElement;
-    if (!container) return 0;
-
-    const sections = Array.from(container.querySelectorAll('.group')) as HTMLElement[];
-    const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    const stickyHeaderOffset = 253;
-
-    let currentIndex = 0;
-
-    for (let i = sections.length - 1; i >= 0; i--) {
-      const rect = sections[i].getBoundingClientRect();
-      const absoluteTop = rect.top + scrollTop;
-
-      if (absoluteTop <= scrollTop + stickyHeaderOffset + 50) {
-        currentIndex = i;
-        break;
-      }
-    }
-
-    return currentIndex;
+    scrollToTopButton();
   }
 
   scrollToNextSection(): void {
-    if (this.isScrolling) return;
-
-    const now = Date.now();
-    const timeSinceLastClick = now - this.lastClickTime;
-
-    // Double-click detection (within 300ms)
-    if (timeSinceLastClick < 300) {
-      clearTimeout(this.clickTimeout);
-      this.scrollToBottom();
-      this.lastClickTime = 0;
-      return;
-    }
-
-    this.lastClickTime = now;
-
-    // Single click with delay to detect potential double-click
-    this.clickTimeout = setTimeout(() => {
-      const container = this.listContainer?.nativeElement;
-      if (!container) return;
-
-      const sections = Array.from(container.querySelectorAll('.group')) as HTMLElement[];
-      const currentIndex = this.getCurrentSectionIndex();
-
-      if (currentIndex < sections.length - 1) {
-        this.isScrolling = true;
-        this.scrollToSection(sections[currentIndex + 1]);
-
-        setTimeout(() => {
-          this.isScrolling = false;
-        }, 600);
-      }
-    }, 300);
+    scrollToNextSection(this);
   }
 
   scrollToPreviousSection(): void {
-    if (this.isScrolling) return;
-
-    const now = Date.now();
-    const timeSinceLastClick = now - this.lastClickTime;
-
-    // Double-click detection (within 300ms)
-    if (timeSinceLastClick < 300) {
-      clearTimeout(this.clickTimeout);
-      this.scrollToTop();
-      this.lastClickTime = 0;
-      return;
-    }
-
-    this.lastClickTime = now;
-
-    // Single click with delay to detect potential double-click
-    this.clickTimeout = setTimeout(() => {
-      const container = this.listContainer?.nativeElement;
-      if (!container) return;
-
-      const sections = Array.from(container.querySelectorAll('.group')) as HTMLElement[];
-      const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      const stickyHeaderOffset = 253;
-      let currentIndex = this.getCurrentSectionIndex();
-
-      const currentSection = sections[currentIndex];
-      const rect = currentSection.getBoundingClientRect();
-      const absoluteTop = rect.top + scrollTop;
-
-      if (absoluteTop < scrollTop + stickyHeaderOffset - 50) {
-        this.isScrolling = true;
-        this.scrollToSection(currentSection);
-        setTimeout(() => {
-          this.isScrolling = false;
-        }, 600);
-      } else if (currentIndex > 0) {
-        this.isScrolling = true;
-        this.scrollToSection(sections[currentIndex - 1]);
-        setTimeout(() => {
-          this.isScrolling = false;
-        }, 600);
-      }
-    }, 300);
-  }
-
-  private scrollToSection(section: HTMLElement): void {
-    const stickyHeaderOffset = 253;
-    const rect = section.getBoundingClientRect();
-    const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    const absoluteTop = rect.top + scrollTop;
-    const targetScroll = absoluteTop - stickyHeaderOffset;
-
-    window.scrollTo({
-      top: targetScroll,
-      behavior: 'smooth'
-    });
-  }
-
-  private scrollToTop(): void {
-    this.isScrolling = true;
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-    setTimeout(() => {
-      this.isScrolling = false;
-    }, 600);
-  }
-
-  private scrollToBottom(): void {
-    this.isScrolling = true;
-    const documentHeight = Math.max(
-      document.body.scrollHeight,
-      document.body.offsetHeight,
-      document.documentElement.clientHeight,
-      document.documentElement.scrollHeight,
-      document.documentElement.offsetHeight
-    );
-    window.scrollTo({
-      top: documentHeight,
-      behavior: 'smooth'
-    });
-    setTimeout(() => {
-      this.isScrolling = false;
-    }, 600);
+    scrollToPreviousSection(this);
   }
 
   canScrollNext(): boolean {
-    const container = this.listContainer?.nativeElement;
-    if (!container) return false;
-
-    const sections = Array.from(container.querySelectorAll('.group')) as HTMLElement[];
-    if (sections.length <= 1) return false;
-
-    const currentIndex = this.getCurrentSectionIndex();
-    return currentIndex < sections.length - 1;
+    return canScrollNext(this);
   }
 
   canScrollPrevious(): boolean {
-    const container = this.listContainer?.nativeElement;
-    if (!container) return false;
-
-    const sections = Array.from(container.querySelectorAll('.group')) as HTMLElement[];
-    if (sections.length <= 1) return false;
-
-    const currentIndex = this.getCurrentSectionIndex();
-    return currentIndex > 0;
+    return canScrollPrevious(this);
   }
 }

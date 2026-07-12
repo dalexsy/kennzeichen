@@ -18,7 +18,9 @@
           "builder": "@angular/build:application",
           "options": {
             "browser": "src/main.ts",
-            "polyfills": ["zone.js"],
+            "polyfills": [
+              "zone.js"
+            ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -37,7 +39,15 @@
                 "output": "/"
               }
             ],
-            "styles": ["node_modules/leaflet/dist/leaflet.css", "src/styles.scss"]
+            "styles": [
+              "node_modules/leaflet/dist/leaflet.css",
+              "src/styles.scss",
+              {
+                "input": "public/dryl-bug-report.css",
+                "inject": false,
+                "bundleName": "dryl-bug-report"
+              }
+            ]
           },
           "configurations": {
             "production": {
@@ -80,7 +90,8 @@
               "Pragma": "no-cache",
               "Expires": "0",
               "X-Content-Type-Options": "nosniff"
-            }
+            },
+            "proxyConfig": "proxy.conf.json"
           },
           "configurations": {
             "production": {
@@ -98,7 +109,10 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
-            "polyfills": ["zone.js", "zone.js/testing"],
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -107,7 +121,9 @@
                 "input": "public"
               }
             ],
-            "styles": ["src/styles.scss"]
+            "styles": [
+              "src/styles.scss"
+            ]
           }
         }
       }

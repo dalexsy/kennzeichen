@@ -26,12 +26,12 @@
   <main class="main">
     <div class="content-wrapper">
       <app-map
-        [licensePlates]="(filteredLicensePlates$ | async) || []"
+        [licensePlates]="(mapLicensePlates$ | async) || []"
         [selectedCode]="selectedCode"
         [stateFilter]="licensePlateService.getCurrentStateFilter()"
         [seenFilterActive]="isSeenFilterActive"
-        [seenCount]="getSeenCount()"
-        [availableStates]="availableStates"
+        [seenCount]="(licensePlateService.seenCountInFiltered$ | async) ?? 0"
+        [availableStates]="(licensePlateService.availableStates$ | async) ?? emptyStates"
         [isSettingsOpen]="isSettingsOpen"
         (codeSelected)="onLicensePlateClicked($event)"
         (stateFilterChange)="onStateChange($event)"
@@ -65,4 +65,15 @@
       ></app-table-of-contents>
     </div>
   </main>
+
+  <footer class="site-footer">
+    <p>
+      <a
+        href="#"
+        class="contact-link"
+        (click)="onContactClick($event)"
+        [attr.aria-label]="localizationService.translate('contact_aria')"
+      >{{ localizationService.translate('contact_label') }}</a>
+    </p>
+  </footer>
 </div>

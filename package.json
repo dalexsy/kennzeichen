@@ -7,6 +7,19 @@
     "start": "cd kennzeichen-app && npm start",
     "build": "cd kennzeichen-app && npm run build",
     "test": "cd kennzeichen-app && npm test",
-    "deploy": "cd kennzeichen-app && npm run deploy"
-  }
+    "deploy": "cd kennzeichen-app && npm run deploy",
+    "deploy:dryl": "npm run deploy",
+    "lint:bem": "node ../directory/scripts/check-no-bem.mjs",
+    "lint:lines": "node ../directory/scripts/check-max-lines.mjs",
+    "lint:ui": "npm run lint:bem && npm run lint:lines && npm run lint:component-budget && npm run lint:typography && npm run lint:spacing && npm run lint:flex-gap && npm run lint:mobile-first && npm run lint:inline-layout",
+    "prestart": "npm run lint:ui",
+    "lint:component-budget": "node ../directory/scripts/check-component-budget.mjs",
+    "lint:typography": "node ../directory/scripts/check-typography-inherit.mjs",
+    "lint:spacing": "node ../directory/scripts/check-spacing-scale.mjs",
+    "lint:flex-gap": "node ../directory/scripts/check-flex-gap.mjs",
+    "lint:mobile-first": "node ../directory/scripts/lint-mobile-first.mjs",
+    "lint:inline-layout": "node ../directory/scripts/lint-no-inline-layout.mjs",
+    "prebuild": "npm run lint:ui"
+  },
+  "packageManager": "npm@11.17.0"
 }

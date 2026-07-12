@@ -78,4 +78,21 @@
       flex: 1;
     }
   }
+
+  .site-footer {
+    padding: 1.5rem 1rem 2rem;
+    text-align: center;
+
+    p {
+      margin: 0;
+      font-size: var(--font-sm, 0.875rem);
+      color: var(--text-secondary, #666);
+    }
+
+    .contact-link {
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 0.15em;
+    }
+  }
 }

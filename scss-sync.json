@@ -1,0 +1,8 @@
+{
+  "projectRoot": ".",
+  "liveUrl": "https://plates.dryl.io",
+  "urls": [
+    "http://localhost:4200",
+    "https://plates.dryl.io"
+  ]
+}

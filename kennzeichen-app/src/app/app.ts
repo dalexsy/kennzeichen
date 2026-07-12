@@ -7,7 +7,6 @@ import { LicensePlateService, LicensePlateGroup } from './services/license-plate
 import { LocalStorageService } from './services/local-storage';
 import { ScrollStateService } from './services/scroll-state.service';
 import { FilterStateService } from './services/filter-state.service';
-import { FirebaseSyncService } from './services/firebase-sync.service';
 
 import { LicensePlateDisplay } from './components/license-plate-display/license-plate-display';
 import { SearchInput } from './components/search-input/search-input';
@@ -15,6 +14,15 @@ import { LicensePlateList } from './components/license-plate-list/license-plate-
 import { MapComponent } from './components/map/map';
 import { TableOfContentsComponent } from './components/table-of-contents/table-of-contents';
 import { SettingsComponent } from './components/settings/settings';
+import { LocalizationService } from './services/localization.service';
+import {
+  AppFilterContext,
+  handleStateChange,
+  handleLicensePlateClicked,
+  handleBackClick,
+  handleGroupHeadingClicked,
+  handleSeenFilterToggle,
+} from './app-filter-handlers';
 
 @Component({
   selector: 'app-root',
@@ -30,24 +38,21 @@ import { SettingsComponent } from './components/settings/settings';
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
-export class App implements OnInit, OnDestroy {
+export class App implements OnInit, OnDestroy, AppFilterContext {
   @ViewChild(MapComponent) mapComponent?: MapComponent;
 
-  title = 'German License Plate Lookup';
-
-  // Observables from services
   filteredLicensePlates$: Observable<LicensePlate[]>;
+  mapLicensePlates$: Observable<LicensePlate[]>;
   groupedLicensePlates$: Observable<LicensePlateGroup[]>;
   seenCodes$: Observable<Set<string>>;
 
-  // Local state
   currentSearchTerm = '';
   selectedCode = '';
   isLoading = true;
   targetScrollPosition = -1;
   focusedGroup = '';
-  availableStates: Set<string> = new Set();
   isSettingsOpen = false;
+  readonly emptyStates = new Set<string>();
 
   get activeSection(): string {
     return this.scrollStateService.activeSection;
@@ -63,48 +68,30 @@ export class App implements OnInit, OnDestroy {
 
   constructor(
     public licensePlateService: LicensePlateService,
+    public localizationService: LocalizationService,
     private localStorageService: LocalStorageService,
     private scrollStateService: ScrollStateService,
-    private filterStateService: FilterStateService,
-    private firebaseSyncService: FirebaseSyncService,
+    public filterStateService: FilterStateService,
     private cdr: ChangeDetectorRef
   ) {
     this.filteredLicensePlates$ = this.licensePlateService.filteredLicensePlates$;
     this.groupedLicensePlates$ = this.licensePlateService.groupedLicensePlates$;
     this.seenCodes$ = this.localStorageService.seenLicensePlates$;
-
-    // Subscribe to filtered plates to update available states
-    this.filteredLicensePlates$.subscribe((plates) => {
-      const states = new Set<string>();
-      plates.forEach((plate) => {
-        if (plate.federal_state) {
-          states.add(plate.federal_state);
-        }
-      });
-      this.availableStates = states;
-    });
+    this.mapLicensePlates$ = this.licensePlateService.mapLicensePlates$;
   }
 
   ngOnInit(): void {
-    // Simulate loading state
     setTimeout(() => {
       this.isLoading = false;
       this.scrollStateService.setupScrollObserver(this.cdr);
       this.scrollStateService.setupScrollListener();
     }, 1000);
 
-    // Re-observe when grouped list changes
     this.groupedLicensePlates$.subscribe((groups) => {
-      // Set the accent color to the first group's state color
-      if (groups && groups.length > 0) {
-        const firstStateName = groups[0].state;
-        this.scrollStateService.setActiveSection(firstStateName);
+      if (groups?.length) {
+        this.scrollStateService.setActiveSection(groups[0].state);
       }
-
-      // Re-observe headings after a short delay
-      setTimeout(() => {
-        this.scrollStateService.reobserveHeadings();
-      }, 100);
+      setTimeout(() => this.scrollStateService.reobserveHeadings(), 100);
     });
   }
 
@@ -112,77 +99,22 @@ export class App implements OnInit, OnDestroy {
     this.scrollStateService.destroy();
   }
 
-  private observer?: IntersectionObserver;
-
   onSearchChange(searchTerm: string): void {
     this.currentSearchTerm = searchTerm;
-    this.selectedCode = ''; // Clear selection when typing
+    this.selectedCode = '';
     this.licensePlateService.setSearchTerm(searchTerm);
   }
 
   onSeenClick(code: string): void {
-    if (code) {
-      this.localStorageService.markAsSeen(code.toUpperCase());
-    }
+    if (code) this.localStorageService.markAsSeen(code.toUpperCase());
   }
 
   onStateChange(state: string): void {
-    const currentStateFilter = this.licensePlateService.getCurrentStateFilter();
-    const result = this.filterStateService.handleStateChange(
-      state,
-      this.currentSearchTerm,
-      currentStateFilter
-    );
-
-    if (result.action === 'clear') {
-      this.targetScrollPosition = result.scrollPosition ?? 0;
-      this.currentSearchTerm = result.searchTerm ?? '';
-      this.focusedGroup = result.focusedGroup ?? '';
-      this.licensePlateService.setStateFilter('');
-      this.licensePlateService.setSearchTerm(result.searchTerm ?? '');
-
-      setTimeout(() => {
-        this.targetScrollPosition = -1;
-      }, 100);
-    } else if (result.action === 'set') {
-      this.focusedGroup = result.focusedGroup ?? state;
-      if (this.currentSearchTerm !== '') {
-        this.licensePlateService.setSearchTerm('');
-      }
-      this.currentSearchTerm = '';
-      this.licensePlateService.setStateFilter(state);
-    }
+    handleStateChange(this, state);
   }
 
   onLicensePlateClicked(licensePlate: LicensePlate): void {
-    const currentStateFilter = this.licensePlateService.getCurrentStateFilter();
-    const result = this.filterStateService.handlePlateSelection(
-      licensePlate.code,
-      this.selectedCode,
-      this.currentSearchTerm,
-      currentStateFilter
-    );
-
-    if (result.action === 'deselect') {
-      this.targetScrollPosition = result.scrollPosition ?? 0;
-      this.selectedCode = '';
-      this.currentSearchTerm = result.searchTerm ?? '';
-      this.focusedGroup = result.focusedGroup ?? '';
-
-      this.licensePlateService.setSearchTerm(result.searchTerm ?? '');
-      this.licensePlateService.setStateFilter(result.stateFilter ?? '');
-
-      setTimeout(() => {
-        this.targetScrollPosition = -1;
-      }, 100);
-    } else if (result.action === 'select') {
-      this.selectedCode = result.selectedCode ?? licensePlate.code;
-      this.currentSearchTerm = licensePlate.code;
-      this.focusedGroup = '';
-
-      this.licensePlateService.setStateFilter('');
-      this.licensePlateService.setSearchTerm('==' + licensePlate.code);
-    }
+    handleLicensePlateClicked(this, licensePlate);
   }
 
   onViewChange(view: 'alphabetical' | 'grouped'): void {
@@ -190,104 +122,19 @@ export class App implements OnInit, OnDestroy {
   }
 
   onBackClick(): void {
-    const restored = this.filterStateService.restoreState();
-
-    this.targetScrollPosition = restored.scrollPosition;
-    this.selectedCode = '';
-    this.currentSearchTerm = restored.searchTerm;
-    this.focusedGroup = restored.stateFilter;
-
-    this.licensePlateService.setSearchTerm(restored.searchTerm);
-    this.licensePlateService.setStateFilter(restored.stateFilter);
-
-    setTimeout(() => {
-      this.targetScrollPosition = -1;
-    }, 100);
+    handleBackClick(this);
   }
 
   onGroupHeadingClicked(group: LicensePlateGroup): void {
-    const currentStateFilter = this.licensePlateService.getCurrentStateFilter();
-    const result = this.filterStateService.handleGroupHeadingClick(
-      group,
-      this.focusedGroup,
-      this.currentSearchTerm,
-      currentStateFilter
-    );
-
-    if (result.action === 'toggle-off') {
-      this.targetScrollPosition = result.scrollPosition ?? 0;
-      this.currentSearchTerm = result.searchTerm ?? '';
-      this.focusedGroup = result.focusedGroup ?? '';
-
-      this.licensePlateService.setStateFilter(result.stateFilter ?? '');
-      this.licensePlateService.setSearchTerm(result.searchTerm ?? '');
-
-      setTimeout(() => {
-        this.targetScrollPosition = -1;
-      }, 100);
-    } else if (result.action === 'filter-state') {
-      this.focusedGroup = result.focusedGroup ?? group.state;
-      if (this.currentSearchTerm !== '') {
-        this.licensePlateService.setSearchTerm('');
-      }
-      this.currentSearchTerm = '';
-      this.licensePlateService.setStateFilter(group.state);
-    } else if (result.action === 'filter-letter') {
-      this.currentSearchTerm = group.state;
-      this.focusedGroup = group.state;
-
-      this.licensePlateService.setSearchTerm(group.state);
-      this.licensePlateService.setStateFilter('');
-    }
-  }
-
-  getSeenCount(): number {
-    // Count how many of the currently filtered plates have been seen
-    let count = 0;
-    const seenCodesArray = this.localStorageService.getSeenCodes();
-    const seenCodes = new Set(seenCodesArray);
-
-    this.filteredLicensePlates$
-      .subscribe((plates) => {
-        count = plates.filter((plate) => seenCodes.has(plate.code)).length;
-      })
-      .unsubscribe();
-
-    return count;
-  }
-
-  onSeenFilterToggle(): void {
-    const currentFilter = this.licensePlateService.getCurrentSeenFilter();
-    const currentStateFilter = this.licensePlateService.getCurrentStateFilter();
-    const result = this.filterStateService.handleSeenFilterToggle(
-      currentFilter,
-      this.currentSearchTerm,
-      currentStateFilter
-    );
-
-    if (result.action === 'turn-off') {
-      this.targetScrollPosition = result.scrollPosition ?? 0;
-      this.currentSearchTerm = result.searchTerm ?? '';
-      this.focusedGroup = result.stateFilter ?? '';
-
-      this.licensePlateService.setSeenFilter(false);
-      this.licensePlateService.setSearchTerm(result.searchTerm ?? '');
-      this.licensePlateService.setStateFilter(result.stateFilter ?? '');
-
-      setTimeout(() => {
-        this.targetScrollPosition = -1;
-      }, 100);
-    } else if (result.action === 'turn-on') {
-      this.currentSearchTerm = '';
-      this.selectedCode = '';
-
-      this.licensePlateService.setSeenFilter(true);
-      this.licensePlateService.setSearchTerm('');
-    }
+    handleGroupHeadingClicked(this, group);
   }
 
   get isSeenFilterActive(): boolean {
     return this.licensePlateService.getCurrentSeenFilter();
+  }
+
+  onSeenFilterToggle(): void {
+    handleSeenFilterToggle(this);
   }
 
   onTocSectionClick(section: string): void {
@@ -303,5 +150,10 @@ export class App implements OnInit, OnDestroy {
 
   onSettingsMenuChange(isOpen: boolean): void {
     this.isSettingsOpen = isOpen;
+  }
+
+  onContactClick(event: Event): void {
+    event.preventDefault();
+    window.location.href = 'mailto:daryl@dryl.io';
   }
 }
