@@ -11,11 +11,12 @@
     "setup-firebase": "node setup-firebase.js",
     "deploy": "npm run deploy:dryl",
     "deploy:dryl": "node ..\\..\\directory\\scripts\\run-full-deploy.mjs plates",
-    "verify:dist": "npm run build && node ..\\..\\directory\\scripts\\verify-dist-git-sha.mjs --dist=dist/license-plate-app/browser --repo=kennzeichen-app --site-id=plates && node ..\\..\\directory\\scripts\\smoke-spa-console.mjs plates --local",
+    "verify:dist": "npm run build && node ..\\..\\directory\\scripts\\verify-dist-git-sha.mjs --dist=dist/license-plate-app/browser --repo=kennzeichen-app --site-id=plates",
     "verify:console": "node ..\\..\\directory\\scripts\\smoke-spa-console.mjs plates",
     "sync:errors": "node ..\\..\\directory\\scripts\\sync-error-reporter.mjs --only kennzeichen",
     "sync:favicons": "node ..\\..\\directory\\scripts\\sync-favicons.mjs kennzeichen",
-    "prebuild": "npm run sync:favicons && npm run sync:errors"
+    "prebuild": "npm run sync:favicons && npm run sync:errors",
+    "verify:dist:local": "npm run build && node ..\\..\\directory\\scripts\\verify-dist-git-sha.mjs --dist=dist/license-plate-app/browser --repo=kennzeichen-app --site-id=plates && node ..\\..\\directory\\scripts\\smoke-spa-console.mjs plates --local"
   },
   "prettier": {
     "printWidth": 100,
