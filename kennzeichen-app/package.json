@@ -16,7 +16,8 @@
     "sync:errors": "node ..\\..\\directory\\scripts\\sync-error-reporter.mjs --only kennzeichen",
     "sync:favicons": "node ..\\..\\directory\\scripts\\sync-favicons.mjs kennzeichen",
     "prebuild": "npm run sync:favicons && npm run sync:errors",
-    "verify:dist:local": "npm run build && node ..\\..\\directory\\scripts\\verify-dist-git-sha.mjs --dist=dist/license-plate-app/browser --repo=kennzeichen-app --site-id=plates && node ..\\..\\directory\\scripts\\smoke-spa-console.mjs plates --local"
+    "verify:dist:local": "npm run build && node ..\\..\\directory\\scripts\\verify-dist-git-sha.mjs --dist=dist/license-plate-app/browser --repo=kennzeichen-app --site-id=plates && node ..\\..\\directory\\scripts\\smoke-spa-console.mjs plates --local",
+    "verify:visual": "node ..\\..\\directory\\scripts\\assert-deploy-screenshots.mjs plates"
   },
   "prettier": {
     "printWidth": 100,
