@@ -1,10 +1,10 @@
 {
   "project": "kennzeichen",
-  "medianMs": 62707,
-  "p75Ms": 84672,
-  "p90Ms": 84672,
-  "lastElapsedMs": 57862,
-  "agentWaitMs": 108139,
-  "sampleCount": 3,
-  "updatedAt": "2026-07-11T20:48:10.238Z"
+  "medianMs": null,
+  "p75Ms": null,
+  "p90Ms": null,
+  "lastElapsedMs": null,
+  "agentWaitMs": 360000,
+  "sampleCount": 0,
+  "updatedAt": "2026-08-09T10:27:08.354Z"
 }
