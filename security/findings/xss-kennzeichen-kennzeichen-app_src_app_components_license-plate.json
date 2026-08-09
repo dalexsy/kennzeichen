@@ -1,0 +1,15 @@
+{
+  "id": "xss-kennzeichen-kennzeichen-app_src_app_components_license-plate",
+  "checkId": "SEC-XSS-INNERHTML",
+  "title": "Potential XSS sink in kennzeichen",
+  "severity": "S1",
+  "repo": "kennzeichen",
+  "path": "kennzeichen-app/src/app/components/license-plate-item/license-plate-item.html",
+  "evidence": "lines 25, 30",
+  "remediation": "Sanitize or use textContent / Angular bindings; never trust user HTML.",
+  "report": "security",
+  "runId": "audit-2026-08-09T08-57-30",
+  "status": "exported",
+  "exportedAt": "2026-08-09T08:57:55.321Z",
+  "sourceRun": "audit-2026-08-09T08-57-30"
+}

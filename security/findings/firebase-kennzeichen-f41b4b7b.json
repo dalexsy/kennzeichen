@@ -1,0 +1,15 @@
+{
+  "id": "firebase-kennzeichen-f41b4b7b",
+  "checkId": "SEC-FIREBASE-BAN",
+  "title": "Firebase/Firestore remnant in kennzeichen",
+  "severity": "S0",
+  "repo": "kennzeichen",
+  "path": "kennzeichen-app/public/dryl-bug-report.js",
+  "evidence": "firestore.googleapis",
+  "remediation": "Remove Firebase SDK, config, rules, and transports. Use dryl-auth user-app-data / site APIs; edge via Cloudflare only.",
+  "report": "firebase-ban",
+  "runId": "audit-2026-08-09T08-57-30",
+  "status": "exported",
+  "exportedAt": "2026-08-09T08:57:55.254Z",
+  "sourceRun": "audit-2026-08-09T08-57-30"
+}
