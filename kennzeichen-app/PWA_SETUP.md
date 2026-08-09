@@ -1,4 +1,4 @@
-# PWA Icon Setup
+﻿# PWA Icon Setup
 
 This app is now configured as a Progressive Web App (PWA). To complete the setup, you need to add icon files to the `public` folder.
 
@@ -45,13 +45,9 @@ Then rename the generated files to match the required names above.
 4. Check that the manifest loads and service worker registers
 5. Try the "Install" prompt on supported browsers
 
-## GitHub Pages Deployment
+## Production deployment
 
-For GitHub Pages, make sure to:
-
-1. Build with the correct base href: `ng build --base-href=/your-repo-name/`
-2. Add a 404.html that redirects to index.html for client-side routing
-3. The service worker and manifest will work automatically
+Hosted at **https://plates.dryl.io** via the dryl fleet (`npm run deploy:dryl` from the kennzeichen repo root). Base href is `/` on the plates hostname — do not use a GitHub Pages `/kennzeichen/` base href.
 
 ## Service Worker
 
@@ -63,3 +59,4 @@ The service worker (`sw.js`) is configured to:
 - Clean up old caches on activation
 
 The app will work offline after the first visit!
+
