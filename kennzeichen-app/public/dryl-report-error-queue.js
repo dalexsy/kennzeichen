@@ -1,12 +1,40 @@
 /**
  * HTTP queue helpers for dryl client error reporter.
+ * Fallthrough ingest from window.__DRYL_FLEET_RUNTIME__ (serviceBindings).
  */
 (function () {
   "use strict";
 
-  var storage = window.__DRYL_ERROR_QUEUE_STORAGE__;
-  if (!storage) return;
+  var MAX_STORAGE_WAITS = 40;
 
+  function start(attempt) {
+    var storage = window.__DRYL_ERROR_QUEUE_STORAGE__;
+    if (!storage) {
+      if (attempt < MAX_STORAGE_WAITS) {
+        setTimeout(function () { start(attempt + 1); }, attempt < 4 ? 0 : 25);
+      }
+      return;
+    }
+    bindQueue(storage);
+  }
+
+  function fleetRuntime() {
+    return window.__DRYL_FLEET_RUNTIME__ || {};
+  }
+
+  function ingestUrl() {
+    var cfg = fleetRuntime();
+    if (cfg.clientErrorIngestUrl) return cfg.clientErrorIngestUrl;
+    return cfg.fleetStatusOrigin ? cfg.fleetStatusOrigin + "/api/client-errors" : "";
+  }
+
+  function ingestHostname() {
+    var cfg = fleetRuntime();
+    if (cfg.fleetStatusHostname) return cfg.fleetStatusHostname;
+    try { return new URL(ingestUrl()).hostname; } catch (_e) { return ""; }
+  }
+
+  function bindQueue(storage) {
   var BASE_FLUSH_MS = 400;
   var MAX_FLUSH_MS = 30_000;
   var flushing = false;
@@ -14,8 +42,12 @@
   function defaultHttpEndpoints() {
     var list = ["/api/client-errors"];
     var host = typeof location !== "undefined" ? location.hostname || "" : "";
+    var statusHost = ingestHostname();
     if (host === "localhost" || host === "127.0.0.1") {
       list.push("http://localhost:3905/api/client-errors");
+    } else if (host && statusHost && host !== statusHost) {
+      var url = ingestUrl();
+      if (url) list.push(url);
     }
     return list;
   }
@@ -36,46 +68,64 @@
   }
 
   function backoffMs(attempts) {
-    var ms = BASE_FLUSH_MS * Math.pow(2, Math.min(attempts, 8));
-    return Math.min(ms, MAX_FLUSH_MS);
+    return Math.min(BASE_FLUSH_MS * Math.pow(2, Math.min(attempts, 8)), MAX_FLUSH_MS);
   }
 
+  function isSameOrigin(endpoint) {
+    return (
+      typeof location !== "undefined" &&
+      (endpoint.startsWith("/") || endpoint.indexOf(location.origin) === 0)
+    );
+  }
+
+  function postOnce(endpoint, body) {
+    var cross = !isSameOrigin(endpoint);
+    return fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": cross ? "text/plain;charset=UTF-8" : "application/json",
+      },
+      body: body,
+      credentials: cross ? "omit" : "same-origin",
+      // no-cors: when status.* shares a flapping CF tunnel, cors mode logs
+      // "No Access-Control-Allow-Origin" on every CF error page (console flood).
+      mode: cross ? "no-cors" : "cors",
+      keepalive: true,
+    });
+  }
+
+  function responseAccepted(res) {
+    if (!res) return false;
+    // Opaque (no-cors) — no CORS console spam, but status is unknowable.
+    // Do not count as delivered; walk to queue so a later same-origin flush can retry.
+    if (res.type === "opaque") return false;
+    return res.ok || res.status === 204;
+  }
+
+  /** Walk endpoints until one accepts (502 must fall through). */
   function postHttp(entry, allowQueue, endpoints) {
     var body = JSON.stringify(entry);
-    for (var i = 0; i < endpoints.length; i += 1) {
-      var endpoint = endpoints[i];
-      var sameOrigin =
-        typeof location !== "undefined" &&
-        (endpoint.startsWith("/") || endpoint.indexOf(location.origin) === 0);
-      try {
-        void fetch(endpoint, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: body,
-          credentials: sameOrigin ? "same-origin" : "omit",
-          keepalive: true,
-        })
-          .then(function (res) {
-            if (res.ok || res.status === 204) {
-              storage.bumpStat("delivered");
-              flushQueue(endpoints);
-            } else if (allowQueue) {
-              storage.bumpStat("retryableHttp");
-              storage.enqueueEntry(entry);
-            }
-          })
-          .catch(function () {
-            if (allowQueue) {
-              storage.bumpStat("retryableNet");
-              storage.enqueueEntry(entry);
-            }
-          });
+    var ep = 0;
+    (function tryEndpoint() {
+      if (ep >= endpoints.length) {
+        if (allowQueue) storage.enqueueEntry(entry);
         return;
-      } catch {
-        // try next endpoint
       }
-    }
-    if (allowQueue) storage.enqueueEntry(entry);
+      postOnce(endpoints[ep++], body)
+        .then(function (res) {
+          if (responseAccepted(res)) {
+            storage.bumpStat("delivered");
+            flushQueue(endpoints);
+            return;
+          }
+          storage.bumpStat("retryableHttp");
+          tryEndpoint();
+        })
+        .catch(function () {
+          storage.bumpStat("retryableNet");
+          tryEndpoint();
+        });
+    })();
   }
 
   function flushQueue(endpoints) {
@@ -85,19 +135,14 @@
     var now = Date.now();
     var readyIdx = -1;
     for (var i = 0; i < queue.length; i += 1) {
-      if ((queue[i].nextAt || 0) <= now) {
-        readyIdx = i;
-        break;
-      }
+      if ((queue[i].nextAt || 0) <= now) { readyIdx = i; break; }
     }
     if (readyIdx < 0) {
-      var wait = Math.max(50, (queue[0].nextAt || now) - now);
-      setTimeout(function () { flushQueue(endpoints); }, wait);
+      setTimeout(function () { flushQueue(endpoints); }, Math.max(50, (queue[0].nextAt || now) - now));
       return;
     }
     var next = queue[readyIdx];
-    var rest = queue.slice(0, readyIdx).concat(queue.slice(readyIdx + 1));
-    storage.saveQueue(rest);
+    storage.saveQueue(queue.slice(0, readyIdx).concat(queue.slice(readyIdx + 1)));
     flushing = true;
     var body = JSON.stringify(next.payload);
     var ep = 0;
@@ -113,19 +158,9 @@
         setTimeout(function () { flushQueue(endpoints); }, backoffMs(next.attempts));
         return;
       }
-      var endpoint = endpoints[ep++];
-      var sameOrigin =
-        typeof location !== "undefined" &&
-        (endpoint.startsWith("/") || endpoint.indexOf(location.origin) === 0);
-      fetch(endpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: body,
-        credentials: sameOrigin ? "same-origin" : "omit",
-        keepalive: true,
-      })
+      postOnce(endpoints[ep++], body)
         .then(function (res) {
-          if (res.ok || res.status === 204) {
+          if (responseAccepted(res)) {
             storage.bumpStat("delivered");
             flushing = false;
             setTimeout(function () { flushQueue(endpoints); }, BASE_FLUSH_MS);
@@ -146,4 +181,7 @@
     flushQueue: flushQueue,
     loadStats: storage.loadStats,
   };
+  }
+
+  start(0);
 })();

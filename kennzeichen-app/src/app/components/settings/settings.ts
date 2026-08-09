@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { LocalStorageService } from '../../services/local-storage';
 import { LocalizationService, Language } from '../../services/localization.service';
 import { ThemeService, Theme } from '../../services/theme.service';
-import { FirebaseSyncService } from '../../services/firebase-sync.service';
+import { DrylSyncService } from '../../services/dryl-sync.service';
 import { Observable } from 'rxjs';
 import { Button } from '../button/button';
 import { SyncLicensePlateComponent } from './sync-license-plate';
@@ -21,7 +21,7 @@ export class SettingsComponent {
   localStorageService = inject(LocalStorageService);
   localizationService = inject(LocalizationService);
   themeService = inject(ThemeService);
-  firebaseSyncService = inject(FirebaseSyncService);
+  drylSyncService = inject(DrylSyncService);
 
   translations$ = this.localizationService.translations$;
   language$ = this.localizationService.language$;
@@ -30,7 +30,7 @@ export class SettingsComponent {
   showSyncModal = false;
   userIdInput = '';
   isMenuOpen = false;
-  shortCode$ = this.firebaseSyncService.getShortCode();
+  shortCode$ = this.drylSyncService.getShortCode();
 
   constructor() {
     // Watch for short code changes and update the input field
@@ -92,7 +92,7 @@ export class SettingsComponent {
   }
 
   getUserId(): string | null {
-    return this.firebaseSyncService.getUserId();
+    return this.drylSyncService.getUserId();
   }
 
   copyUserId(): void {
@@ -114,25 +114,13 @@ export class SettingsComponent {
   }
 
   onSubmitUserId(): void {
-    if (!this.userIdInput.trim()) {
-      alert('Please enter a sync code');
-      return;
-    }
-
-    this.firebaseSyncService
-      .importUserId(this.userIdInput.trim())
-      .then((success) => {
-        if (success) {
-          alert('Sync code stored for reference');
-          this.showSyncModal = false;
-          this.userIdInput = '';
-        } else {
-          alert('Failed to store sync code');
-        }
-      })
-      .catch((error) => {
-        console.error('Import error:', error);
-        alert('Error storing sync code');
-      });
+    void this.drylSyncService.manualSync().then(() => {
+      if (this.drylSyncService.isSyncEnabled()) {
+        alert('Synced with your dryl account. Sign in on other devices to share progress.');
+        this.showSyncModal = false;
+      } else {
+        alert('Sign in at admin.dryl.io, then open Plates again to sync.');
+      }
+    });
   }
 }
