@@ -1,16 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { createUserAppDataStore, type UserAppDataStore } from '@dryl/app-data';
 import { LocalStorageService } from './local-storage';
-
-declare global {
-  interface Window {
-    drylUserDataStore?: (appKey: string) => {
-      authMe(): Promise<{ id: string; username?: string } | null>;
-      loadRemote(): Promise<unknown>;
-      saveRemote(data: unknown): Promise<void>;
-    };
-  }
-}
 
 const APP_KEY = 'kennzeichen';
 
@@ -21,12 +12,13 @@ type KennzeichenBlob = {
 };
 
 /**
- * Account-scoped plate progress via dryl-auth user-app-data (no Firebase).
+ * Account-scoped plate progress via @dryl/app-data (dryl-auth user-app-data).
  * Cross-device sync = sign in with the same dryl account.
  */
 @Injectable({ providedIn: 'root' })
 export class DrylSyncService {
   private readonly localStorageService = inject(LocalStorageService);
+  private readonly dataStore: UserAppDataStore = createUserAppDataStore(APP_KEY);
   private readonly syncStatus$ = new BehaviorSubject<
     'offline' | 'syncing' | 'synced' | 'error'
   >('offline');
@@ -44,21 +36,13 @@ export class DrylSyncService {
     void this.bootstrap();
   }
 
-  private store() {
-    if (typeof window === 'undefined' || !window.drylUserDataStore) {
-      return null;
-    }
-    return window.drylUserDataStore(APP_KEY);
+  private store(): UserAppDataStore {
+    return this.dataStore;
   }
 
   private async bootstrap(): Promise<void> {
-    const store = this.store();
-    if (!store) {
-      this.syncStatus$.next('offline');
-      return;
-    }
     try {
-      const user = await store.authMe();
+      const user = await this.dataStore.authMe();
       if (!user?.id) {
         this.signedIn = false;
         this.syncStatus$.next('offline');
@@ -67,16 +51,14 @@ export class DrylSyncService {
       }
       this.signedIn = true;
       this.accountLabel$.next(user.username || user.id.slice(0, 8));
-      await this.pullAndMerge(store);
+      await this.pullAndMerge(this.dataStore);
     } catch {
       this.signedIn = false;
       this.syncStatus$.next('error');
     }
   }
 
-  private async pullAndMerge(
-    store: NonNullable<ReturnType<DrylSyncService['store']>>,
-  ): Promise<void> {
+  private async pullAndMerge(store: UserAppDataStore): Promise<void> {
     this.syncStatus$.next('syncing');
     try {
       const remote = await store.loadRemote();
@@ -111,8 +93,7 @@ export class DrylSyncService {
   }
 
   private async pushLocal(): Promise<void> {
-    const store = this.store();
-    if (!store || !this.signedIn) {
+    if (!this.signedIn) {
       return;
     }
     this.syncStatus$.next('syncing');
@@ -122,7 +103,7 @@ export class DrylSyncService {
         seenCodes: this.localStorageService.getSeenCodes(),
         updatedAt: new Date().toISOString(),
       };
-      await store.saveRemote(blob);
+      await this.dataStore.saveRemote(blob);
       this.lastSyncTime$.next(new Date());
       this.syncStatus$.next('synced');
     } catch {
@@ -157,12 +138,7 @@ export class DrylSyncService {
   }
 
   async manualSync(): Promise<void> {
-    const store = this.store();
-    if (!store) {
-      this.syncStatus$.next('offline');
-      return;
-    }
-    const user = await store.authMe();
+    const user = await this.dataStore.authMe();
     if (!user?.id) {
       this.signedIn = false;
       this.syncStatus$.next('offline');
@@ -170,7 +146,7 @@ export class DrylSyncService {
     }
     this.signedIn = true;
     this.accountLabel$.next(user.username || user.id.slice(0, 8));
-    await this.pullAndMerge(store);
+    await this.pullAndMerge(this.dataStore);
   }
 
   isSyncEnabled(): boolean {
