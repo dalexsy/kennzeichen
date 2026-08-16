@@ -1,10 +1,5 @@
-import { fetchDrylUser } from '@dryl/auth-client';
-import { createUserAppDataBackend } from '@dryl/app-data';
-import {
-  createDocumentStore,
-  type DocumentStore,
-  type JsonDocumentBackend,
-} from '@dryl/storage';
+import { createUserDocumentStore } from '@dryl/app-data';
+import { type DocumentStore, type JsonDocumentBackend } from '@dryl/storage';
 
 export const PLATES_APP_KEY = 'kennzeichen';
 const SEEN_KEY = 'license-plates-seen';
@@ -59,28 +54,11 @@ function localPlatesBackend(): JsonDocumentBackend {
   };
 }
 
-function signedRemote(appKey: string): JsonDocumentBackend | undefined {
-  if (typeof window === 'undefined') return undefined;
-  const remote = createUserAppDataBackend(appKey);
-  return {
-    async load() {
-      const user = await fetchDrylUser({ timeoutMs: 4000 }).catch(() => null);
-      if (!user?.id) return null;
-      return remote.load();
-    },
-    async save(data) {
-      const user = await fetchDrylUser({ timeoutMs: 4000 }).catch(() => null);
-      if (!user?.id) return;
-      await remote.save(data);
-    },
-  };
-}
-
 export function platesDocumentStore(): DocumentStore<KennzeichenBlob> {
-  storeCache ??= createDocumentStore<KennzeichenBlob>({
+  storeCache ??= createUserDocumentStore<KennzeichenBlob>({
+    appKey: PLATES_APP_KEY,
     empty: EMPTY_PLATES_BLOB,
     local: localPlatesBackend(),
-    remote: signedRemote(PLATES_APP_KEY),
     isEmpty: (blob) => !blob.seenCodes.length,
     merge: (local, remote) => ({
       version: 1,
