@@ -9,6 +9,8 @@
     "test": "ng test",
     "deploy": "npm run deploy:dryl",
     "deploy:dryl": "node ..\\..\\directory\\scripts\\run-full-deploy.mjs plates",
+    "deploy:staging": "node ..\\..\\directory\\scripts\\run-full-deploy-staging.mjs plates",
+    "verify:staging": "node ..\\..\\directory\\scripts\\verify-staging.mjs plates",
     "verify:dist": "npm run build && node ..\\..\\directory\\scripts\\verify-dist-git-sha.mjs --dist=dist/license-plate-app/browser --repo=.. --site-id=plates",
     "verify:console": "node ..\\..\\directory\\scripts\\smoke-spa-console.mjs plates",
     "sync:errors": "node ..\\..\\directory\\scripts\\sync-error-reporter.mjs --only kennzeichen",
@@ -39,6 +41,7 @@
     "@angular/router": "^20.3.0",
     "@dryl/app-data": "file:../../dryl/app-data",
     "@dryl/auth-client": "file:../../dryl/auth-client",
+    "@dryl/storage": "file:../../dryl/storage",
     "@types/leaflet": "^1.9.20",
     "leaflet": "^1.9.4",
     "rxjs": "~7.8.0",
@@ -61,7 +64,8 @@
   "dryl": {
     "packages": {
       "@dryl/auth-client": "0.2.0",
-      "@dryl/app-data": "0.2.0"
+      "@dryl/app-data": "0.3.0",
+      "@dryl/storage": "0.3.0"
     }
   }
 }

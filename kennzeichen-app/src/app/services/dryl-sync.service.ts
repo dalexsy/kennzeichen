@@ -1,24 +1,20 @@
 import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { createUserAppDataStore, type UserAppDataStore } from '@dryl/app-data';
+import { fetchDrylUser } from '@dryl/auth-client';
 import { LocalStorageService } from './local-storage';
-
-const APP_KEY = 'kennzeichen';
-
-type KennzeichenBlob = {
-  version: 1;
-  seenCodes: string[];
-  updatedAt: string;
-};
+import {
+  platesDocumentStore,
+  savePlatesBlob,
+  type KennzeichenBlob,
+} from '../infra/kennzeichen-document-store';
 
 /**
- * Account-scoped plate progress via @dryl/app-data (dryl-auth user-app-data).
+ * Account-scoped plate progress via @dryl/storage 0.3.0 (remote-first).
  * Cross-device sync = sign in with the same dryl account.
  */
 @Injectable({ providedIn: 'root' })
 export class DrylSyncService {
   private readonly localStorageService = inject(LocalStorageService);
-  private readonly dataStore: UserAppDataStore = createUserAppDataStore(APP_KEY);
   private readonly syncStatus$ = new BehaviorSubject<
     'offline' | 'syncing' | 'synced' | 'error'
   >('offline');
@@ -29,20 +25,14 @@ export class DrylSyncService {
 
   constructor() {
     this.localStorageService.onDataChanged$.subscribe(() => {
-      if (this.signedIn) {
-        this.queueSave();
-      }
+      if (this.signedIn) this.queueSave();
     });
     void this.bootstrap();
   }
 
-  private store(): UserAppDataStore {
-    return this.dataStore;
-  }
-
   private async bootstrap(): Promise<void> {
     try {
-      const user = await this.dataStore.authMe();
+      const user = await fetchDrylUser({ timeoutMs: 4000 }).catch(() => null);
       if (!user?.id) {
         this.signedIn = false;
         this.syncStatus$.next('offline');
@@ -51,31 +41,18 @@ export class DrylSyncService {
       }
       this.signedIn = true;
       this.accountLabel$.next(user.username || user.id.slice(0, 8));
-      await this.pullAndMerge(this.dataStore);
+      await this.pullAndMerge();
     } catch {
       this.signedIn = false;
       this.syncStatus$.next('error');
     }
   }
 
-  private async pullAndMerge(store: UserAppDataStore): Promise<void> {
+  private async pullAndMerge(): Promise<void> {
     this.syncStatus$.next('syncing');
     try {
-      const remote = await store.loadRemote();
-      const remoteCodes =
-        remote && typeof remote === 'object' && Array.isArray((remote as KennzeichenBlob).seenCodes)
-          ? (remote as KennzeichenBlob).seenCodes
-          : [];
-      const localCodes = this.localStorageService.getSeenCodes();
-      const merged = Array.from(new Set([...localCodes, ...remoteCodes]));
-      if (merged.length > localCodes.length) {
-        this.localStorageService.setSeenCodes(merged);
-      }
-      await store.saveRemote({
-        version: 1,
-        seenCodes: merged,
-        updatedAt: new Date().toISOString(),
-      } satisfies KennzeichenBlob);
+      const blob = await platesDocumentStore().load();
+      this.localStorageService.setSeenCodes(blob.seenCodes);
       this.lastSyncTime$.next(new Date());
       this.syncStatus$.next('synced');
     } catch {
@@ -84,18 +61,12 @@ export class DrylSyncService {
   }
 
   private queueSave(): void {
-    if (this.saveTimer) {
-      clearTimeout(this.saveTimer);
-    }
-    this.saveTimer = setTimeout(() => {
-      void this.pushLocal();
-    }, 800);
+    if (this.saveTimer) clearTimeout(this.saveTimer);
+    this.saveTimer = setTimeout(() => void this.pushLocal(), 800);
   }
 
   private async pushLocal(): Promise<void> {
-    if (!this.signedIn) {
-      return;
-    }
+    if (!this.signedIn) return;
     this.syncStatus$.next('syncing');
     try {
       const blob: KennzeichenBlob = {
@@ -103,7 +74,7 @@ export class DrylSyncService {
         seenCodes: this.localStorageService.getSeenCodes(),
         updatedAt: new Date().toISOString(),
       };
-      await this.dataStore.saveRemote(blob);
+      await savePlatesBlob(blob);
       this.lastSyncTime$.next(new Date());
       this.syncStatus$.next('synced');
     } catch {
@@ -138,7 +109,7 @@ export class DrylSyncService {
   }
 
   async manualSync(): Promise<void> {
-    const user = await this.dataStore.authMe();
+    const user = await fetchDrylUser({ timeoutMs: 4000 }).catch(() => null);
     if (!user?.id) {
       this.signedIn = false;
       this.syncStatus$.next('offline');
@@ -146,7 +117,7 @@ export class DrylSyncService {
     }
     this.signedIn = true;
     this.accountLabel$.next(user.username || user.id.slice(0, 8));
-    await this.pullAndMerge(this.dataStore);
+    await this.pullAndMerge();
   }
 
   isSyncEnabled(): boolean {
