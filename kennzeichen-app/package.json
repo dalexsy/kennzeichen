@@ -65,7 +65,7 @@
     "packages": {
       "@dryl/auth-client": "0.2.0",
       "@dryl/app-data": "0.3.1",
-      "@dryl/storage": "0.3.0"
+      "@dryl/storage": "0.3.1"
     }
   }
 }
