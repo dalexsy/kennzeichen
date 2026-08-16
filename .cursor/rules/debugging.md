@@ -25,9 +25,9 @@ _(none yet — add entries when something fails in production or deploy.)_
 
 ## Deploy timing (auto)
 
-_No production deploy samples yet for **kennzeichen** — first runs populate this section._
+Median **80s** · wait `block_until_ms` **114521** chunks, total **114521** · details: `.dryl-deploy-timing.json`
 
-- **Agent shell wait:** use `block_until_ms` **300000** (5 min) until data exists.
+Updated: 2026-08-16T16:54:36Z · source: `directory/data/deploy-timing.json`
 
 <!-- end deploy-timing -->
 
