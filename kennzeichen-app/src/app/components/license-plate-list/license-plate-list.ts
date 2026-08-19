@@ -2,11 +2,13 @@ import { Component, Input, Output, EventEmitter, inject, ElementRef, ViewChild, 
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { LicensePlate } from '../../models/license-plate.interface';
-import { LicensePlateGroup, LicensePlateService } from '../../services/license-plate';
-import { LocalStorageService } from '../../services/local-storage';
-import { LocalizationService } from '../../services/localization.service';
+import { LicensePlateGroup, LicensePlateService } from '../../services/license-plate/license-plate.service';
+import { LocalStorageService } from '../../services/local-storage/local-storage.service';
+import { LocalizationService } from '../../services/localization/localization.service';
 import { LicensePlateItem } from '../license-plate-item/license-plate-item';
 import { ViewToggle } from '../view-toggle/view-toggle';
+import { ListEmpty } from './list-empty/list-empty';
+import { ListNav } from './list-nav/list-nav';
 import {
   ListScrollHost,
   updateBackToTopVisibility,
@@ -15,11 +17,11 @@ import {
   scrollToPreviousSection,
   canScrollNext,
   canScrollPrevious,
-} from './license-plate-list-scroll';
+} from '../../services/list-scroll/license-plate-list-scroll';
 
 @Component({
   selector: 'app-license-plate-list',
-  imports: [CommonModule, LicensePlateItem, ViewToggle],
+  imports: [CommonModule, LicensePlateItem, ViewToggle, ListEmpty, ListNav],
   templateUrl: './license-plate-list.html',
   styleUrl: './license-plate-list.scss'
 })

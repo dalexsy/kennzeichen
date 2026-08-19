@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 
 import { LicensePlate } from './models/license-plate.interface';
-import { LicensePlateService, LicensePlateGroup } from './services/license-plate';
-import { LocalStorageService } from './services/local-storage';
-import { ScrollStateService } from './services/scroll-state.service';
-import { FilterStateService } from './services/filter-state.service';
+import { LicensePlateService, LicensePlateGroup } from './services/license-plate/license-plate.service';
+import { LocalStorageService } from './services/local-storage/local-storage.service';
+import { ScrollStateService } from './services/scroll-state/scroll-state.service';
+import { FilterStateService } from './services/filter-state/filter-state.service';
 
 import { LicensePlateDisplay } from './components/license-plate-display/license-plate-display';
 import { SearchInput } from './components/search-input/search-input';
@@ -14,7 +14,7 @@ import { LicensePlateList } from './components/license-plate-list/license-plate-
 import { MapComponent } from './components/map/map';
 import { TableOfContentsComponent } from './components/table-of-contents/table-of-contents';
 import { SettingsComponent } from './components/settings/settings';
-import { LocalizationService } from './services/localization.service';
+import { LocalizationService } from './services/localization/localization.service';
 import {
   AppFilterContext,
   handleStateChange,
@@ -22,7 +22,7 @@ import {
   handleBackClick,
   handleGroupHeadingClicked,
   handleSeenFilterToggle,
-} from './app-filter-handlers';
+} from './app-filter/app-filter-handlers';
 
 @Component({
   selector: 'app-root',

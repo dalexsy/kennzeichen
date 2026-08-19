@@ -1,8 +1,8 @@
 import * as L from 'leaflet';
-import { GeocodingService, CityCoordinates } from '../../services/geocoding';
+import { GeocodingService, CityCoordinates } from '../geocoding/geocoding.service';
 import { LicensePlate } from '../../models/license-plate.interface';
-import { MapStateService } from '../../services/map-state.service';
-import { MapMarkerService } from '../../services/map-marker.service';
+import { MapStateService } from '../map-state/map-state.service';
+import { MapMarkerService } from './map-marker.service';
 
 export interface MapMarkerHost {
   map: L.Map | null;

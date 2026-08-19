@@ -1,0 +1,19 @@
+<div class="filter-section">
+  <div class="region-info">
+    <div class="region-name">{{ activeFilterText }}</div>
+  </div>
+  <div class="state-filter-tiles">
+    @for (state of states; track state.index) {
+    <button
+      [class]="'state-tile state-' + state.index"
+      [class.active]="isStateActive(state)"
+      [class.dimmed]="isStateDimmed(state)"
+      (click)="stateTileClick.emit(state)"
+      [attr.aria-label]="localizationService.translateStateName(state.name)"
+      [title]="localizationService.translateStateName(state.name)"
+    >
+      {{ state.code }}
+    </button>
+    }
+  </div>
+</div>

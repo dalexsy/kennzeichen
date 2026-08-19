@@ -1,31 +1,27 @@
-import { Component, inject, ElementRef, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, inject, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { LocalStorageService } from '../../services/local-storage';
-import { LocalizationService, Language } from '../../services/localization.service';
-import { ThemeService, Theme } from '../../services/theme.service';
-import { DrylSyncService } from '../../services/dryl-sync.service';
-import { Observable } from 'rxjs';
+import { LocalizationService, Language } from '../../services/localization/localization.service';
+import { ThemeService } from '../../services/theme/theme.service';
+import { DrylSyncService } from '../../services/dryl-sync/dryl-sync.service';
 import { Button } from '../button/button';
-import { SyncLicensePlateComponent } from './sync-license-plate';
+import { SyncLicensePlateComponent } from '../sync-license-plate/sync-license-plate';
+import { SettingsMenu } from './settings-menu/settings-menu';
 
 @Component({
   selector: 'app-settings',
-  imports: [CommonModule, FormsModule, Button, SyncLicensePlateComponent],
+  imports: [CommonModule, FormsModule, Button, SyncLicensePlateComponent, SettingsMenu],
   templateUrl: './settings.html',
   styleUrl: './settings.scss',
 })
 export class SettingsComponent {
   @Output() menuOpenChange = new EventEmitter<boolean>();
 
-  localStorageService = inject(LocalStorageService);
   localizationService = inject(LocalizationService);
   themeService = inject(ThemeService);
   drylSyncService = inject(DrylSyncService);
 
   translations$ = this.localizationService.translations$;
-  language$ = this.localizationService.language$;
-  theme$ = this.themeService.theme$;
 
   showSyncModal = false;
   userIdInput = '';

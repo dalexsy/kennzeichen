@@ -1,49 +1,24 @@
-<div class="map-overlay" [class.visible]="isMapVisible" (click)="onOverlayClick($event)">
-  <div class="map-container" (click)="onMapClick($event)">
+<div class="map-overlay" [class.visible]="isMapVisible" (click)="onOverlayClick()">
+  <div class="map-container" (click)="$event.stopPropagation()">
     <div #mapContainer class="map" id="map" style="height: 100%; width: 100%"></div>
-    <div class="filter-section">
-      <div class="region-info">
-        <div class="region-name">{{ activeFilterText }}</div>
-      </div>
-      <div class="state-filter-tiles">
-        @for (state of states; track state.index) {
-        <button
-          [class]="'state-tile state-' + state.index"
-          [class.active]="isStateActive(state)"
-          [class.dimmed]="isStateDimmed(state)"
-          (click)="onStateTileClick(state)"
-          [attr.aria-label]="localizationService.translateStateName(state.name)"
-          [title]="localizationService.translateStateName(state.name)"
-        >
-          {{ state.code }}
-        </button>
-        }
-      </div>
-    </div>
+    <app-map-state-tiles
+      [states]="states"
+      [highlightedState]="highlightedState"
+      [availableStates]="availableStates"
+      [activeFilterText]="activeFilterText"
+      (stateTileClick)="onStateTileClick($event)"
+    ></app-map-state-tiles>
   </div>
 </div>
 
-@if (shouldShowMapButton && !isSettingsOpen) {
-<button
-  class="map-toggle"
-  (click)="toggleMap()"
-  [attr.aria-label]="isMapVisible ? 'Hide map' : 'Show map'"
->
-  <span class="material-icons">{{ isMapVisible ? 'close' : 'map' }}</span>
-  <span class="toggle-text">{{
-    isMapVisible ? (translations$ | async)?.back || 'Close' : 'Map'
-  }}</span>
-</button>
-} @if (shouldShowSeenButton && !isSettingsOpen) {
-<button
-  class="seen-toggle"
-  (click)="onSeenFilterToggle()"
-  [attr.aria-label]="(translations$ | async)?.seen || 'Seen'"
->
-  @if (seenFilterActive) {
-  <span class="material-icons">visibility</span>
-  }
-  <span class="toggle-text">{{ (translations$ | async)?.seen }}</span>
-  <span class="count-badge">{{ seenCount }}</span>
-</button>
-}
+<app-map-toggles
+  [isMapVisible]="isMapVisible"
+  [shouldShowMapButton]="shouldShowMapButton"
+  [shouldShowSeenButton]="true"
+  [isSettingsOpen]="isSettingsOpen"
+  [seenFilterActive]="seenFilterActive"
+  [seenCount]="seenCount"
+  [translations$]="translations$"
+  (mapToggle)="toggleMap()"
+  (seenToggle)="onSeenFilterToggle()"
+></app-map-toggles>

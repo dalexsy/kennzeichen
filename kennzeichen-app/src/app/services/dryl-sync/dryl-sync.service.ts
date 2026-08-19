@@ -1,12 +1,12 @@
 import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { fetchDrylUser } from '@dryl/auth-client';
-import { LocalStorageService } from './local-storage';
+import { LocalStorageService } from '../local-storage/local-storage.service';
 import {
   platesDocumentStore,
   savePlatesBlob,
   type KennzeichenBlob,
-} from '../infra/kennzeichen-document-store';
+} from '../../infra/kennzeichen-document-store';
 
 /**
  * Account-scoped plate progress via @dryl/storage 0.3.0 (remote-first).

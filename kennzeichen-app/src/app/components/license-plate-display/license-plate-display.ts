@@ -1,11 +1,12 @@
 import { Component, Input, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LicensePlateService } from '../../services/license-plate';
+import { LicensePlateService } from '../../services/license-plate/license-plate.service';
 import { RegionBadge } from '../region-badge/region-badge';
+import { EuStars } from './eu-stars/eu-stars';
 
 @Component({
   selector: 'app-license-plate-display',
-  imports: [CommonModule, RegionBadge],
+  imports: [CommonModule, RegionBadge, EuStars],
   templateUrl: './license-plate-display.html',
   styleUrl: './license-plate-display.scss'
 })

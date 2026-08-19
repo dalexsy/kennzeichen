@@ -1,0 +1,23 @@
+@if (showNavButtons) {
+<div class="section-nav" [class.map-button-visible]="isMapButtonVisible">
+  @if (canGoPrevious) {
+  <button class="nav-button prev" (click)="previous.emit()" aria-label="Previous section">
+    <span class="material-icons">keyboard_arrow_up</span>
+  </button>
+  }
+  @if (canGoNext) {
+  <button class="nav-button next" (click)="next.emit()" aria-label="Next section">
+    <span class="material-icons">keyboard_arrow_down</span>
+  </button>
+  }
+</div>
+}
+
+<button
+  class="back-to-top"
+  [class.visible]="showBackToTop"
+  (click)="backToTop.emit()"
+  aria-label="Back to top"
+>
+  <span class="material-icons">keyboard_arrow_up</span>
+</button>

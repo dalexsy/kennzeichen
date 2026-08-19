@@ -7,28 +7,13 @@
   }
 
   @if (!isLoading && (groupedLicensePlates$ | async); as groupedList) {
-    <div
-      class="list-container"
-      #listContainer
-    >
+    <div class="list-container" #listContainer>
       @if (getTotalCount(groupedList) === 0) {
-        <div class="empty">
-          <p class="empty-text">
-            {{
-              searchTerm
-                ? (translations$ | async)?.no_plates_found + ' "' + searchTerm + '"'
-                : (translations$ | async)?.no_plates_available
-            }}
-          </p>
-          @if (searchTerm) {
-            <p class="empty-hint">
-              {{ (translations$ | async)?.search_hint }}
-            </p>
-          }
-          <button class="reset-filters-button" (click)="onClearFiltersClick()">
-            {{ (translations$ | async)?.reset_filters }}
-          </button>
-        </div>
+        <app-list-empty
+          [searchTerm]="searchTerm"
+          [translations$]="translations$"
+          (clearFilters)="onClearFiltersClick()"
+        ></app-list-empty>
       }
 
       @if (getTotalCount(groupedList) > 0) {
@@ -39,27 +24,18 @@
           <h3 class="group-heading" [class.focused]="isGroupFocused(group.state)">
             <div class="heading-content" (click)="onGroupHeadingClick(group)">
               @if ((viewMode$ | async) === 'grouped') {
-                <span
-                  class="state-color-tile"
-                  [class]="getStateColorClass(group.state)"
-                ></span>
+                <span class="state-color-tile" [class]="getStateColorClass(group.state)"></span>
               }
               <span class="heading-text">{{ localizationService.translateStateName(group.state) }} ({{ group.licensePlates.length }})</span>
             </div>
             @if (focusedGroup) {
-              <button
-                class="show-all-button"
-                (click)="onGroupHeadingClick(group)"
-              >
+              <button class="show-all-button" (click)="onGroupHeadingClick(group)">
                 {{ (translations$ | async)?.show_all }}
-                <span _ngcontent-ng-c3358268225="" class="material-icons">keyboard_return</span>
+                <span class="material-icons">keyboard_return</span>
               </button>
             }
             @if (!focusedGroup && isLicensePlateSelected) {
-              <button
-                class="show-all-button"
-                (click)="onBackClick()"
-              >
+              <button class="show-all-button" (click)="onBackClick()">
                 {{ (translations$ | async)?.back }}
                 <span class="material-icons">keyboard_return</span>
               </button>
@@ -92,38 +68,16 @@
     </div>
   }
 
-  @if (showNavButtons && getTotalCount((groupedLicensePlates$ | async) || []) > 0) {
-    <div
-      class="section-nav"
-      [class.map-button-visible]="isMapButtonVisible"
-    >
-      @if (canScrollPrevious()) {
-        <button
-          class="nav-button prev"
-          (click)="scrollToPreviousSection()"
-          aria-label="Previous section"
-        >
-          <span class="material-icons">keyboard_arrow_up</span>
-        </button>
-      }
-      @if (canScrollNext()) {
-        <button
-          class="nav-button next"
-          (click)="scrollToNextSection()"
-          aria-label="Next section"
-        >
-          <span class="material-icons">keyboard_arrow_down</span>
-        </button>
-      }
-    </div>
+  @if (getTotalCount((groupedLicensePlates$ | async) || []) > 0) {
+    <app-list-nav
+      [showNavButtons]="showNavButtons"
+      [showBackToTop]="showBackToTop"
+      [isMapButtonVisible]="isMapButtonVisible"
+      [canGoNext]="canScrollNext()"
+      [canGoPrevious]="canScrollPrevious()"
+      (next)="scrollToNextSection()"
+      (previous)="scrollToPreviousSection()"
+      (backToTop)="scrollToTopButton()"
+    ></app-list-nav>
   }
-
-  <button
-    class="back-to-top"
-    [class.visible]="showBackToTop"
-    (click)="scrollToTopButton()"
-    aria-label="Back to top"
-  >
-    <span class="material-icons">keyboard_arrow_up</span>
-  </button>
 </div>

@@ -27,44 +27,6 @@
     padding-bottom: 1rem;
   }
 
-  .empty {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: $text-secondary;
-    width: 100%;
-    gap: 1rem;
-  }
-
-  .empty-text {
-  }
-
-  .empty-hint {
-    color: $text-secondary;
-  }
-
-  .reset-filters-button {
-    background-color: $accent-tertiary;
-    color: white;
-    border: none;
-    border-radius: 0.25rem;
-    font-family: $body-font;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.2s;
-    padding: 0.75rem 1.5rem;
-
-    &:hover {
-      filter: brightness(1.1);
-    }
-
-    &:active {
-      filter: brightness(1.2);
-    }
-  }
-
   .results {
     width: 100%;
   }
@@ -107,10 +69,8 @@
       }
     }
 
-    &.focused {
-      .heading-text {
-        font-weight: 600;
-      }
+    &.focused .heading-text {
+      font-weight: 600;
     }
 
     .show-all-button {
@@ -144,7 +104,6 @@
       border-radius: 0.125rem;
       flex-shrink: 0;
       transition: all 0.2s;
-      //  filter: sepia(0.3) brightness(1.4);
 
       @include state-colors;
     }
@@ -155,86 +114,11 @@
     }
   }
 
-
   .group-items {
     display: grid;
     gap: 1rem;
     padding: 0 0.125rem;
     grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
-  }
-
-  .section-nav {
-    display: none;
-  }
-
-  .back-to-top {
-    display: none;
-
-    @include desktop-up {
-      display: block;
-      position: fixed;
-      bottom: 1rem;
-      right: 1rem;
-      width: 3rem;
-      height: 3rem;
-      border-radius: 50%;
-      background-color: $accent-tertiary;
-      color: white;
-      border: none;
-      cursor: pointer;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 2px 2px $box-shadow;
-      transition: all 0.2s;
-      opacity: 0;
-      pointer-events: none;
-
-      &.visible {
-        opacity: 1;
-        pointer-events: auto;
-      }
-
-      .material-icons {
-        font-size: 1.5rem;
-      }
-
-      &:hover {
-        filter: brightness(1.1);
-        transform: scale(1.05);
-      }
-
-      &:active {
-        filter: brightness(1.2);
-      }
-    }
-  }
-
-  .nav-button {
-    width: 3rem;
-    height: 3rem;
-    border-radius: 50%;
-    background-color: $accent-tertiary;
-    color: white;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 2px 2px $box-shadow;
-    transition: all 0.2s;
-
-    .material-icons {
-      font-size: 1.5rem;
-    }
-
-    &:hover {
-      filter: brightness(1.1);
-      transform: scale(1.05);
-    }
-
-    &:active {
-      filter: brightness(1.2);
-    }
   }
 }
 
