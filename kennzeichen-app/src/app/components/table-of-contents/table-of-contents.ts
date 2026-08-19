@@ -1,8 +1,8 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LicensePlateGroup } from '../../services/license-plate';
-import { MapStateService } from '../../services/map-state.service';
-import { LocalizationService } from '../../services/localization.service';
+import { LicensePlateGroup } from '../../services/license-plate/license-plate-group';
+import { MapStateService } from '../../services/map-state/map-state.service';
+import { LocalizationService } from '../../services/localization/localization.service';
 
 @Component({
   selector: 'app-table-of-contents',

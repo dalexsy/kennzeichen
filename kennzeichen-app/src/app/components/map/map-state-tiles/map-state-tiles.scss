@@ -1,0 +1,90 @@
+@use '../../../../styles/main' as *;
+
+.filter-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem;
+}
+
+.region-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @include tablet-up {
+    display: none;
+  }
+
+  .region-name {
+    font-weight: 500;
+    position: relative;
+    padding: 0.25rem 1rem;
+    text-align: center;
+    color: $text-primary;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: $accent-secondary;
+      clip-path: polygon(
+        0.5rem 50%,
+        0rem 0%,
+        calc(100% - 0rem) 0%,
+        calc(100% - 0.5rem) 50%,
+        calc(100% - 0rem) 100%,
+        0rem 100%
+      );
+      z-index: $z-behind;
+    }
+  }
+}
+
+.state-filter-tiles {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 0.5rem;
+  justify-content: center;
+
+  @include tablet-up {
+    margin: 0 auto;
+  }
+}
+
+.state-tile {
+  width: 100%;
+  height: 2.5rem;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-family: $body-font;
+  font-weight: 600;
+  font-size: 0.75rem;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all ease-out 0.05s;
+
+  @include tablet-up {
+    width: 2.5rem;
+  }
+
+  @include state-colors;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &.active {
+    transform: scale(1.15);
+  }
+
+  &.dimmed {
+    opacity: 0.3;
+  }
+}

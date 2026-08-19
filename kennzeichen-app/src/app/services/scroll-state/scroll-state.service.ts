@@ -1,5 +1,5 @@
 import { Injectable, NgZone, ChangeDetectorRef } from '@angular/core';
-import { MapStateService } from './map-state.service';
+import { MapStateService } from '../map-state/map-state.service';
 
 /**
  * Service responsible for managing scroll-related state and behavior.

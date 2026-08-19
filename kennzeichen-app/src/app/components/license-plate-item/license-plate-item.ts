@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LicensePlate } from '../../models/license-plate.interface';
 import { RegionBadge } from '../region-badge/region-badge';
-import { LocalizationService } from '../../services/localization.service';
+import { LocalizationService } from '../../services/localization/localization.service';
 
 @Component({
   selector: 'app-license-plate-item',

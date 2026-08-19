@@ -1,0 +1,75 @@
+@use '../../../../styles/main' as *;
+
+.section-nav {
+  display: none;
+}
+
+.back-to-top {
+  display: none;
+
+  @include desktop-up {
+    display: block;
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background-color: $accent-tertiary;
+    color: white;
+    border: none;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 2px 2px $box-shadow;
+    transition: all 0.2s;
+    opacity: 0;
+    pointer-events: none;
+
+    &.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .material-icons {
+      font-size: 1.5rem;
+    }
+
+    &:hover {
+      filter: brightness(1.1);
+      transform: scale(1.05);
+    }
+
+    &:active {
+      filter: brightness(1.2);
+    }
+  }
+}
+
+.nav-button {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background-color: $accent-tertiary;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 2px 2px $box-shadow;
+  transition: all 0.2s;
+
+  .material-icons {
+    font-size: 1.5rem;
+  }
+
+  &:hover {
+    filter: brightness(1.1);
+    transform: scale(1.05);
+  }
+
+  &:active {
+    filter: brightness(1.2);
+  }
+}

@@ -8,37 +8,15 @@
   </button>
 
   @if (isMenuOpen) {
-  <div class="settings-menu" (click)="$event.stopPropagation()">
-    <div class="menu-header">
-      <h3>{{ (translations$ | async)?.settings }}</h3>
-      <button class="close-button" (click)="closeMenu()">
-        <span class="material-icons">close</span>
-      </button>
-    </div>
-
-    <div class="menu-content">
-      <button class="menu-item" (click)="toggleLanguage()">
-        <span class="material-icons">translate</span>
-        <div class="item-content">
-          <span class="item-label">{{ (translations$ | async)?.language }}</span>
-          <span class="item-value">{{ getCurrentLanguageLabel() }}</span>
-        </div>
-      </button>
-
-      <button class="menu-item" (click)="cycleTheme()">
-        <span class="material-icons">palette</span>
-        <div class="item-content">
-          <span class="item-label">{{ (translations$ | async)?.theme }}</span>
-          <span class="item-value">{{ getCurrentThemeLabel() }}</span>
-        </div>
-      </button>
-
-      <button class="menu-item" (click)="showSyncModalAction()">
-        <span class="material-icons">cloud</span>
-        <span class="item-text">Enable Sync</span>
-      </button>
-    </div>
-  </div>
+  <app-settings-menu
+    [translations$]="translations$"
+    [languageLabel]="getCurrentLanguageLabel()"
+    [themeLabel]="getCurrentThemeLabel()"
+    (closed)="closeMenu()"
+    (languageToggle)="toggleLanguage()"
+    (themeCycle)="cycleTheme()"
+    (syncOpen)="showSyncModalAction()"
+  ></app-settings-menu>
   }
 </div>
 

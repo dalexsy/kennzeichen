@@ -1,7 +1,7 @@
-import { LicensePlate } from './models/license-plate.interface';
-import { LicensePlateGroup } from './services/license-plate';
-import { FilterStateService } from './services/filter-state.service';
-import { LicensePlateService } from './services/license-plate';
+import { LicensePlate } from '../models/license-plate.interface';
+import { LicensePlateGroup } from '../services/license-plate/license-plate-group';
+import { FilterStateService } from '../services/filter-state/filter-state.service';
+import { LicensePlateService } from '../services/license-plate/license-plate.service';
 
 export interface AppFilterContext {
   targetScrollPosition: number;
@@ -74,7 +74,6 @@ export function handleLicensePlateClicked(
 
 export function handleBackClick(ctx: AppFilterContext): void {
   const restored = ctx.filterStateService.restoreState();
-
   ctx.targetScrollPosition = restored.scrollPosition;
   ctx.selectedCode = '';
   ctx.currentSearchTerm = restored.searchTerm;

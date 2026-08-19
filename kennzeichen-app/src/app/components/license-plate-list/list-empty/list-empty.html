@@ -1,0 +1,15 @@
+<div class="empty">
+  <p class="empty-text">
+    {{
+      searchTerm
+        ? (translations$ | async)?.no_plates_found + ' "' + searchTerm + '"'
+        : (translations$ | async)?.no_plates_available
+    }}
+  </p>
+  @if (searchTerm) {
+  <p class="empty-hint">{{ (translations$ | async)?.search_hint }}</p>
+  }
+  <button class="reset-filters-button" (click)="clearFilters.emit()">
+    {{ (translations$ | async)?.reset_filters }}
+  </button>
+</div>

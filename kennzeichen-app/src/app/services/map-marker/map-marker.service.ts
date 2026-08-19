@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import * as L from 'leaflet';
 import { LicensePlate } from '../models/license-plate.interface';
-import { CityCoordinates } from './geocoding';
-import { MapStateService } from './map-state.service';
+import { CityCoordinates } from '../geocoding/geocoding.types';
+import { MapStateService } from '../map-state/map-state.service';
 
 /**
  * Service to handle marker creation and management for the map.

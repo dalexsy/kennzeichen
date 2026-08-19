@@ -1,0 +1,83 @@
+@use '../../../../styles/main' as *;
+
+.map-toggle {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  background-color: $accent-tertiary;
+  color: white;
+  border: none;
+  border-radius: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  font-family: $body-font;
+  cursor: pointer;
+  z-index: $z-map-container;
+  box-shadow: $box-shadow 2px 2px;
+
+  @include tablet-up {
+    display: none;
+  }
+
+  .material-icons {
+    font-size: 1rem;
+  }
+
+  .toggle-text {
+    font-weight: 500;
+  }
+}
+
+.seen-toggle {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  background-color: $accent-tertiary;
+  color: white;
+  border: none;
+  border-radius: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  font-family: $body-font;
+  cursor: pointer;
+  z-index: $z-map-container;
+  box-shadow: $box-shadow 2px 2px;
+
+  @include tablet-up {
+    display: flex;
+    position: absolute;
+    top: 1.5rem;
+    right: 0.5rem;
+    bottom: auto;
+    left: auto;
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    z-index: $z-dropdown;
+  }
+
+  .material-icons {
+    font-size: 1rem;
+  }
+
+  .toggle-text {
+    font-weight: 500;
+  }
+
+  .count-badge {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 1rem;
+    padding: 0.125rem 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+
+    @include tablet-up {
+      font-size: 0.75rem;
+    }
+  }
+}

@@ -3,8 +3,8 @@ import { FormsModule } from '@angular/forms';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
-import { LocalStorageService } from '../../services/local-storage';
-import { LocalizationService } from '../../services/localization.service';
+import { LocalStorageService } from '../../services/local-storage/local-storage.service';
+import { LocalizationService } from '../../services/localization/localization.service';
 import { LicensePlate } from '../../models/license-plate.interface';
 
 @Component({
