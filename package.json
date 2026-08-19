@@ -26,5 +26,19 @@
     "lint:inline-layout": "node ../directory/scripts/lint-no-inline-layout.mjs",
     "prebuild": "npm run lint:ui"
   },
-  "packageManager": "npm@11.17.0"
+  "packageManager": "npm@11.17.0",
+  "dependencies": {
+    "@dryl/ui": "file:../dryl/ui/dist/dryl/ui",
+    "@dryl/auth-client": "file:../dryl/auth-client",
+    "@dryl/app-data": "file:../dryl/app-data",
+    "@dryl/storage": "file:../dryl/storage"
+  },
+  "dryl": {
+    "packages": {
+      "@dryl/ui": "0.6.2",
+      "@dryl/auth-client": "0.2.0",
+      "@dryl/app-data": "0.3.1",
+      "@dryl/storage": "0.3.1"
+    }
+  }
 }
