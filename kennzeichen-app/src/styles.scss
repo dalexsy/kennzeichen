@@ -1,3 +1,5 @@
+@use '@dryl/ui/styles';
+@use './vscode-themes.generated';
 // Use main styles
 @use 'styles/main' as *;
 
@@ -188,3 +190,4 @@ app-root {
     color: $text-primary !important;
   }
 }
+
