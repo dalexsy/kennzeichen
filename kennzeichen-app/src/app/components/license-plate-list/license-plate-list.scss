@@ -8,6 +8,7 @@
     justify-content: center;
     color: $text-secondary;
     padding: 0 1rem;
+    gap: 1rem;
   }
 
   .spinner {
@@ -17,7 +18,6 @@
     border-top: 0.25rem solid $accent-primary;
     border-radius: 50%;
     animation: spin 1s linear infinite;
-    margin-bottom: 1rem;
   }
 
   .list-container {

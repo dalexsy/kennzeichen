@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as L from 'leaflet';
-import { LicensePlate } from '../models/license-plate.interface';
+import { LicensePlate } from '../../models/license-plate.interface';
 import { CityCoordinates } from '../geocoding/geocoding.types';
 import { MapStateService } from '../map-state/map-state.service';
 

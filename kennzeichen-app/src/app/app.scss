@@ -43,7 +43,6 @@
     .map-section {
       flex: 0 0 auto;
       background-color: $background-primary;
-      margin-top: 1rem;
 
       @include tablet-up {
         flex: 0 0 500px;

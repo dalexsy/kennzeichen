@@ -1,6 +1,6 @@
 <div class="map-overlay" [class.visible]="isMapVisible" (click)="onOverlayClick()">
   <div class="map-container" (click)="$event.stopPropagation()">
-    <div #mapContainer class="map" id="map" style="height: 100%; width: 100%"></div>
+    <div #mapContainer class="map" id="map"></div>
     <app-map-state-tiles
       [states]="states"
       [highlightedState]="highlightedState"

@@ -50,7 +50,8 @@
                 "inject": false,
                 "bundleName": "dryl-bug-report"
               }
-            ]
+            ],
+            "preserveSymlinks": true
           },
           "configurations": {
             "production": {

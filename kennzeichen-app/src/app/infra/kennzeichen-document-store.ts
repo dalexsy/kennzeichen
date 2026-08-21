@@ -66,6 +66,9 @@ export function platesDocumentStore(): DocumentStore<KennzeichenBlob> {
       updatedAt: local.updatedAt > remote.updatedAt ? local.updatedAt : remote.updatedAt,
     }),
   });
+  if (!storeCache) {
+    throw new Error('kennzeichen document store unavailable');
+  }
   return storeCache;
 }
 

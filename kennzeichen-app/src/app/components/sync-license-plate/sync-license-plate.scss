@@ -27,6 +27,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 0.125rem;
     width: 30px;
     text-align: center;
   }
@@ -38,7 +39,6 @@
     align-items: center;
     width: 20px;
     height: 20px;
-    margin-bottom: 2px;
     position: relative;
   }
 
@@ -86,7 +86,6 @@
   }
 
   .country {
-    font-size: 1rem;
     font-family: monospace;
   }
 
@@ -99,14 +98,13 @@
 
   .code {
     display: flex;
-    gap: 0.1rem;
+    gap: 0.125rem;
   }
 
   .separator {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 0.25rem;
   }
 
   .year-sticker {
@@ -148,6 +146,6 @@
 
   .numbers {
     display: flex;
-    gap: 0.1rem;
+    gap: 0.125rem;
   }
 }

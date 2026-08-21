@@ -35,12 +35,12 @@ export async function requestCityCoordinates(
 
   const response: {
     elements?: Array<{ lat?: number; lon?: number; center?: { lat: number; lon: number } }>;
-  } = await http
+  } = (await http
     .post(OVERPASS_URL, buildOverpassQuery(cityName, stateName), {
       headers: { 'Content-Type': 'text/plain' },
       responseType: 'json',
     })
-    .toPromise();
+    .toPromise()) ?? { elements: [] };
 
   if (response.elements && response.elements.length > 0) {
     const element = response.elements[0];
