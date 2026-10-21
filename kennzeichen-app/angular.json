@@ -44,12 +44,7 @@
             ],
             "styles": [
               "node_modules/leaflet/dist/leaflet.css",
-              "src/styles.scss",
-              {
-                "input": "public/dryl-bug-report.css",
-                "inject": false,
-                "bundleName": "dryl-bug-report"
-              }
+              "src/styles.scss"
             ],
             "preserveSymlinks": true
           },
