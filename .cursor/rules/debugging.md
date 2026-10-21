@@ -25,9 +25,9 @@ _(none yet — add entries when something fails in production or deploy.)_
 
 ## Deploy timing (auto)
 
-Median **80s** · wait `block_until_ms` **114521** chunks, total **114521** · details: `.dryl-deploy-timing.json`
+Median **90s** · wait `block_until_ms` **116312** chunks, total **116312** · details: `.dryl-deploy-timing.json`
 
-Updated: 2026-08-16T16:54:36Z · source: `directory/data/deploy-timing.json`
+Updated: 2026-10-21T15:22:26Z · source: `directory/data/deploy-timing.json`
 
 <!-- end deploy-timing -->
 
