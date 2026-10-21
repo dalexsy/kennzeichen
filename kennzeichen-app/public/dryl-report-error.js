@@ -97,3 +97,31 @@
 
   boot(0);
 })();
+/* dryl-bug-report-boot:4 */
+(function () {
+  try {
+    var host = (location.hostname || "").toLowerCase();
+    var appId = typeof window !== "undefined" && window.__DRYL_APP_ID__
+      ? String(window.__DRYL_APP_ID__)
+      : "";
+    var statusHost = window.__DRYL_FLEET_RUNTIME__
+      ? String(window.__DRYL_FLEET_RUNTIME__.fleetStatusHostname || "")
+      : "";
+    var isLocal = host === "localhost" || host === "127.0.0.1" || host === "::1";
+    if (host !== statusHost && !(isLocal && appId === "status")) return;
+    function inject() {
+      if (document.querySelector('script[src*="dryl-bug-report.js"]')) return;
+      var script = document.createElement("script");
+      script.src = "/dryl-bug-report.js";
+      script.async = true;
+      (document.head || document.documentElement).appendChild(script);
+    }
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", inject);
+    } else {
+      inject();
+    }
+  } catch (_err) {
+    /* ignore */
+  }
+})();
