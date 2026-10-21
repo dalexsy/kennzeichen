@@ -12,8 +12,14 @@
     }
   },
   "/api/client-errors": {
-    "target": "http://127.0.0.1:3905",
+    "target": "http://192.168.178.80:3905",
     "secure": false,
     "changeOrigin": true
+  },
+  "/api/spotify": {
+    "target": "https://crossfade.dryl.io",
+    "secure": true,
+    "changeOrigin": true,
+    "cookieDomainRewrite": ""
   }
 }

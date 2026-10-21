@@ -14,9 +14,8 @@
     "verify:staging": "node ..\\..\\directory\\scripts\\verify-staging.mjs plates",
     "verify:dist": "npm run build && node ..\\..\\directory\\scripts\\verify-dist-git-sha.mjs --dist=dist/license-plate-app/browser --repo=.. --site-id=plates",
     "verify:console": "node ..\\..\\directory\\scripts\\smoke-spa-console.mjs plates",
-    "sync:errors": "node ..\\..\\directory\\scripts\\sync-error-reporter.mjs --only kennzeichen",
     "sync:favicons": "node ..\\..\\directory\\scripts\\sync-favicons.mjs kennzeichen",
-    "prebuild": "npm run generate:themes && npm run sync:favicons && npm run sync:errors",
+    "prebuild": "npm run generate:themes && npm run sync:favicons",
     "verify:dist:local": "npm run build && node ..\\..\\directory\\scripts\\verify-dist-git-sha.mjs --dist=dist/license-plate-app/browser --repo=.. --site-id=plates && node ..\\..\\directory\\scripts\\smoke-spa-console.mjs plates --local",
     "verify:visual": "node ..\\..\\directory\\scripts\\assert-deploy-screenshots.mjs plates",
     "generate:themes": "node ../../directory/scripts/generate-vscode-theme-scss.mjs"
@@ -66,7 +65,7 @@
   },
   "dryl": {
     "packages": {
-      "@dryl/ui": "0.6.3",
+      "@dryl/ui": "0.6.13",
       "@dryl/auth-client": "0.2.0",
       "@dryl/app-data": "0.3.1",
       "@dryl/storage": "0.3.1"
