@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "node ../../directory/scripts/ng-build-gate.mjs build && node ../../directory/scripts/stamp-dist-git-source.mjs --dist=dist/license-plate-app/browser --repo=..",
+    "build": "go run -C ../../directory/tools/fleet-ng-build-gate . build && node ../../directory/scripts/stamp-dist-git-source.mjs --dist=dist/license-plate-app/browser --repo=..",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "deploy": "node ../scripts/block-desktop-deploy.mjs",
