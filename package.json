@@ -1,4 +1,21 @@
 {
+  "dependencies": {
+    "@dryl/app-data": "file:../dryl/app-data",
+    "@dryl/auth-client": "file:../dryl/auth-client",
+    "@dryl/storage": "file:../dryl/storage",
+    "@dryl/ui": "file:../dryl/ui/dist/dryl/ui"
+  },
+  "dryl": {
+    "packages": {
+      "@dryl/app-data": "0.3.1",
+      "@dryl/auth-client": "0.2.0",
+      "@dryl/storage": "0.3.1",
+      "@dryl/ui": "0.6.13"
+    }
+  },
+  "name": "kennzeichen",
+  "packageManager": "npm@11.17.0",
+  "private": true,
   "scripts": {
     "build": "cd kennzeichen-app \u0026\u0026 npm run build",
     "lint:lines": "go run -C ../directory/tools/fleet-max-lines . .",
@@ -11,5 +28,6 @@
     "verify:console": "cd kennzeichen-app \u0026\u0026 npm run verify:console",
     "verify:dist": "cd kennzeichen-app \u0026\u0026 npm run verify:dist",
     "verify:visual": "cd kennzeichen-app \u0026\u0026 npm run verify:visual"
-  }
+  },
+  "version": "1.0.0"
 }
