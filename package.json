@@ -1,32 +1,33 @@
 {
-  "name": "kennzeichen",
-  "version": "1.0.0",
-  "private": true,
-  "scripts": {
-    "postinstall": "cd kennzeichen-app && npm install",
-    "start": "cd kennzeichen-app && npm start",
-    "build": "cd kennzeichen-app && npm run build",
-    "test": "cd kennzeichen-app && npm test",
-    "verify:dist": "cd kennzeichen-app && npm run verify:dist",
-    "verify:console": "cd kennzeichen-app && npm run verify:console",
-    "verify:visual": "cd kennzeichen-app && npm run verify:visual",
-    "lint:ui": "npm run lint:bem && npm run lint:lines && npm run lint:component-budget && npm run lint:typography && npm run lint:spacing && npm run lint:flex-gap && npm run lint:mobile-first && npm run lint:inline-layout",
-    "prestart": "npm run lint:ui",
-    "prebuild": "npm run lint:ui"
-  },
-  "packageManager": "npm@11.17.0",
   "dependencies": {
-    "@dryl/ui": "file:../dryl/ui/dist/dryl/ui",
-    "@dryl/auth-client": "file:../dryl/auth-client",
     "@dryl/app-data": "file:../dryl/app-data",
-    "@dryl/storage": "file:../dryl/storage"
+    "@dryl/auth-client": "file:../dryl/auth-client",
+    "@dryl/storage": "file:../dryl/storage",
+    "@dryl/ui": "file:../dryl/ui/dist/dryl/ui"
   },
   "dryl": {
     "packages": {
-      "@dryl/ui": "0.6.13",
-      "@dryl/auth-client": "0.2.0",
       "@dryl/app-data": "0.3.1",
-      "@dryl/storage": "0.3.1"
+      "@dryl/auth-client": "0.2.0",
+      "@dryl/storage": "0.3.1",
+      "@dryl/ui": "0.6.13"
     }
-  }
+  },
+  "name": "kennzeichen",
+  "packageManager": "npm@11.17.0",
+  "private": true,
+  "scripts": {
+    "build": "cd kennzeichen-app \u0026\u0026 npm run build",
+    "lint:lines": "go run -C ../directory/tools/fleet-max-lines . .",
+    "lint:ui": "go run -C ../directory/tools/fleet-ui-lint .",
+    "postinstall": "cd kennzeichen-app \u0026\u0026 npm install",
+    "prebuild": "npm run lint:ui",
+    "prestart": "npm run lint:ui",
+    "start": "cd kennzeichen-app \u0026\u0026 npm start",
+    "test": "cd kennzeichen-app \u0026\u0026 npm test",
+    "verify:console": "cd kennzeichen-app \u0026\u0026 npm run verify:console",
+    "verify:dist": "cd kennzeichen-app \u0026\u0026 npm run verify:dist",
+    "verify:visual": "cd kennzeichen-app \u0026\u0026 npm run verify:visual"
+  },
+  "version": "1.0.0"
 }
