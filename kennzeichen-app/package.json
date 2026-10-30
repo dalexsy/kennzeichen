@@ -13,10 +13,10 @@
     "deploy:staging": "node ../scripts/block-desktop-deploy.mjs",
     "verify:staging": "node ..\\..\\directory\\scripts\\verify-staging.mjs plates",
     "verify:dist": "npm run build && node ..\\..\\directory\\scripts\\verify-dist-git-sha.mjs --dist=dist/license-plate-app/browser --repo=.. --site-id=plates",
-    "verify:console": "node ..\\..\\directory\\scripts\\smoke-spa-console.mjs plates",
+    "verify:console": "npm run verify:visual",
     "sync:favicons": "node ..\\..\\directory\\scripts\\sync-favicons.mjs kennzeichen",
     "prebuild": "npm run generate:themes && npm run sync:favicons",
-    "verify:dist:local": "npm run build && node ..\\..\\directory\\scripts\\verify-dist-git-sha.mjs --dist=dist/license-plate-app/browser --repo=.. --site-id=plates && node ..\\..\\directory\\scripts\\smoke-spa-console.mjs plates --local",
+    "verify:dist:local": "npm run build && node ..\\..\\directory\\scripts\\verify-dist-git-sha.mjs --dist=dist/license-plate-app/browser --repo=.. --site-id=plates",
     "verify:visual": "node ..\\..\\directory\\scripts\\assert-deploy-screenshots.mjs plates",
     "generate:themes": "node ../../directory/scripts/generate-vscode-theme-scss.mjs"
   },
