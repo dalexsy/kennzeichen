@@ -9,7 +9,7 @@
     "test": "ng test",
     "deploy": "node ../scripts/block-desktop-deploy.mjs",
     "deploy:pi": "node ../scripts/block-desktop-deploy.mjs",
-    "deploy:dryl": "node ..\\..\\directory\\scripts\\run-full-deploy.mjs plates",
+    "deploy:dryl": "python ..\\..\\directory\\scripts\\pi-deploy-dryl-site.py plates",
     "deploy:staging": "node ../scripts/block-desktop-deploy.mjs",
     "verify:staging": "node ..\\..\\directory\\scripts\\verify-staging.mjs plates",
     "verify:dist": "npm run build && node ..\\..\\directory\\scripts\\verify-dist-git-sha.mjs --dist=dist/license-plate-app/browser --repo=.. --site-id=plates",
