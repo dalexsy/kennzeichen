@@ -1,4 +1,5 @@
 import * as L from 'leaflet';
+import { rasterProviders } from '@dryl/maps';
 
 export function isDarkMode(): boolean {
   const theme = document.documentElement.getAttribute('data-theme');
@@ -8,15 +9,12 @@ export function isDarkMode(): boolean {
 }
 
 export function createTileLayer(isDark: boolean): L.TileLayer {
-  const url = isDark
-    ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
-    : 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
+  const provider = isDark ? rasterProviders.cartoDark : rasterProviders.cartoLight;
 
-  return L.tileLayer(url, {
+  return L.tileLayer(provider.url, {
     minZoom: 0,
-    maxZoom: 20,
-    attribution:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    maxZoom: provider.maxZoom,
+    attribution: provider.attribution,
     subdomains: 'abcd',
   });
 }
